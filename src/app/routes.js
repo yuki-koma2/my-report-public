@@ -11,5 +11,10 @@ export function getRoute(hash) {
     return { name: "report", id: decodeURIComponent(reportMatch[1]) };
   }
 
+  const tagMatch = normalized.match(/^\/tags\/([^/]+)$/);
+  if (tagMatch) {
+    return { name: "tag", tag: decodeURIComponent(tagMatch[1]) };
+  }
+
   return { name: "notFound" };
 }
