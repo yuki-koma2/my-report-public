@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { getRoute, renderRoute } from "../src/app/render.js";
+import { reports } from "../src/app/reports.js";
+import { getRoute } from "../src/app/routes.js";
 
 describe("routing", () => {
   it("空のハッシュはホームとして扱う", () => {
@@ -15,18 +16,10 @@ describe("routing", () => {
   });
 });
 
-describe("renderRoute", () => {
-  it("ホームにレポート一覧を表示する", () => {
-    const html = renderRoute("#/");
-
-    assert.match(html, /最新レポート/);
-    assert.match(html, /自治体DX公開資料/);
-    assert.match(html, /医療公開データ確認レポート/);
-  });
-
-  it("存在しないページでは not found を表示する", () => {
-    const html = renderRoute("#/missing");
-
-    assert.match(html, /ページが見つかりません/);
+describe("reports", () => {
+  it("サンプルレポートの一覧データを保持する", () => {
+    assert.equal(reports.length, 2);
+    assert.equal(reports[0].title, "自治体DX公開資料の読み取りサンプル");
+    assert.equal(reports[1].title, "医療公開データ確認レポートのサンプル");
   });
 });

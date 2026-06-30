@@ -8,25 +8,9 @@
       name="description"
       content="公開情報から確認できるレポートをまとめたサンプルサイト"
     />
-    <link rel="stylesheet" href="./assets/styles.css" />
   </head>
   <body>
-    <header class="site-header">
-      <div class="site-header__inner">
-        <a class="site-title" href="#/">Public Report Library</a>
-        <nav class="site-nav" aria-label="主要ナビゲーション">
-          <a href="#/">レポート一覧</a>
-          <a href="#/policy">作成方針</a>
-        </nav>
-      </div>
-    </header>
-
-    <main id="app" class="app" tabindex="-1"></main>
-
-    <footer class="site-footer">
-      <p>公開情報にもとづく調査レポートのサンプルサイトです。</p>
-    </footer>
-
-    <script type="module" src="./app/main.js"></script>
+    <div id="root"></div>
+    <script type="module" src="./app/main.jsx"></script>
   </body>
 </html>
