@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useMemo, useState } from "react";
 import { findReportById, getReportsByTag, getReportsByType, getTagSummaries, reports, tagDefinitions } from "../reports.js";
 import { getRoute } from "../routes.js";
@@ -19,9 +19,9 @@ export default function App() {
   const route = useHashRoute();
 
   return (
-    <div className="min-h-screen bg-[#f4f7f1] text-[#18211d]">
+    <div className="min-h-screen overflow-hidden bg-white text-[#050505]">
       <Header />
-      <main id="main-content" className="mx-auto min-h-[calc(100vh-152px)] w-[min(1120px,calc(100%-32px))] py-8 outline-none md:py-12">
+      <main id="main-content" className="mx-auto min-h-[calc(100vh-152px)] w-[min(1160px,calc(100%-32px))] py-8 outline-none md:py-12">
         {route.name === "home" && <HomePage />}
         {route.name === "policy" && <PolicyPage />}
         {route.name === "report" && <ReportPage id={route.id} />}
@@ -34,20 +34,28 @@ export default function App() {
 }
 
 function Header() {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
-    <header className="border-b border-[#cfd8cf] bg-[#fbfcf8]/95 backdrop-blur">
-      <div className="mx-auto flex min-h-[76px] w-[min(1120px,calc(100%-32px))] flex-col justify-center gap-3 py-4 md:flex-row md:items-center md:justify-between md:gap-6 md:py-0">
-        <a className="font-mono text-sm font-bold uppercase tracking-[0.08em] text-[#2f4f43] no-underline" href="#/">
+    <header className="sticky top-0 z-50 border-b border-[#050505]/10 bg-white/90 backdrop-blur-md">
+      <div className="mx-auto flex min-h-[76px] w-[min(1160px,calc(100%-32px))] flex-col justify-center gap-3 py-4 md:flex-row md:items-center md:justify-between md:gap-6 md:py-0">
+        <a className="inline-flex items-center gap-3 font-mono text-sm font-black uppercase tracking-[0.08em] text-[#050505] no-underline" href="#/">
+          <motion.span
+            className="h-3 w-3 bg-[#0718c8]"
+            animate={shouldReduceMotion ? undefined : { rotate: [0, 90, 90, 180], scale: [1, 1.35, 1, 1] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            aria-hidden="true"
+          />
           My Report Public
         </a>
         <nav className="flex flex-wrap gap-2 text-sm font-semibold" aria-label="主要ナビゲーション">
-          <a className="rounded-full border border-[#cfd8cf] bg-white px-3 py-1.5 text-[#2f4f43] transition hover:border-[#b7442e]" href="#/">
+          <a className="rounded-full border border-[#050505] bg-white px-3 py-1.5 text-[#050505] transition hover:-translate-y-0.5 hover:bg-[#0718c8] hover:text-white" href="#/">
             レポート一覧
           </a>
-          <a className="rounded-full border border-[#cfd8cf] bg-white px-3 py-1.5 text-[#2f4f43] transition hover:border-[#b7442e]" href="#/tags/医療">
+          <a className="rounded-full border border-[#050505] bg-white px-3 py-1.5 text-[#050505] transition hover:-translate-y-0.5 hover:bg-[#0718c8] hover:text-white" href="#/tags/医療">
             タグ
           </a>
-          <a className="rounded-full border border-[#cfd8cf] bg-white px-3 py-1.5 text-[#2f4f43] transition hover:border-[#b7442e]" href="#/policy">
+          <a className="rounded-full border border-[#050505] bg-white px-3 py-1.5 text-[#050505] transition hover:-translate-y-0.5 hover:bg-[#0718c8] hover:text-white" href="#/policy">
             作成方針
           </a>
         </nav>
@@ -120,41 +128,73 @@ function HomePage() {
 
 function Hero() {
   return (
-    <section className="mb-8 grid grid-cols-1 gap-5 border-b border-[#cfd8cf] pb-8 md:grid-cols-[1.45fr_0.85fr] md:items-end">
-      <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
-        <p className="mb-4 inline-flex border-l-4 border-[#b7442e] bg-white px-3 py-2 font-mono text-xs font-bold uppercase tracking-[0.08em] text-[#4f554f]">
+    <section className="relative mb-8 min-h-[680px] overflow-hidden border-b border-[#050505] pb-10 pt-6 md:min-h-[720px]">
+      <KineticField />
+      <div className="relative z-10 grid grid-cols-1 gap-8 md:grid-cols-[1.28fr_0.72fr] md:items-end">
+        <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45, ease: "easeOut" }}>
+          <p className="mb-4 inline-flex border border-[#050505] bg-white px-3 py-2 font-mono text-xs font-black uppercase tracking-[0.08em] text-[#0718c8] shadow-[4px_4px_0_#050505]">
           AI assisted public research
-        </p>
-        <h1 className="max-w-4xl text-[2.55rem] font-black leading-[0.98] tracking-[-0.01em] text-[#17211d] md:text-[5.6rem]">
-          AI調査レポート公開ライブラリ
-        </h1>
-        <p className="mt-5 max-w-2xl text-lg leading-8 text-[#45534b]">
-          公開情報をAIで調査・整理し、人が確認しながら一般公開するためのレポートサイトです。制度、事業機会、リスク、プロダクト論点を追える形で蓄積します。
-        </p>
-      </motion.div>
-      <motion.aside
-        className="border border-[#17211d] bg-[#17211d] p-5 text-[#eef4ec] shadow-[8px_8px_0_#b7442e]"
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.08, duration: 0.3 }}
-        aria-label="調査の前提"
-      >
-        <p className="mb-5 font-mono text-xs font-bold uppercase tracking-[0.12em] text-[#f0b05e]">Research ledger</p>
-        <dl className="space-y-4">
-          <LedgerItem label="source" value="公開情報のみ" />
-          <LedgerItem label="method" value="AI調査 + 人の確認" />
-          <LedgerItem label="rhythm" value="深掘り / 週次更新" />
-          <LedgerItem label="focus" value="医療・介護・AI・技術" />
-        </dl>
-      </motion.aside>
+          </p>
+          <h1 className="max-w-5xl text-[3.15rem] font-black leading-[0.9] text-[#050505] md:text-[7.4rem]">
+            AI調査レポート公開ライブラリ
+          </h1>
+          <p className="mt-7 max-w-2xl text-lg font-medium leading-8 text-[#172033]">
+            公開情報をAIで調査・整理し、人が確認しながら一般公開するためのレポートサイトです。制度、事業機会、リスク、プロダクト論点を追える形で蓄積します。
+          </p>
+        </motion.div>
+        <motion.aside
+          className="border border-[#050505] bg-[#0718c8] p-5 text-white shadow-[10px_10px_0_#050505]"
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.12, duration: 0.45, ease: "easeOut" }}
+          aria-label="調査の前提"
+        >
+          <p className="mb-5 font-mono text-xs font-black uppercase tracking-[0.12em] text-white/70">Research ledger</p>
+          <dl className="space-y-4">
+            <LedgerItem label="source" value="公開情報のみ" />
+            <LedgerItem label="method" value="AI調査 + 人の確認" />
+            <LedgerItem label="rhythm" value="深掘り / 週次更新" />
+            <LedgerItem label="focus" value="医療・介護・AI・技術" />
+          </dl>
+        </motion.aside>
+      </div>
     </section>
+  );
+}
+
+function KineticField() {
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+      <motion.div
+        className="absolute right-[-18%] top-16 h-[240px] w-[72%] border-[18px] border-[#0718c8] md:top-24 md:h-[310px]"
+        animate={shouldReduceMotion ? undefined : { x: [0, -34, 0], y: [0, 22, 0], rotate: [0, -2, 0] }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute bottom-24 left-[8%] h-[18px] w-[68%] bg-[#0718c8]"
+        animate={shouldReduceMotion ? undefined : { x: ["-18%", "18%", "-18%"] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute bottom-14 left-[26%] h-[18px] w-[48%] bg-[#050505]"
+        animate={shouldReduceMotion ? undefined : { x: ["16%", "-16%", "16%"] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute right-[10%] top-[54%] h-24 w-24 border border-[#050505] bg-white"
+        animate={shouldReduceMotion ? undefined : { rotate: [0, 180, 360], borderRadius: ["0%", "50%", "0%"] }}
+        transition={{ duration: 14, repeat: Infinity, ease: "linear" }}
+      />
+    </div>
   );
 }
 
 function LedgerItem({ label, value }) {
   return (
-    <div className="grid grid-cols-[90px_1fr] gap-3 border-t border-[#445048] pt-3">
-      <dt className="font-mono text-xs uppercase tracking-[0.08em] text-[#9fb0a6]">{label}</dt>
+    <div className="grid grid-cols-[90px_1fr] gap-3 border-t border-white/35 pt-3">
+      <dt className="font-mono text-xs uppercase tracking-[0.08em] text-white/65">{label}</dt>
       <dd className="font-semibold">{value}</dd>
     </div>
   );
@@ -162,54 +202,69 @@ function LedgerItem({ label, value }) {
 
 function TagSummaryCard({ tag }) {
   return (
-    <a className="group rounded-md border border-[#cfd8cf] bg-[#fbfcf8] p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-[#b7442e] hover:shadow-[5px_5px_0_#dfe7dc]" href={`#/tags/${encodeURIComponent(tag.name)}`}>
+    <motion.a
+      className="group rounded-md border border-[#050505]/15 bg-white p-5 shadow-sm transition hover:border-[#0718c8] hover:shadow-[6px_6px_0_#0718c8]"
+      href={`#/tags/${encodeURIComponent(tag.name)}`}
+      whileHover={{ y: -4 }}
+      transition={{ type: "spring", stiffness: 420, damping: 28 }}
+    >
       <div className="mb-3 flex items-center justify-between gap-3">
-        <h3 className="text-lg font-black text-[#17211d]">{tag.name}</h3>
-        <span className="rounded-full bg-[#e7ecdf] px-3 py-1 font-mono text-xs font-bold text-[#4f554f]">{tag.count}件</span>
+        <h3 className="text-lg font-black text-[#050505]">{tag.name}</h3>
+        <span className="rounded-full bg-[#0718c8] px-3 py-1 font-mono text-xs font-bold text-white">{tag.count}件</span>
       </div>
-      <p className="text-sm leading-6 text-[#5d685f]">{tag.description}</p>
-    </a>
+      <p className="text-sm leading-6 text-[#172033]">{tag.description}</p>
+    </motion.a>
   );
 }
 
 function InfoPanel({ title, children }) {
   return (
-    <article className="rounded-md border border-[#cfd8cf] bg-[#fbfcf8] p-6 shadow-sm">
-      <h2 className="mb-3 text-xl font-black text-[#17211d]">{title}</h2>
-      <div className="space-y-3 text-[#4b584f]">{children}</div>
-    </article>
+    <motion.article
+      className="rounded-md border border-[#050505]/15 bg-white p-6 shadow-sm"
+      initial={{ y: 16 }}
+      whileInView={{ y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.35 }}
+    >
+      <h2 className="mb-3 text-xl font-black text-[#050505]">{title}</h2>
+      <div className="space-y-3 text-[#172033]">{children}</div>
+    </motion.article>
   );
 }
 
 function SectionHeader({ title, description }) {
   return (
-    <div className="mb-5 flex flex-col gap-2 border-b border-[#cfd8cf] pb-3 md:flex-row md:items-end md:justify-between">
-      <h2 className="text-2xl font-black leading-tight text-[#17211d]">{title}</h2>
-      <p className="max-w-xl text-sm leading-6 text-[#5d685f]">{description}</p>
+    <div className="mb-5 flex flex-col gap-2 border-b border-[#050505] pb-3 md:flex-row md:items-end md:justify-between">
+      <h2 className="text-2xl font-black leading-tight text-[#050505]">{title}</h2>
+      <p className="max-w-xl text-sm leading-6 text-[#172033]">{description}</p>
     </div>
   );
 }
 
 function ArticleTypeCard({ title, description, points }) {
   return (
-    <article className="rounded-md border border-[#cfd8cf] bg-white p-6 shadow-sm">
-      <h3 className="mb-3 text-xl font-black text-[#17211d]">{title}</h3>
-      <p className="mb-4 text-[#4b584f]">{description}</p>
-      <ul className="space-y-2 text-sm text-[#5d685f]">
+    <motion.article
+      className="rounded-md border border-[#050505] bg-white p-6 shadow-sm"
+      whileHover={{ y: -5, backgroundColor: "#eef2ff" }}
+      transition={{ type: "spring", stiffness: 360, damping: 28 }}
+    >
+      <h3 className="mb-3 text-xl font-black text-[#050505]">{title}</h3>
+      <p className="mb-4 text-[#172033]">{description}</p>
+      <ul className="space-y-2 text-sm text-[#172033]">
         {points.map((point) => (
-          <li className="border-l-2 border-[#b7442e] pl-3" key={point}>
+          <li className="border-l-2 border-[#0718c8] pl-3" key={point}>
             {point}
           </li>
         ))}
       </ul>
-    </article>
+    </motion.article>
   );
 }
 
 function ArticleGroup({ title, reports: groupReports }) {
   return (
     <div className="mb-8">
-      <h3 className="mb-4 font-mono text-sm font-bold uppercase tracking-[0.08em] text-[#4f554f]">{title}</h3>
+      <h3 className="mb-4 font-mono text-sm font-black uppercase tracking-[0.08em] text-[#0718c8]">{title}</h3>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {groupReports.map((report, index) => (
           <ReportCard key={report.id} report={report} index={index} />
@@ -222,20 +277,22 @@ function ArticleGroup({ title, reports: groupReports }) {
 function ReportCard({ report, index }) {
   return (
     <motion.article
-      className="rounded-md border border-[#cfd8cf] bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-[#2f4f43] hover:shadow-[6px_6px_0_#dfe7dc]"
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.06, duration: 0.28 }}
+      className="rounded-md border border-[#050505]/20 bg-white p-6 shadow-sm"
+      initial={{ y: 12 }}
+      whileInView={{ y: 0 }}
+      whileHover={{ y: -6, boxShadow: "8px 8px 0 #0718c8" }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ delay: index * 0.04, duration: 0.28 }}
     >
-      <div className="mb-4 flex justify-between gap-3 font-mono text-xs font-bold uppercase tracking-[0.06em] text-[#69746c]">
-        <span className="text-[#b7442e]">{report.articleTypeLabel}</span>
+      <div className="mb-4 flex justify-between gap-3 font-mono text-xs font-bold uppercase tracking-[0.06em] text-[#172033]/65">
+        <span className="text-[#0718c8]">{report.articleTypeLabel}</span>
         <time dateTime={report.publishedAt}>{report.publishedAt}</time>
       </div>
-      <h3 className="mb-3 text-xl font-black leading-snug text-[#17211d]">{report.title}</h3>
-      <p className="mb-5 leading-7 text-[#4b584f]">{report.summary}</p>
+      <h3 className="mb-3 text-xl font-black leading-snug text-[#050505]">{report.title}</h3>
+      <p className="mb-5 leading-7 text-[#172033]">{report.summary}</p>
       <TagList tags={report.tags} />
-      <p className="mb-5 text-sm font-semibold text-[#5d685f]">{report.cadence}</p>
-      <a className="font-bold text-[#2f4f43] underline decoration-2 underline-offset-4" href={`#/reports/${encodeURIComponent(report.id)}`}>
+      <p className="mb-5 text-sm font-semibold text-[#172033]">{report.cadence}</p>
+      <a className="font-bold text-[#0718c8] underline decoration-2 underline-offset-4" href={`#/reports/${encodeURIComponent(report.id)}`}>
         レポートを読む
       </a>
     </motion.article>
@@ -247,7 +304,7 @@ function TagList({ tags }) {
     <div className="mb-5 flex flex-wrap gap-2">
       {tags.map((tag) => (
         <a
-          className="rounded-full border border-[#cfd8cf] bg-[#f4f7f1] px-3 py-1 text-sm font-semibold text-[#2f4f43] transition hover:border-[#b7442e]"
+          className="rounded-full border border-[#050505]/20 bg-[#eef2ff] px-3 py-1 text-sm font-semibold text-[#0718c8] transition hover:border-[#0718c8] hover:bg-[#0718c8] hover:text-white"
           href={`#/tags/${encodeURIComponent(tag)}`}
           key={tag}
         >
@@ -274,10 +331,15 @@ function PolicyPage() {
       />
       <section className="grid grid-cols-1 gap-5 md:grid-cols-3" aria-label="作成方針">
         {policies.map(([title, description]) => (
-          <article className="rounded-md border border-[#cfd8cf] bg-white p-6 shadow-sm" key={title}>
-            <h2 className="mb-3 text-lg font-black text-[#17211d]">{title}</h2>
-            <p className="leading-7 text-[#4b584f]">{description}</p>
-          </article>
+          <motion.article
+            className="rounded-md border border-[#050505]/20 bg-white p-6 shadow-sm"
+            key={title}
+            whileHover={{ y: -4, backgroundColor: "#eef2ff" }}
+            transition={{ type: "spring", stiffness: 360, damping: 28 }}
+          >
+            <h2 className="mb-3 text-lg font-black text-[#050505]">{title}</h2>
+            <p className="leading-7 text-[#172033]">{description}</p>
+          </motion.article>
         ))}
       </section>
     </>
@@ -293,11 +355,11 @@ function ReportPage({ id }) {
 
   return (
     <motion.article className="max-w-4xl" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.25 }}>
-      <a className="mb-7 inline-block font-bold text-[#2f4f43] underline decoration-2 underline-offset-4" href="#/">
+      <a className="mb-7 inline-block font-bold text-[#0718c8] underline decoration-2 underline-offset-4" href="#/">
         一覧へ戻る
       </a>
-      <p className="mb-2 font-mono text-xs font-extrabold uppercase tracking-[0.08em] text-[#b7442e]">{report.category}</p>
-      <h1 className="mb-6 max-w-3xl text-4xl font-black leading-tight text-[#17211d] md:text-6xl">{report.title}</h1>
+      <p className="mb-2 font-mono text-xs font-extrabold uppercase tracking-[0.08em] text-[#0718c8]">{report.category}</p>
+      <h1 className="mb-6 max-w-3xl text-4xl font-black leading-tight text-[#050505] md:text-6xl">{report.title}</h1>
       <dl className="my-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
         <Fact label="記事種別" value={report.articleTypeLabel} />
         <Fact label="更新頻度" value={report.cadence} />
@@ -305,13 +367,13 @@ function ReportPage({ id }) {
         <Fact label="確認日" value={report.checkedAt} />
       </dl>
       <TagList tags={report.tags} />
-      <p className="max-w-3xl text-lg leading-8 text-[#4b584f]">{report.summary}</p>
+      <p className="max-w-3xl text-lg leading-8 text-[#172033]">{report.summary}</p>
 
       <section className="mt-9">
         <h2 className="mb-3 text-2xl font-black">確認したポイント</h2>
-        <ul className="space-y-2 text-[#4b584f]">
+        <ul className="space-y-2 text-[#172033]">
           {report.highlights.map((highlight) => (
-            <li className="border-l-2 border-[#b7442e] pl-3" key={highlight}>
+            <li className="border-l-2 border-[#0718c8] pl-3" key={highlight}>
               {highlight}
             </li>
           ))}
@@ -320,10 +382,10 @@ function ReportPage({ id }) {
 
       <section className="mt-9">
         <h2 className="mb-3 text-2xl font-black">出典</h2>
-        <ul className="space-y-2 text-[#4b584f]">
+        <ul className="space-y-2 text-[#172033]">
           {report.sources.map((source) => (
-            <li className="border-l-2 border-[#cfd8cf] pl-3" key={source.url}>
-              <a className="text-[#2f4f43] underline decoration-2 underline-offset-4" href={source.url} target="_blank" rel="noreferrer">
+            <li className="border-l-2 border-[#050505]/20 pl-3" key={source.url}>
+              <a className="text-[#0718c8] underline decoration-2 underline-offset-4" href={source.url} target="_blank" rel="noreferrer">
                 {source.title}
               </a>
             </li>
@@ -363,9 +425,9 @@ function TagPage({ tag }) {
 
 function Fact({ label, value }) {
   return (
-    <div className="border-l-4 border-[#2f4f43] bg-white px-4 py-3 shadow-sm">
-      <dt className="font-mono text-xs font-bold uppercase tracking-[0.06em] text-[#69746c]">{label}</dt>
-      <dd className="mt-1 font-extrabold text-[#17211d]">{value}</dd>
+    <div className="border-l-4 border-[#0718c8] bg-[#eef2ff] px-4 py-3 shadow-sm">
+      <dt className="font-mono text-xs font-bold uppercase tracking-[0.06em] text-[#172033]/65">{label}</dt>
+      <dd className="mt-1 font-extrabold text-[#050505]">{value}</dd>
     </div>
   );
 }
@@ -376,7 +438,7 @@ function NotFoundPage() {
       eyebrow="Not found"
       title="ページが見つかりません"
       description="指定されたページは存在しません。"
-      action={<a className="font-bold text-[#2f4f43] underline decoration-2 underline-offset-4" href="#/">一覧へ戻る</a>}
+      action={<a className="font-bold text-[#0718c8] underline decoration-2 underline-offset-4" href="#/">一覧へ戻る</a>}
     />
   );
 }
@@ -384,9 +446,9 @@ function NotFoundPage() {
 function PageHeading({ eyebrow, title, description, action }) {
   return (
     <motion.section className="mb-10 max-w-3xl" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.25 }}>
-      <p className="mb-2 font-mono text-xs font-extrabold uppercase tracking-[0.08em] text-[#b7442e]">{eyebrow}</p>
-      <h1 className="mb-4 text-4xl font-black leading-tight text-[#17211d] md:text-6xl">{title}</h1>
-      <p className="text-lg leading-8 text-[#4b584f]">{description}</p>
+      <p className="mb-2 font-mono text-xs font-extrabold uppercase tracking-[0.08em] text-[#0718c8]">{eyebrow}</p>
+      <h1 className="mb-4 text-4xl font-black leading-tight text-[#050505] md:text-6xl">{title}</h1>
+      <p className="text-lg leading-8 text-[#172033]">{description}</p>
       {action && <div className="mt-6">{action}</div>}
     </motion.section>
   );
@@ -394,7 +456,7 @@ function PageHeading({ eyebrow, title, description, action }) {
 
 function Footer() {
   return (
-    <footer className="mx-auto w-[min(1120px,calc(100%-32px))] border-t border-[#cfd8cf] py-6 text-sm text-[#5d685f]">
+    <footer className="mx-auto w-[min(1160px,calc(100%-32px))] border-t border-[#050505]/20 py-6 text-sm text-[#172033]">
       <p>公開情報にもとづく調査レポートのサンプルサイトです。</p>
     </footer>
   );
