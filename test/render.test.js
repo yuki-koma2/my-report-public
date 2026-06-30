@@ -64,6 +64,22 @@ describe("reports", () => {
       expect(report.sources.length).toBeGreaterThan(0);
       expect(report.highlights.length).toBeGreaterThan(0);
       expect(report.sections.length).toBeGreaterThan(0);
+      expect(report.dashboardMetrics.length).toBeGreaterThan(0);
+      expect(report.topicCards.length).toBeGreaterThan(0);
+      expect(report.actionCards.length).toBeGreaterThan(0);
     }
+  });
+
+  it("記事ページをリッチに表示するための構造化データを持つ", () => {
+    const [report] = reports;
+
+    expect(report.lead.title).toBe("今週の判断ポイント");
+    expect(report.dashboardMetrics.map((metric) => metric.label)).toContain("高優先度");
+    expect(report.dashboardMetrics.map((metric) => metric.label)).toContain("一次情報");
+    expect(report.topicCards[0]).toMatchObject({
+      priority: "高",
+      sourceType: "一次情報"
+    });
+    expect(report.topicCards[0].relevance).toBeGreaterThanOrEqual(80);
   });
 });

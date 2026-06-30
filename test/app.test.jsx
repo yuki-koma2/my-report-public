@@ -49,13 +49,20 @@ describe("App", () => {
     expect(screen.getByText("週次最新情報")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "医療" })).toHaveAttribute("href", "#/tags/%E5%8C%BB%E7%99%82");
     expect(screen.getByRole("link", { name: "介護" })).toHaveAttribute("href", "#/tags/%E4%BB%8B%E8%AD%B7");
-    expect(screen.getByText("公開日")).toBeInTheDocument();
+    expect(screen.getAllByText("公開日").length).toBeGreaterThan(0);
     expect(screen.getByText("確認日")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "今週の判断ポイント" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "要点ダッシュボード" })).toBeInTheDocument();
+    expect(screen.getByText("高優先度")).toBeInTheDocument();
+    expect(screen.getAllByText("一次情報").length).toBeGreaterThan(0);
+    expect(screen.getByText("関連度 95")).toBeInTheDocument();
+    expect(screen.getAllByText("重要度 高").length).toBeGreaterThan(0);
     expect(screen.getByRole("heading", { name: "調査条件" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "テーマ別の調査結果" })).toBeInTheDocument();
     expect(screen.getByText(/標準型電子カルテ導入版/)).toBeInTheDocument();
     expect(screen.getAllByText(/今週確認できた重要な新規情報なし/).length).toBeGreaterThan(0);
-    expect(screen.getByRole("link", { name: "厚生労働省 新着情報RSS" })).toHaveAttribute("href", "https://www.mhlw.go.jp/stf/news.rdf");
+    expect(screen.getByRole("heading", { name: "引用元・確認した一次情報" })).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: "厚生労働省 新着情報RSS" })[0]).toHaveAttribute("href", "https://www.mhlw.go.jp/stf/news.rdf");
   });
 
   it("存在しないページでは Not Found を表示する", () => {

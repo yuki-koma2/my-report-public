@@ -359,7 +359,7 @@ function ReportPage({ id }) {
   }
 
   return (
-    <motion.article className="max-w-4xl" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.25 }}>
+    <motion.article className="max-w-5xl" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.25 }}>
       <a className="mb-7 inline-block font-bold text-[#0718c8] underline decoration-2 underline-offset-4" href="#/">
         一覧へ戻る
       </a>
@@ -374,25 +374,23 @@ function ReportPage({ id }) {
       <TagList tags={report.tags} />
       <p className="max-w-3xl text-lg leading-8 text-[#172033]">{report.summary}</p>
 
-      <section className="mt-9">
-        <h2 className="mb-3 text-2xl font-black">確認したポイント</h2>
-        <ul className="space-y-2 text-[#172033]">
-          {report.highlights.map((highlight) => (
-            <li className="border-l-2 border-[#0718c8] pl-3" key={highlight}>
-              {highlight}
-            </li>
-          ))}
-        </ul>
-      </section>
+      {report.lead && <ReportLead lead={report.lead} />}
+      {report.dashboardMetrics?.length > 0 && <ReportDashboard metrics={report.dashboardMetrics} />}
 
-      {report.sections?.length > 0 && <ReportSections sections={report.sections} />}
+      <ReportHighlights highlights={report.highlights} />
 
-      <section className="mt-9">
-        <h2 className="mb-3 text-2xl font-black">出典</h2>
-        <ul className="space-y-2 text-[#172033]">
+      {report.sections?.length > 0 && <ReportSections sections={report.sections} topicCards={report.topicCards} actionCards={report.actionCards} />}
+
+      <section className="mt-12 border-t-2 border-[#050505] pt-8">
+        <h2 className="mb-4 text-2xl font-black text-[#050505]">引用元・確認した一次情報</h2>
+        <p className="mb-5 max-w-2xl leading-7 text-[#172033]">
+          本文内の判断は、公開日と確認日を追える一次情報を優先して整理しています。リンク先で原文を確認できます。
+        </p>
+        <ul className="grid grid-cols-1 gap-3 md:grid-cols-2">
           {report.sources.map((source) => (
-            <li className="border-l-2 border-[#050505]/20 pl-3" key={source.url}>
-              <a className="text-[#0718c8] underline decoration-2 underline-offset-4" href={source.url} target="_blank" rel="noreferrer">
+            <li className="rounded-md border border-[#050505]/15 bg-white p-4 shadow-sm transition hover:border-[#0718c8] hover:shadow-[6px_6px_0_#0718c8]" key={source.url}>
+              <p className="mb-2 font-mono text-xs font-black uppercase tracking-[0.08em] text-[#0718c8]">primary source</p>
+              <a className="font-bold leading-6 text-[#050505] underline decoration-[#0718c8] decoration-2 underline-offset-4" href={source.url} target="_blank" rel="noreferrer">
                 {source.title}
               </a>
             </li>
@@ -403,23 +401,259 @@ function ReportPage({ id }) {
   );
 }
 
-function ReportSections({ sections }) {
+function ReportLead({ lead }) {
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <section className="relative mt-10 overflow-hidden rounded-md border border-[#050505] bg-[#0718c8] p-6 text-white shadow-[10px_10px_0_#050505]">
+      <motion.div
+        className="absolute right-[-48px] top-[-36px] h-32 w-32 border-[14px] border-white/25"
+        animate={shouldReduceMotion ? undefined : { rotate: [0, 45, 0], x: [0, -8, 0] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        aria-hidden="true"
+      />
+      <div className="relative z-10 grid grid-cols-1 gap-5 md:grid-cols-[1.3fr_0.7fr]">
+        <div>
+          <p className="mb-2 font-mono text-xs font-black uppercase tracking-[0.1em] text-white/70">overview</p>
+          <h2 className="mb-4 text-2xl font-black md:text-3xl">{lead.title}</h2>
+          <p className="leading-8 text-white/90">{lead.body}</p>
+        </div>
+        <blockquote className="border-l-4 border-white bg-white/10 p-4 text-sm font-semibold leading-7 text-white">
+          {lead.quote}
+        </blockquote>
+      </div>
+    </section>
+  );
+}
+
+function ReportDashboard({ metrics }) {
+  return (
+    <section className="mt-10">
+      <div className="mb-4 flex flex-col gap-2 border-b border-[#050505] pb-3 md:flex-row md:items-end md:justify-between">
+        <h2 className="text-2xl font-black text-[#050505]">要点ダッシュボード</h2>
+        <p className="max-w-xl text-sm leading-6 text-[#172033]">読む前に、対応の重さ、根拠の強さ、期限、ウォッチ対象を確認できます。</p>
+      </div>
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        {metrics.map((metric, index) => (
+          <motion.article
+            className={`rounded-md border p-4 shadow-sm ${metricClass(metric.tone)}`}
+            key={metric.label}
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ delay: index * 0.04, duration: 0.25 }}
+          >
+            <p className="font-mono text-xs font-black uppercase tracking-[0.08em] opacity-70">{metric.label}</p>
+            <p className="mt-3 text-3xl font-black leading-none">{metric.value}</p>
+            <p className="mt-3 text-sm font-medium leading-6 opacity-80">{metric.caption}</p>
+          </motion.article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function metricClass(tone) {
+  if (tone === "high") {
+    return "border-[#050505] bg-[#050505] text-white";
+  }
+  if (tone === "deadline") {
+    return "border-[#0718c8] bg-[#0718c8] text-white";
+  }
+  if (tone === "watch") {
+    return "border-[#050505]/20 bg-[#f8fafc] text-[#050505]";
+  }
+  return "border-[#0718c8]/20 bg-[#eef2ff] text-[#050505]";
+}
+
+function ReportHighlights({ highlights }) {
+  return (
+    <section className="mt-10">
+      <h2 className="mb-4 text-2xl font-black text-[#050505]">確認したポイント</h2>
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+        {highlights.map((highlight, index) => (
+          <motion.article
+            className="rounded-md border border-[#050505]/15 bg-white p-4 shadow-sm"
+            key={highlight}
+            initial={{ opacity: 0, x: -12 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ delay: index * 0.03, duration: 0.25 }}
+          >
+            <p className="mb-3 font-mono text-xs font-black text-[#0718c8]">{String(index + 1).padStart(2, "0")}</p>
+            <p className="leading-7 text-[#172033]">{highlight}</p>
+          </motion.article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function ReportSections({ sections, topicCards = [], actionCards = [] }) {
   return (
     <div className="mt-10 space-y-10">
       {sections.map((section) => (
-        <section className="border-t border-[#050505]/20 pt-7" key={section.title}>
-          <h2 className="mb-4 text-2xl font-black text-[#050505]">{section.title}</h2>
-          <ul className="space-y-3 text-[#172033]">
-            {section.items.map((item) => (
-              <li className="rounded-md border border-[#050505]/10 bg-white px-4 py-3 leading-7 shadow-sm" key={item}>
-                {item}
-              </li>
-            ))}
-          </ul>
-        </section>
+        <ReportSection section={section} topicCards={topicCards} actionCards={actionCards} key={section.title} />
       ))}
     </div>
   );
+}
+
+function ReportSection({ section, topicCards, actionCards }) {
+  if (section.title === "テーマ別の調査結果" && topicCards.length > 0) {
+    return <TopicCardSection title={section.title} topicCards={topicCards} />;
+  }
+
+  if (section.title === "今週検討すべき対応アクション" && actionCards.length > 0) {
+    return <ActionCardSection title={section.title} actionCards={actionCards} />;
+  }
+
+  return (
+    <section className="border-t border-[#050505]/20 pt-7">
+      <h2 className="mb-4 text-2xl font-black text-[#050505]">{section.title}</h2>
+      <div className="grid grid-cols-1 gap-3">
+        {section.items.map((item) => (
+          <RichTextCard item={item} key={item} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function TopicCardSection({ title, topicCards }) {
+  return (
+    <section className="border-t-2 border-[#050505] pt-8">
+      <div className="mb-5 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+        <h2 className="text-2xl font-black text-[#050505]">{title}</h2>
+        <p className="max-w-xl text-sm leading-6 text-[#172033]">重要度、関連度、対象者、出典を同じカード内で確認できます。</p>
+      </div>
+      <div className="grid grid-cols-1 gap-5">
+        {topicCards.map((topic, index) => (
+          <TopicCard topic={topic} index={index} key={topic.title} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function TopicCard({ topic, index }) {
+  return (
+    <motion.article
+      className="rounded-md border border-[#050505] bg-white p-5 shadow-[8px_8px_0_#0718c8]"
+      initial={{ opacity: 0, y: 18 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ delay: index * 0.04, duration: 0.28 }}
+    >
+      <div className="mb-4 flex flex-wrap items-center gap-2">
+        <span className="bg-[#0718c8] px-3 py-1 font-mono text-xs font-black uppercase tracking-[0.08em] text-white">{topic.theme}</span>
+        <span className="border border-[#050505] px-3 py-1 text-xs font-black text-[#050505]">重要度 {topic.priority}</span>
+        <span className="border border-[#0718c8] bg-[#eef2ff] px-3 py-1 text-xs font-black text-[#0718c8]">関連度 {topic.relevance}</span>
+        <span className="border border-[#050505]/20 px-3 py-1 text-xs font-bold text-[#172033]">対応 {topic.timing}</span>
+      </div>
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1.1fr_0.9fr]">
+        <div>
+          <h3 className="text-2xl font-black leading-tight text-[#050505]">{topic.title}</h3>
+          <p className="mt-3 leading-7 text-[#172033]">{topic.summary}</p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {topic.relatedTags.map((tag) => (
+              <span className="rounded-full bg-[#eef2ff] px-3 py-1 text-xs font-bold text-[#0718c8]" key={tag}>
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+        <div className="rounded-md border border-[#050505]/15 bg-[#f8fafc] p-4">
+          <dl className="space-y-3">
+            <TopicFact label="公開日" value={topic.date} />
+            <TopicFact label="引用種別" value={topic.sourceType} />
+            <TopicFact label="影響主体" value={topic.affected.join(" / ")} />
+          </dl>
+          <a className="mt-4 inline-block font-bold text-[#0718c8] underline decoration-2 underline-offset-4" href={topic.sourceUrl} target="_blank" rel="noreferrer">
+            {topic.sourceTitle}
+          </a>
+        </div>
+      </div>
+      <div className="mt-5 h-2 overflow-hidden rounded-full bg-[#eef2ff]" aria-hidden="true">
+        <div className="h-full bg-[#0718c8]" style={{ width: `${topic.relevance}%` }} />
+      </div>
+      <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2">
+        <InsightBlock label="何が変わるのか" value={topic.change} />
+        <InsightBlock label="なぜ重要なのか" value={topic.importance} />
+        <InsightBlock label="示唆" value={topic.implication} />
+        <InsightBlock label="不確実性" value={topic.uncertainty} />
+      </div>
+    </motion.article>
+  );
+}
+
+function TopicFact({ label, value }) {
+  return (
+    <div>
+      <dt className="font-mono text-xs font-black uppercase tracking-[0.08em] text-[#172033]/60">{label}</dt>
+      <dd className="mt-1 text-sm font-bold leading-6 text-[#050505]">{value}</dd>
+    </div>
+  );
+}
+
+function InsightBlock({ label, value }) {
+  return (
+    <div className="rounded-md border border-[#050505]/10 bg-white p-4">
+      <p className="mb-2 font-mono text-xs font-black uppercase tracking-[0.08em] text-[#0718c8]">{label}</p>
+      <p className="text-sm leading-7 text-[#172033]">{value}</p>
+    </div>
+  );
+}
+
+function ActionCardSection({ title, actionCards }) {
+  return (
+    <section className="border-t border-[#050505]/20 pt-7">
+      <h2 className="mb-4 text-2xl font-black text-[#050505]">{title}</h2>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        {actionCards.map((action) => (
+          <article className="rounded-md border border-[#050505] bg-[#050505] p-5 text-white shadow-[6px_6px_0_#0718c8]" key={action.action}>
+            <p className="mb-3 font-mono text-xs font-black uppercase tracking-[0.08em] text-white/60">{action.owner}</p>
+            <h3 className="text-xl font-black leading-snug">{action.action}</h3>
+            <p className="mt-4 inline-block bg-white px-3 py-1 text-xs font-black text-[#050505]">期限 {action.due}</p>
+            <p className="mt-4 text-sm leading-7 text-white/85">{action.reason}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function RichTextCard({ item }) {
+  const [label, body] = splitLabel(item);
+
+  return (
+    <article className="rounded-md border border-[#050505]/10 bg-white p-4 leading-7 shadow-sm">
+      {label && <p className="mb-2 font-mono text-xs font-black uppercase tracking-[0.08em] text-[#0718c8]">{label}</p>}
+      <p className="text-[#172033]">{renderLinkedText(body ?? item)}</p>
+    </article>
+  );
+}
+
+function splitLabel(item) {
+  const separatorIndex = item.indexOf(": ");
+  if (separatorIndex === -1 || separatorIndex > 28) {
+    return [null, item];
+  }
+  return [item.slice(0, separatorIndex), item.slice(separatorIndex + 2)];
+}
+
+function renderLinkedText(text) {
+  const parts = text.split(/(https?:\/\/[^\s。]+)/g);
+  return parts.map((part, index) => {
+    if (part.startsWith("http")) {
+      return (
+        <a className="font-bold text-[#0718c8] underline decoration-2 underline-offset-4" href={part} target="_blank" rel="noreferrer" key={`${part}-${index}`}>
+          {part}
+        </a>
+      );
+    }
+    return part;
+  });
 }
 
 function TagPage({ tag }) {
