@@ -118,7 +118,7 @@ function HomePage() {
       </section>
 
       <section className="mt-12">
-        <SectionHeader title="記事" description={`${reports.length}件のサンプル記事を掲載中`} />
+        <SectionHeader title="記事" description={`${reports.length}件の記事を掲載中`} />
         <ArticleGroup title="週次で自動更新・追加される最新情報" reports={weeklyReports} />
         <ArticleGroup title="不定期で深く調査するページ" reports={deepReports} />
       </section>
@@ -265,6 +265,11 @@ function ArticleGroup({ title, reports: groupReports }) {
   return (
     <div className="mb-8">
       <h3 className="mb-4 font-mono text-sm font-black uppercase tracking-[0.08em] text-[#0718c8]">{title}</h3>
+      {groupReports.length === 0 && (
+        <p className="rounded-md border border-[#050505]/15 bg-[#f8fafc] px-4 py-3 text-sm font-semibold text-[#172033]">
+          該当する記事はまだありません。
+        </p>
+      )}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {groupReports.map((report, index) => (
           <ReportCard key={report.id} report={report} index={index} />
@@ -380,6 +385,8 @@ function ReportPage({ id }) {
         </ul>
       </section>
 
+      {report.sections?.length > 0 && <ReportSections sections={report.sections} />}
+
       <section className="mt-9">
         <h2 className="mb-3 text-2xl font-black">出典</h2>
         <ul className="space-y-2 text-[#172033]">
@@ -393,6 +400,25 @@ function ReportPage({ id }) {
         </ul>
       </section>
     </motion.article>
+  );
+}
+
+function ReportSections({ sections }) {
+  return (
+    <div className="mt-10 space-y-10">
+      {sections.map((section) => (
+        <section className="border-t border-[#050505]/20 pt-7" key={section.title}>
+          <h2 className="mb-4 text-2xl font-black text-[#050505]">{section.title}</h2>
+          <ul className="space-y-3 text-[#172033]">
+            {section.items.map((item) => (
+              <li className="rounded-md border border-[#050505]/10 bg-white px-4 py-3 leading-7 shadow-sm" key={item}>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </div>
   );
 }
 
@@ -457,7 +483,7 @@ function PageHeading({ eyebrow, title, description, action }) {
 function Footer() {
   return (
     <footer className="mx-auto w-[min(1160px,calc(100%-32px))] border-t border-[#050505]/20 py-6 text-sm text-[#172033]">
-      <p>公開情報にもとづく調査レポートのサンプルサイトです。</p>
+      <p>公開情報にもとづく調査レポートサイトです。</p>
     </footer>
   );
 }
