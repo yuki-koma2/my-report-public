@@ -27,6 +27,7 @@
 │   ├── assets/       # CSS などの静的アセット
 │   └── index.html    # SPA のエントリーポイント
 ├── dist/             # ビルド後の公開対象。GitHub Pages で配信する想定
+├── .github/          # GitHub Actions workflow
 ├── scripts/          # build / preview などの開発用スクリプト
 └── test/             # Node.js 標準 test runner のテスト
 ```
@@ -63,10 +64,18 @@ npm run preview
 
 ## 公開方法
 
-GitHub Pages を使って公開します。
+GitHub Pages を使って公開します。公開元は GitHub Actions です。
 
-実装後は、静的ビルドの成果物を GitHub Pages の公開元に設定します。利用するフレームワークやビルド方式は、初回実装時にリポジトリへ追加します。
+`main` に変更が push されるたびに `.github/workflows/deploy-pages.yml` が起動します。
+
+1. `npm run test` でテストを実行する
+2. `npm run build` で `src/` から `dist/` を生成する
+3. `dist/` を GitHub Pages artifact としてアップロードする
+4. GitHub Pages にデプロイする
+5. デプロイ成功後に `deploy/pages/YYYYMMDD-HHMMSS-<run-number>-<short-sha>` 形式のタグを作成する
+
+pull request では test/build まで実行し、デプロイとタグ作成は行いません。GitHub Pages の設定では、Build and deployment の Source を `GitHub Actions` にします。
 
 ## 初期セットアップ
 
-現時点では、依存パッケージなしで動くサンプル SPA を用意しています。今後必要になった段階で、フレームワーク、CI、GitHub Pages のデプロイ設定を追加します。
+現時点では、依存パッケージなしで動くサンプル SPA を用意しています。今後必要になった段階で、フレームワークや追加の CI 設定を導入します。

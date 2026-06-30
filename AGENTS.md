@@ -53,3 +53,10 @@ t-wada 式 TDD を基本に進める。
 - ユーザーや他エージェントの未コミット変更を勝手に戻さない。
 - 実装後は、利用可能なテスト、lint、build を実行して確認する。
 - GitHub Pages の公開設定や CI を変更する場合は、変更理由と確認方法を明確にする。
+
+## デプロイ方針
+
+- GitHub Pages は GitHub Actions 経由で公開する。
+- `main` への push で test/build/deploy/tag を実行する。
+- pull request では test/build まで実行し、デプロイとタグ作成は行わない。
+- デプロイ成功後のタグは `deploy/pages/YYYYMMDD-HHMMSS-<run-number>-<short-sha>` 形式にする。
