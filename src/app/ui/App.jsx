@@ -393,6 +393,13 @@ function ReportPage({ id }) {
               <a className="font-bold leading-6 text-[#050505] underline decoration-[#0718c8] decoration-2 underline-offset-4" href={source.url} target="_blank" rel="noreferrer">
                 {source.title}
               </a>
+              {(source.publishedAt || source.checkedAt) && (
+                <p className="mt-3 text-xs font-semibold leading-5 text-[#172033]/75">
+                  {source.publishedAt && `公開日 ${source.publishedAt}`}
+                  {source.publishedAt && source.checkedAt && " / "}
+                  {source.checkedAt && `確認日 ${source.checkedAt}`}
+                </p>
+              )}
             </li>
           ))}
         </ul>

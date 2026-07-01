@@ -26,9 +26,12 @@ describe("App", () => {
     expect(screen.getByRole("heading", { name: "エンジニアリング" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "プロダクト" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "マーケティング" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "VC" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "スタートアップ" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "プロダクト・テック週次レポート 2026-07-01週" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Academic VC / スタートアップ投資動向週次レポート 2026-07-01週" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "医療・介護領域の最新動向調査レポート 2026-06-30週" })).toBeInTheDocument();
-    expect(screen.getByText("2件の記事を掲載中")).toBeInTheDocument();
+    expect(screen.getByText("3件の記事を掲載中")).toBeInTheDocument();
     expect(screen.queryByText(/サンプル/)).not.toBeInTheDocument();
   });
 
@@ -100,6 +103,38 @@ describe("App", () => {
       "https://www.publickey1.jp/blog/26/pythonmojomodularai.html"
     );
     expect(screen.getAllByText("配信元フィード").length).toBeGreaterThan(0);
+  });
+
+  it("Academic VC週次レポートの詳細に主要トピック、出典、取得エラーを表示する", () => {
+    window.location.hash = "#/reports/academic-vc-weekly-2026-07-01";
+
+    render(<App />);
+
+    expect(screen.getByRole("heading", { name: "Academic VC / スタートアップ投資動向週次レポート 2026-07-01週", level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "今週の投資判断ポイント" })).toBeInTheDocument();
+    expect(screen.getByText("対象期間内候補")).toBeInTheDocument();
+    expect(screen.getAllByText("重要度 高").length).toBeGreaterThan(0);
+    expect(screen.getByText(/欧州でリピート創業者・deeptech向けの新ファンド形成/)).toBeInTheDocument();
+    expect(screen.getByText(/AIインフラとエージェント周辺で大型資金調達/)).toBeInTheDocument();
+    expect(screen.getByText(/Academic VC \/ 大学発スタートアップは今週採用すべき新規情報なし/)).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "取得エラー" })).toBeInTheDocument();
+    expect(screen.getByText("VC Adventure")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "https://www.sethlevine.com/feed" })).toHaveAttribute("href", "https://www.sethlevine.com/feed");
+    expect(screen.getByRole("heading", { name: "引用元・確認した出典" })).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: "Sifted: Tapestry VC launches $80m fund aimed at backing repeat founders" })[0]).toHaveAttribute(
+      "href",
+      "https://sifted.eu/articles/tapestry-vc-london-office-vc-fund-openai/"
+    );
+    expect(screen.getByRole("link", { name: "VC News Daily: Tetrix Announces $15M Series A Financing" })).toHaveAttribute(
+      "href",
+      "https://vcnewsdaily.com/tetrix/venture-capital-funding/rnzmprrjyv"
+    );
+    expect(screen.getByRole("link", { name: "VC News Daily: Caplight Closes $16M Series A Round" })).toHaveAttribute(
+      "href",
+      "https://vcnewsdaily.com/caplight/venture-capital-funding/zqjsvjrngc"
+    );
+    expect(screen.queryByText(/Omen AI/)).not.toBeInTheDocument();
+    expect(screen.getAllByText("メディア記事").length).toBeGreaterThan(0);
   });
 
   it("存在しないページでは Not Found を表示する", () => {
