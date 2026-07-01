@@ -62,6 +62,20 @@ export const reports = [
         checkedAt: "2026-07-01"
       },
       {
+        title: "VC News Daily: Tetrix Announces $15M Series A Financing",
+        url: "https://vcnewsdaily.com/tetrix/venture-capital-funding/rnzmprrjyv",
+        type: "資金調達記事",
+        publishedAt: "2026-07-01",
+        checkedAt: "2026-07-01"
+      },
+      {
+        title: "VC News Daily: Caplight Closes $16M Series A Round",
+        url: "https://vcnewsdaily.com/caplight/venture-capital-funding/zqjsvjrngc",
+        type: "資金調達記事",
+        publishedAt: "2026-06-25",
+        checkedAt: "2026-07-01"
+      },
+      {
         title: "VC Cafe: Israel's $30B AI Sovereignty Bet",
         url: "https://www.vccafe.com/israels-30b-ai-sovereignty-bet/",
         type: "VCブログ",
@@ -88,13 +102,20 @@ export const reports = [
         type: "投資家ブログ",
         publishedAt: "2026-06-28",
         checkedAt: "2026-07-01"
+      },
+      {
+        title: "Sifted: University of Edinburgh spinouts looking to raise",
+        url: "https://sifted.eu/articles/university-of-edinburgh-spinouts-looking-to-raise/",
+        type: "メディア記事",
+        publishedAt: "2026-07-01",
+        checkedAt: "2026-07-01"
       }
     ],
     highlights: [
       "欧州ではTapestry VCの80百万ドルファンド、Rick Hao氏の50百万ドルsolo GPファンドなど、リピート創業者とdeeptechに絞る小中規模ファンド形成が続いた。",
       "AIインフラ、エージェント、AIセキュリティ、AIチップ、金融AIで大型資金調達・高評価額の記事が集中し、投資家はGPU、推論コスト、実運用ROIを分けて見る必要がある。",
       "Wayveの85百万ドル従業員テンダーは、後期AI企業が未上場のまま人材維持と流動性を設計する動きとして重要。",
-      "Airwallexの320百万ドル調達、CaplightのBlackRock主導Series A、Tomasz Tunguz氏の公開SaaSセクター比較は、AI金融ソフトウェアと流動性インフラを継続ウォッチ対象にする材料。",
+      "Airwallexの320百万ドル調達、Tetrixの15百万ドルSeries A、CaplightのBlackRock主導Series A、Tomasz Tunguz氏の公開SaaSセクター比較は、AI金融ソフトウェアと流動性インフラを継続ウォッチ対象にする材料。",
       "取得エラーは4フィード。該当媒体は確認不能として扱い、推測で補完しない。"
     ],
     lead: {
@@ -209,9 +230,9 @@ export const reports = [
       },
       {
         theme: "ヘルスケア・ライフサイエンス",
-        title: "ロボティック薬局、流体分析、高齢者支援AIに資金が入る",
+        title: "ロボティック薬局、高齢者支援、住居安定AIに資金が入る",
         summary:
-          "VC News DailyではQueueの12.6百万ドルSeed、Omen AIの31百万ドルSeries A、Heraの27百万ドルSeries A、Upsideの20百万ドルSeries Aが確認できた。医療・高齢者支援の運用課題にAI/自動化が入り込んでいる。",
+          "VC News DailyではQueueの12.6百万ドルSeed、Heraの27百万ドルSeries A、Upsideの20百万ドルSeries Aが確認できた。薬局自動化、高齢者支援、住居安定のような医療・介護周辺の運用課題にAI/自動化が入り込んでいる。",
         date: "2026-06-30",
         sourceTitle: "VC News Daily: Queue Launches With $12.6M Seed",
         sourceUrl: "https://vcnewsdaily.com/queue/venture-capital-funding/qpdtwmrmvj",
@@ -221,7 +242,7 @@ export const reports = [
         relevance: 82,
         relatedTags: ["スタートアップ", "資金調達", "AI"],
         affected: ["ヘルスケアVC", "医療機関", "薬局", "高齢者支援事業者", "AIロボティクス企業"],
-        change: "ヘルスケアAIは診断支援だけでなく、薬局自動化、流体分析、住居安定、高齢者支援のオペレーションへ広がる。",
+        change: "ヘルスケアAIは診断支援だけでなく、薬局自動化、住居安定、高齢者支援のオペレーションへ広がる。",
         importance: "規制・現場導入の難しさは残るが、労働集約的な医療周辺業務はAI/自動化のROIを説明しやすい。",
         implication: "投資判断では、臨床有効性よりも業務削減、既存制度との接続、導入現場の責任分界、払い手を明確にする必要がある。",
         uncertainty: "医療規制、保険償還、施設導入数、臨床データの詳細は各社一次情報で追加確認が必要。"
@@ -244,6 +265,25 @@ export const reports = [
         importance: "補助金、政府調達、輸出規制、AI表示義務は、スタートアップの販売先とコスト構造を変える可能性がある。",
         implication: "政策ドリブン市場では、技術優位だけでなく調達要件、データ所在、輸出管理、コンプライアンス対応力を投資DDに入れる。",
         uncertainty: "政策規模、実際の公募条件、対象企業、規制の執行時期は一次情報の追加確認が必要。"
+      },
+      {
+        theme: "重要な新規情報なし",
+        title: "Academic VC / 大学発スタートアップは今週採用すべき新規情報なし",
+        summary:
+          "SiftedのUniversity of Edinburgh spinouts記事など大学発・spinout関連候補は確認したが、RSS本文だけでは個別企業の資金調達、研究成果、投資判断に足る詳細を確認できなかった。",
+        date: "2026-07-01",
+        sourceTitle: "Sifted: University of Edinburgh spinouts looking to raise",
+        sourceUrl: "https://sifted.eu/articles/university-of-edinburgh-spinouts-looking-to-raise/",
+        sourceType: "メディア記事",
+        priority: "低",
+        timing: "継続ウォッチ",
+        relevance: 68,
+        relatedTags: ["VC", "スタートアップ", "市場インテリジェンス"],
+        affected: ["大学発スタートアップ", "研究者創業者", "Academic VC", "deeptech投資家"],
+        change: "対象期間内に、投資判断へ採用できるだけの詳細をRSS本文から確認できるAcademic VC / 大学発スタートアップ情報はなかった。",
+        importance: "空情報を明示すると、調査漏れではなく確認範囲内で採用材料が不足していたことを読者が判断できる。",
+        implication: "大学発deeptechとspinout資金調達は継続ウォッチし、個別企業の調達額、研究成果、投資家、商用化状況を一次情報で確認できた時点で採用する。",
+        uncertainty: "記事本文や各大学・企業の一次発表には追加情報がある可能性があり、RSS本文だけでは採用判断を完結しない。"
       }
     ],
     actionCards: [
@@ -267,7 +307,7 @@ export const reports = [
       },
       {
         owner: "ヘルスケア投資担当",
-        action: "薬局自動化、流体分析、高齢者支援AIの払い手と導入現場を整理する",
+        action: "薬局自動化、高齢者支援、住居安定AIの払い手と導入現場を整理する",
         due: "2026-07-15まで",
         reason: "医療AIを診断支援だけでなく運用改善投資として評価するため。"
       }
@@ -289,7 +329,7 @@ export const reports = [
           "VC資金供給: 欧州ではリピート創業者、deeptech、solo GPなど専門性を前面に出すファンド形成が継続している。",
           "AI投資: AIチップ、半導体、長期AIエージェント、エージェントセキュリティ、金融AIで大型調達が集中した。",
           "流動性: Wayveの従業員テンダーは、後期AI企業がIPO前に人材維持と株式流動性を設計する事例として重要。",
-          "ヘルスケア: 薬局自動化、流体分析、高齢者支援、住居安定のような現場運用領域にAI/自動化資金が入っている。",
+          "ヘルスケア: 薬局自動化、高齢者支援、住居安定のような現場運用領域にAI/自動化資金が入っている。",
           "政策・規制: AI主権、防衛投資、EU AI Actの透明性義務は、AIスタートアップの販売先、調達、コンプライアンスコストへ影響しうる。"
         ]
       },
@@ -299,8 +339,8 @@ export const reports = [
           "1. VCファンド形成 / 見出し: 欧州でリピート創業者・deeptech向けの新ファンド形成が続く。媒体: Sifted。公開日: 2026-07-01。URL: https://sifted.eu/articles/tapestry-vc-london-office-vc-fund-openai/ および https://sifted.eu/articles/rick-hao-50m-solo-gp-fund-deeptech-startups/。要点: Tapestry VCの80百万ドルファンドと、元Speedinvest partnerのRick Hao氏による50百万ドルsolo GPファンドが確認された。投資・スタートアップ文脈での示唆: 欧州初期投資は、汎用的なシード資金ではなく、創業者属性やdeeptech知見を絞った資金供給へ分化している。",
           "2. AIインフラ / 見出し: AIインフラとエージェント周辺で大型資金調達が集中。媒体: TechCrunch、VC News Daily。公開日: 2026-06-25から2026-06-30。URL: https://techcrunch.com/2026/06/30/nvidia-competitor-etched-hits-5b-valuation-1b-in-sales-for-ai-chip/ ほか。要点: Etched、Reed Semiconductor、Sail Research、Straikerなど、推論チップ、半導体、長期AIエージェント、AIセキュリティの調達が確認された。投資・スタートアップ文脈での示唆: AIアプリの評価では、モデル性能だけでなく、推論コスト、契約済み需要、セキュリティ、運用信頼性をDDする必要がある。",
           "3. 後期AI・流動性 / 見出し: Wayveの従業員テンダーが未上場AI企業の人材維持策を示す。媒体: TechCrunch。公開日: 2026-07-01。URL: https://techcrunch.com/2026/06/30/wayve-launches-85m-employee-tender-offer-at-8-5b-valuation/。要点: Wayveは85百万ドルの従業員テンダーを8.5十億ドル評価で実施すると報じられた。投資・スタートアップ文脈での示唆: 後期未上場AI企業では、採用競争と従業員流動性が資本政策の重要論点になっている。",
-          "4. 金融AI・市場 / 見出し: AI金融ソフトウェアとオルタナ投資データで大型調達が続く。媒体: FinanceAsia、VC News Daily。公開日: 2026-06-25から2026-06-28。URL: https://www.financeasia.com/article/airwallex-raises-320m-to-build-out-ai-financial-software/507943 ほか。要点: Airwallexの320百万ドル調達、Tetrix、Caplightなどの資金調達が確認された。投資・スタートアップ文脈での示唆: 非公開市場、オルタナ、セカンダリー、決済のデータ化とAI活用はLP/GP双方の意思決定インフラになりうる。",
-          "5. ヘルスケア・ライフサイエンス / 見出し: ロボティック薬局、流体分析、高齢者支援AIに資金が入る。媒体: VC News Daily。公開日: 2026-06-25から2026-06-30。URL: https://vcnewsdaily.com/queue/venture-capital-funding/qpdtwmrmvj ほか。要点: Queue、Omen AI、Hera、Upsideなど、医療・高齢者支援の運用課題に関わる資金調達が確認された。投資・スタートアップ文脈での示唆: 医療AIは診断支援だけでなく、薬局、供給、住居、介護周辺の労働集約業務へ広がっている。",
+          "4. 金融AI・市場 / 見出し: AI金融ソフトウェアとオルタナ投資データで大型調達が続く。媒体: FinanceAsia、VC News Daily。公開日: 2026-06-25から2026-07-01。URL: https://www.financeasia.com/article/airwallex-raises-320m-to-build-out-ai-financial-software/507943、https://vcnewsdaily.com/tetrix/venture-capital-funding/rnzmprrjyv、https://vcnewsdaily.com/caplight/venture-capital-funding/zqjsvjrngc。要点: Airwallexの320百万ドル調達、Tetrixの15百万ドルSeries A、Caplightの16百万ドルSeries Aが確認された。投資・スタートアップ文脈での示唆: 非公開市場、オルタナ、セカンダリー、決済のデータ化とAI活用はLP/GP双方の意思決定インフラになりうる。",
+          "5. ヘルスケア・ライフサイエンス / 見出し: ロボティック薬局、高齢者支援、住居安定AIに資金が入る。媒体: VC News Daily。公開日: 2026-06-25から2026-06-30。URL: https://vcnewsdaily.com/queue/venture-capital-funding/qpdtwmrmvj ほか。要点: Queue、Hera、Upsideなど、医療・高齢者支援の運用課題に関わる資金調達が確認された。投資・スタートアップ文脈での示唆: 医療AIは診断支援だけでなく、薬局、住居、介護周辺の労働集約業務へ広がっている。",
           "6. 規制・政策 / 見出し: AI主権、防衛投資、EU AI Actがスタートアップ市場の前提になる。媒体: VC Cafe、Sifted、deutsche-startups.de。公開日: 2026-06-26から2026-06-28。要点: イスラエルのAI主権投資、英国防衛投資計画へのスタートアップ反応、EU AI Actの透明性義務が確認された。投資・スタートアップ文脈での示唆: 政策ドリブン市場では、政府調達、輸出管理、データ所在、透明性表示を初期から事業計画に入れる必要がある。",
           "7. Academic VC / 大学発スタートアップ / 今週確認できた重要な新規情報なし。SiftedのUniversity of Edinburgh spinouts記事など関連候補は確認したが、RSS本文だけでは個別企業の資金調達・研究成果・投資判断に足る詳細を確認できなかった。大学発deeptechとspinout資金調達は継続ウォッチする。"
         ]

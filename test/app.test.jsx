@@ -79,6 +79,7 @@ describe("App", () => {
     expect(screen.getAllByText("重要度 高").length).toBeGreaterThan(0);
     expect(screen.getByText(/欧州でリピート創業者・deeptech向けの新ファンド形成/)).toBeInTheDocument();
     expect(screen.getByText(/AIインフラとエージェント周辺で大型資金調達/)).toBeInTheDocument();
+    expect(screen.getByText(/Academic VC \/ 大学発スタートアップは今週採用すべき新規情報なし/)).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "取得エラー" })).toBeInTheDocument();
     expect(screen.getByText("VC Adventure")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "https://www.sethlevine.com/feed" })).toHaveAttribute("href", "https://www.sethlevine.com/feed");
@@ -87,6 +88,15 @@ describe("App", () => {
       "href",
       "https://sifted.eu/articles/tapestry-vc-london-office-vc-fund-openai/"
     );
+    expect(screen.getByRole("link", { name: "VC News Daily: Tetrix Announces $15M Series A Financing" })).toHaveAttribute(
+      "href",
+      "https://vcnewsdaily.com/tetrix/venture-capital-funding/rnzmprrjyv"
+    );
+    expect(screen.getByRole("link", { name: "VC News Daily: Caplight Closes $16M Series A Round" })).toHaveAttribute(
+      "href",
+      "https://vcnewsdaily.com/caplight/venture-capital-funding/zqjsvjrngc"
+    );
+    expect(screen.queryByText(/Omen AI/)).not.toBeInTheDocument();
     expect(screen.getAllByText("メディア記事").length).toBeGreaterThan(0);
   });
 
