@@ -32,8 +32,9 @@ describe("routing", () => {
 
 describe("reports", () => {
   it("実調査に基づく週次レポートを保持する", () => {
-    expect(reports).toHaveLength(2);
+    expect(reports).toHaveLength(3);
     expect(reports.map((report) => report.id)).toContain("academic-vc-weekly-2026-07-01");
+    expect(reports.map((report) => report.id)).toContain("healthcare-care-weekly-2026-07-01");
     expect(reports[0].title).toBe("Academic VC / スタートアップ投資動向週次レポート 2026-07-01週");
     for (const report of reports) {
       expect(report.summary).not.toContain("サンプル");
@@ -41,15 +42,15 @@ describe("reports", () => {
   });
 
   it("週次記事と深掘り記事を分類できる", () => {
-    expect(getReportsByType("weekly")).toHaveLength(2);
+    expect(getReportsByType("weekly")).toHaveLength(3);
     expect(getReportsByType("deep")).toHaveLength(0);
   });
 
   it("タグで記事を分類できる", () => {
-    expect(getReportsByTag("医療")).toHaveLength(1);
-    expect(getReportsByTag("介護")).toHaveLength(1);
-    expect(getReportsByTag("AI")).toHaveLength(2);
-    expect(getReportsByTag("エンジニアリング")).toHaveLength(1);
+    expect(getReportsByTag("医療")).toHaveLength(2);
+    expect(getReportsByTag("介護")).toHaveLength(2);
+    expect(getReportsByTag("AI")).toHaveLength(3);
+    expect(getReportsByTag("エンジニアリング")).toHaveLength(2);
     expect(getReportsByTag("VC")).toHaveLength(1);
     expect(getReportsByTag("スタートアップ")).toHaveLength(1);
     expect(getReportsByTag("資金調達")).toHaveLength(1);
@@ -103,5 +104,24 @@ describe("reports", () => {
     expect(report.sources.map((source) => source.title)).toContain("VC News Daily: Caplight Closes $16M Series A Round");
     expect(JSON.stringify(report.topicCards.find((topic) => topic.theme === "ヘルスケア・ライフサイエンス"))).not.toContain("Omen AI");
     expect(report.sections.some((section) => section.title === "取得エラー")).toBe(true);
+  });
+
+  it("最新の医療介護レポートは全テーマ、期限、公募必須項目を保持する", () => {
+    const report = reports.find((item) => item.id === "healthcare-care-weekly-2026-07-01");
+    const themeText = report.sections.find((section) => section.title === "テーマ別の調査結果")?.items.join("\n") ?? "";
+
+    expect(report.dashboardMetrics.map((metric) => metric.label)).toContain("最短期限");
+    expect(report.highlights.join("\n")).toContain("今週確認できた重要な新規情報なし");
+    expect(themeText).toContain("1. 医療・介護制度改正");
+    expect(themeText).toContain("10. 海外の医療・介護DX動向");
+    expect(themeText).toContain("https://www.mhlw.go.jp/stf/newpage_74150.html");
+    expect(report.topicCards.find((topic) => topic.sourceTitle === "厚生労働省 介護給付費等実態統計月報")).toMatchObject({
+      date: "2026-06-24",
+      timing: "遡及参照"
+    });
+    expect(themeText).toContain("公募締切: 2026-07-31必着");
+    expect(themeText).toContain("補助率・補助上限額: 公募要領で確認が必要");
+    expect(report.sources.map((source) => source.title)).toContain("厚生労働省 抗菌薬等医薬品備蓄体制整備事業 公募");
+    expect(report.sources.map((source) => source.title)).toContain("厚生労働省 医療提供体制施設整備交付金の内示");
   });
 });

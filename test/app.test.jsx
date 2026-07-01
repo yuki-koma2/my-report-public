@@ -27,8 +27,9 @@ describe("App", () => {
     expect(screen.getByRole("heading", { name: "VC" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "スタートアップ" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Academic VC / スタートアップ投資動向週次レポート 2026-07-01週" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "医療・介護領域の最新動向調査レポート 2026-07-01週" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "医療・介護領域の最新動向調査レポート 2026-06-30週" })).toBeInTheDocument();
-    expect(screen.getByText("2件の記事を掲載中")).toBeInTheDocument();
+    expect(screen.getByText("3件の記事を掲載中")).toBeInTheDocument();
     expect(screen.queryByText(/サンプル/)).not.toBeInTheDocument();
   });
 
@@ -62,10 +63,32 @@ describe("App", () => {
     expect(screen.getAllByText("重要度 高").length).toBeGreaterThan(0);
     expect(screen.getByRole("heading", { name: "調査条件" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "テーマ別の調査結果" })).toBeInTheDocument();
-    expect(screen.getByText(/標準型電子カルテ導入版/)).toBeInTheDocument();
+    expect(screen.getAllByText(/標準型電子カルテ導入版/).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/今週確認できた重要な新規情報なし/).length).toBeGreaterThan(0);
     expect(screen.getByRole("heading", { name: "引用元・確認した出典" })).toBeInTheDocument();
     expect(screen.getAllByRole("link", { name: "厚生労働省 新着情報RSS" })[0]).toHaveAttribute("href", "https://www.mhlw.go.jp/stf/news.rdf");
+  });
+
+  it("最新の医療介護週次レポートに判断ポイント、期限、空情報を表示する", () => {
+    window.location.hash = "#/reports/healthcare-care-weekly-2026-07-01";
+
+    render(<App />);
+
+    expect(screen.getByRole("heading", { name: "医療・介護領域の最新動向調査レポート 2026-07-01週", level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "今週の判断ポイント" })).toBeInTheDocument();
+    expect(screen.getByText("7/31")).toBeInTheDocument();
+    expect(screen.getAllByText(/抗菌薬等医薬品備蓄体制整備事業の2次公募/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/今週確認できた重要な新規情報なし/).length).toBeGreaterThan(0);
+    expect(screen.getByText(/10. 海外の医療・介護DX動向/)).toBeInTheDocument();
+    expect(screen.getByText(/介護給付費等実態統計は2026-06-24/)).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: "厚生労働省 抗菌薬等医薬品備蓄体制整備事業 公募" })[0]).toHaveAttribute(
+      "href",
+      "https://www.mhlw.go.jp/stf/newpage_74146.html"
+    );
+    expect(screen.getByRole("link", { name: "厚生労働省 医療提供体制施設整備交付金の内示" })).toHaveAttribute(
+      "href",
+      "https://www.mhlw.go.jp/stf/newpage_74150.html"
+    );
   });
 
   it("Academic VC週次レポートの詳細に主要トピック、出典、取得エラーを表示する", () => {
@@ -115,6 +138,7 @@ describe("App", () => {
     render(<App />);
 
     expect(screen.getByRole("heading", { name: "#エンジニアリング", level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "医療・介護領域の最新動向調査レポート 2026-07-01週" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "医療・介護領域の最新動向調査レポート 2026-06-30週" })).toBeInTheDocument();
   });
 
