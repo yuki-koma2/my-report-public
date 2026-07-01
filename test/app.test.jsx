@@ -25,7 +25,7 @@ describe("App", () => {
     expect(screen.getByRole("heading", { name: "AI" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "エンジニアリング" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "医療・介護領域の最新動向調査レポート 2026-06-30週" })).toBeInTheDocument();
-    expect(screen.getByText("1件の記事を掲載中")).toBeInTheDocument();
+    expect(screen.getByText("2件の記事を掲載中")).toBeInTheDocument();
     expect(screen.queryByText(/サンプル/)).not.toBeInTheDocument();
   });
 
@@ -63,6 +63,26 @@ describe("App", () => {
     expect(screen.getAllByText(/今週確認できた重要な新規情報なし/).length).toBeGreaterThan(0);
     expect(screen.getByRole("heading", { name: "引用元・確認した一次情報" })).toBeInTheDocument();
     expect(screen.getAllByRole("link", { name: "厚生労働省 新着情報RSS" })[0]).toHaveAttribute("href", "https://www.mhlw.go.jp/stf/news.rdf");
+  });
+
+  it("介護業界課題レポートの3課題を表示する", () => {
+    window.location.hash = "#/reports/japan-care-industry-challenges-2026";
+
+    render(<App />);
+
+    expect(screen.getByRole("heading", { name: "日本の介護業界における3つの構造課題", level: 1 })).toBeInTheDocument();
+    expect(screen.getByText("深掘り調査")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "介護人材の不足と処遇改善の遅れ" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "介護費用と保険料の増加による制度持続性" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "地域差と紙・人手依存の運営による提供体制のひずみ" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "課題が生まれた歴史的背景" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "海外比較から見える論点" })).toBeInTheDocument();
+    expect(screen.getAllByText(/ドイツ/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/韓国/).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("link", { name: "厚生労働省 第9期介護保険事業計画に基づく介護職員の必要数について" })[0]).toHaveAttribute(
+      "href",
+      "https://www.mhlw.go.jp/stf/newpage_41379.html"
+    );
   });
 
   it("存在しないページでは Not Found を表示する", () => {
