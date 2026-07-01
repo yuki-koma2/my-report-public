@@ -35,6 +35,8 @@ describe("reports", () => {
     expect(reports).toHaveLength(2);
     expect(reports[0].title).toBe("プロダクト・テック週次レポート 2026-07-01週");
     expect(reports[0].summary).not.toContain("サンプル");
+    expect(reports[1].title).toBe("医療・介護領域の最新動向調査レポート 2026-06-30週");
+    expect(reports[1].summary).not.toContain("サンプル");
   });
 
   it("週次記事と深掘り記事を分類できる", () => {
@@ -70,6 +72,11 @@ describe("reports", () => {
     expect(report.checkedAt).toBe("2026-07-01");
     expect(report.sources.some((source) => source.title.includes("Anthropic"))).toBe(true);
     expect(report.sources.some((source) => source.title.includes("Google Research"))).toBe(true);
+    expect(report.sources.find((source) => source.title.includes("Publickey"))?.url).toBe(
+      "https://www.publickey1.jp/blog/26/pythonmojomodularai.html"
+    );
+    expect(report.sources.find((source) => source.title === "Product Hunt feed")?.type).toBe("配信元フィード");
+    expect(report.sources.find((source) => source.title.includes("Anthropic"))?.type).toBe("一次情報");
     expect(report.topicCards.map((topic) => topic.theme)).toEqual(
       expect.arrayContaining(["技術・開発者動向", "マーケティング・市場", "日本語記事・国内向け示唆", "取得エラー"])
     );

@@ -14,51 +14,63 @@ export const reports = [
     sources: [
       {
         title: "Anthropic Introducing Claude Sonnet 5",
-        url: "https://www.anthropic.com/news/claude-sonnet-5"
+        url: "https://www.anthropic.com/news/claude-sonnet-5",
+        type: "一次情報"
       },
       {
         title: "Google Research Introducing TabFM",
-        url: "https://research.google/blog/introducing-tabfm-a-zero-shot-foundation-model-for-tabular-data/"
+        url: "https://research.google/blog/introducing-tabfm-a-zero-shot-foundation-model-for-tabular-data/",
+        type: "一次情報"
       },
       {
         title: "Forrester Stripe's New Stablecoin Bet: The Open USD",
-        url: "https://www.forrester.com/blogs/stripes-new-stablecoin-bet-the-open-usd/"
+        url: "https://www.forrester.com/blogs/stripes-new-stablecoin-bet-the-open-usd/",
+        type: "配信元リンク"
       },
       {
         title: "Forrester Customer Zero Programs Prove That AI Works When Humans Change",
-        url: "https://www.forrester.com/blogs/customer-zero-programs-prove-that-ai-works-when-humans-change/"
+        url: "https://www.forrester.com/blogs/customer-zero-programs-prove-that-ai-works-when-humans-change/",
+        type: "配信元リンク"
       },
       {
         title: "ProductZine Figma年次カンファレンス Config 2026",
-        url: "https://productzine.jp/article/detail/4393"
+        url: "https://productzine.jp/article/detail/4393",
+        type: "配信元リンク"
       },
       {
         title: "ProductZine Tayori API公開",
-        url: "https://productzine.jp/article/detail/4402"
+        url: "https://productzine.jp/article/detail/4402",
+        type: "配信元リンク"
       },
       {
         title: "ProductZine Lupe コンテキスト機能",
-        url: "https://productzine.jp/article/detail/4398"
+        url: "https://productzine.jp/article/detail/4398",
+        type: "配信元リンク"
       },
       {
         title: "Publickey QualcommがModular買収を発表",
-        url: "https://www.publickey1.jp/2026/qualcomm-modular-acq.html"
+        url: "https://www.publickey1.jp/blog/26/pythonmojomodularai.html",
+        type: "配信元リンク"
       },
       {
         title: "Hacker News RSS",
-        url: "https://news.ycombinator.com/rss"
+        url: "https://news.ycombinator.com/rss",
+        type: "配信元フィード"
       },
       {
         title: "Product Hunt feed",
-        url: "https://www.producthunt.com/feed"
+        url: "https://www.producthunt.com/feed",
+        type: "配信元フィード"
       },
       {
         title: "TechFeed Startup / Innovation RSS",
-        url: "https://techfeed.io/feeds/categories/Startup%20%2F%20Innovation?userId=667a89b3185e12081e95a7b5"
+        url: "https://techfeed.io/feeds/categories/Startup%20%2F%20Innovation?userId=667a89b3185e12081e95a7b5",
+        type: "配信元フィード"
       },
       {
         title: "TechFeed Marketing RSS",
-        url: "https://techfeed.io/feeds/categories/Marketing?userId=667a89b3185e12081e95a7b5"
+        url: "https://techfeed.io/feeds/categories/Marketing?userId=667a89b3185e12081e95a7b5",
+        type: "配信元フィード"
       }
     ],
     highlights: [

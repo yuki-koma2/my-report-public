@@ -42,7 +42,33 @@ describe("App", () => {
     expect(screen.getByRole("heading", { name: "事実と判断を分ける" })).toBeInTheDocument();
   });
 
-  it("レポート詳細に公開日、確認日、出典を表示する", () => {
+  it("医療・介護領域のレポート詳細に公開日、確認日、出典を表示する", () => {
+    window.location.hash = "#/reports/healthcare-care-weekly-2026-06-30";
+
+    render(<App />);
+
+    expect(screen.getByRole("heading", { name: "医療・介護領域の最新動向調査レポート 2026-06-30週", level: 1 })).toBeInTheDocument();
+    expect(screen.getByText("記事種別")).toBeInTheDocument();
+    expect(screen.getByText("週次最新情報")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "医療" })).toHaveAttribute("href", "#/tags/%E5%8C%BB%E7%99%82");
+    expect(screen.getByRole("link", { name: "介護" })).toHaveAttribute("href", "#/tags/%E4%BB%8B%E8%AD%B7");
+    expect(screen.getAllByText("公開日").length).toBeGreaterThan(0);
+    expect(screen.getByText("確認日")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "今週の判断ポイント" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "要点ダッシュボード" })).toBeInTheDocument();
+    expect(screen.getByText("高優先度")).toBeInTheDocument();
+    expect(screen.getAllByText("一次情報").length).toBeGreaterThan(0);
+    expect(screen.getByText("関連度 95")).toBeInTheDocument();
+    expect(screen.getAllByText("重要度 高").length).toBeGreaterThan(0);
+    expect(screen.getByRole("heading", { name: "調査条件" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "テーマ別の調査結果" })).toBeInTheDocument();
+    expect(screen.getByText(/標準型電子カルテ導入版/)).toBeInTheDocument();
+    expect(screen.getAllByText(/今週確認できた重要な新規情報なし/).length).toBeGreaterThan(0);
+    expect(screen.getByRole("heading", { name: "引用元・確認した出典" })).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: "厚生労働省 新着情報RSS" })[0]).toHaveAttribute("href", "https://www.mhlw.go.jp/stf/news.rdf");
+  });
+
+  it("プロダクト・テック週次レポート詳細に公開日、確認日、出典を表示する", () => {
     window.location.hash = "#/reports/product-tech-weekly-2026-07-01";
 
     render(<App />);
@@ -64,11 +90,16 @@ describe("App", () => {
     expect(screen.getByRole("heading", { name: "テーマ別の調査結果" })).toBeInTheDocument();
     expect(screen.getAllByText(/Claude Sonnet 5/).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/Crunch Hype/).length).toBeGreaterThan(0);
-    expect(screen.getByRole("heading", { name: "引用元・確認した一次情報" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "引用元・確認した出典" })).toBeInTheDocument();
     expect(screen.getAllByRole("link", { name: "Anthropic Introducing Claude Sonnet 5" })[0]).toHaveAttribute(
       "href",
       "https://www.anthropic.com/news/claude-sonnet-5"
     );
+    expect(screen.getAllByRole("link", { name: "Publickey QualcommがModular買収を発表" })[0]).toHaveAttribute(
+      "href",
+      "https://www.publickey1.jp/blog/26/pythonmojomodularai.html"
+    );
+    expect(screen.getAllByText("配信元フィード").length).toBeGreaterThan(0);
   });
 
   it("存在しないページでは Not Found を表示する", () => {
