@@ -25,7 +25,8 @@ describe("App", () => {
     expect(screen.getByRole("heading", { name: "AI" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "エンジニアリング" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "医療・介護領域の最新動向調査レポート 2026-06-30週" })).toBeInTheDocument();
-    expect(screen.getByText("1件の記事を掲載中")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "日本の医療業界が直面する3つの構造課題" })).toBeInTheDocument();
+    expect(screen.getByText("2件の記事を掲載中")).toBeInTheDocument();
     expect(screen.queryByText(/サンプル/)).not.toBeInTheDocument();
   });
 
@@ -65,6 +66,22 @@ describe("App", () => {
     expect(screen.getAllByRole("link", { name: "厚生労働省 新着情報RSS" })[0]).toHaveAttribute("href", "https://www.mhlw.go.jp/stf/news.rdf");
   });
 
+  it("日本の医療業界課題レポートに3課題、歴史背景、国際比較を表示する", () => {
+    window.location.hash = "#/reports/japan-healthcare-industry-structural-challenges-2026-07-01";
+
+    render(<App />);
+
+    expect(screen.getByRole("heading", { name: "日本の医療業界が直面する3つの構造課題", level: 1 })).toBeInTheDocument();
+    expect(screen.getByText("深掘り調査")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "歴史的背景" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "国際比較から見える差分" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "人材・地域偏在の二重制約" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "高齢化で強まる財政持続性の圧力" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "医療DXとデータ連携の遅れ" })).toBeInTheDocument();
+    expect(screen.getAllByText(/英国はGPを入口に置き/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/1961年の国民皆保険/).length).toBeGreaterThan(0);
+  });
+
   it("存在しないページでは Not Found を表示する", () => {
     window.location.hash = "#/missing";
 
@@ -81,6 +98,7 @@ describe("App", () => {
 
     expect(screen.getByRole("heading", { name: "#エンジニアリング", level: 1 })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "医療・介護領域の最新動向調査レポート 2026-06-30週" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "日本の医療業界が直面する3つの構造課題" })).toBeInTheDocument();
   });
 
   it("hashchange に応じて表示を切り替える", () => {

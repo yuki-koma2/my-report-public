@@ -504,7 +504,7 @@ function ReportSection({ section, topicCards, actionCards }) {
     return <TopicCardSection title={section.title} topicCards={topicCards} />;
   }
 
-  if (section.title === "今週検討すべき対応アクション" && actionCards.length > 0) {
+  if (section.title.endsWith("対応アクション") && actionCards.length > 0) {
     return <ActionCardSection title={section.title} actionCards={actionCards} />;
   }
 
