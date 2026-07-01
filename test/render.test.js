@@ -32,9 +32,10 @@ describe("routing", () => {
 
 describe("reports", () => {
   it("実調査に基づく週次レポートを保持する", () => {
-    expect(reports).toHaveLength(5);
+    expect(reports).toHaveLength(6);
     expect(reports.map((report) => report.id)).toContain("tech-landscape-weekly-2026-07-02");
     expect(reports.map((report) => report.id)).toContain("academic-vc-weekly-2026-07-01");
+    expect(reports.map((report) => report.id)).toContain("tech-landscape-weekly-2026-07-01");
     expect(reports.map((report) => report.id)).toContain("healthcare-care-weekly-2026-06-30");
     expect(reports.map((report) => report.id)).toContain("japan-healthcare-industry-structural-challenges-2026-07-01");
     expect(reports.map((report) => report.id)).toContain("japan-care-industry-challenges-2026");
@@ -45,22 +46,27 @@ describe("reports", () => {
   });
 
   it("週次記事と深掘り記事を分類できる", () => {
-    expect(getReportsByType("weekly")).toHaveLength(3);
+    expect(getReportsByType("weekly")).toHaveLength(4);
     expect(getReportsByType("deep")).toHaveLength(2);
   });
 
   it("タグで記事を分類できる", () => {
     expect(getReportsByTag("医療")).toHaveLength(2);
     expect(getReportsByTag("介護")).toHaveLength(2);
-    expect(getReportsByTag("AI")).toHaveLength(3);
-    expect(getReportsByTag("エンジニアリング")).toHaveLength(3);
+    expect(getReportsByTag("AI")).toHaveLength(4);
+    expect(getReportsByTag("エンジニアリング")).toHaveLength(4);
     expect(getReportsByTag("制度")).toHaveLength(3);
     expect(getReportsByTag("DX")).toHaveLength(3);
     expect(getReportsByTag("国際比較")).toHaveLength(1);
     expect(getReportsByTag("VC")).toHaveLength(1);
-    expect(getReportsByTag("スタートアップ")).toHaveLength(2);
+    expect(getReportsByTag("スタートアップ")).toHaveLength(3);
     expect(getReportsByTag("資金調達")).toHaveLength(2);
     expect(getReportsByTag("市場インテリジェンス")).toHaveLength(2);
+    expect(getReportsByTag("テック情勢")).toHaveLength(1);
+    expect(getReportsByTag("半導体")).toHaveLength(1);
+    expect(getReportsByTag("セキュリティ")).toHaveLength(1);
+    expect(getReportsByTag("開発者ツール")).toHaveLength(1);
+    expect(getReportsByTag("規制")).toHaveLength(1);
     expect(getTagSummaries().map((tag) => tag.name)).toEqual([
       "医療",
       "介護",
@@ -72,7 +78,12 @@ describe("reports", () => {
       "VC",
       "スタートアップ",
       "資金調達",
-      "市場インテリジェンス"
+      "市場インテリジェンス",
+      "テック情勢",
+      "半導体",
+      "セキュリティ",
+      "開発者ツール",
+      "規制"
     ]);
   });
 
@@ -230,5 +241,32 @@ describe("reports", () => {
     expect(report.sections.some((section) => section.title === "今週検討すべき対応アクション")).toBe(true);
     expect(report.sections.some((section) => section.title === "取得エラー")).toBe(true);
     expect(report.sections.find((section) => section.title === "取得エラー").items).toContain("主要確認入口7件はすべて取得可能。取得エラーなし。");
+  });
+
+  it("テック情勢週次レポートが仮説、課題、取得エラーを構造化して持つ", () => {
+    const report = reports.find((item) => item.id === "tech-landscape-weekly-2026-07-01");
+
+    expect(report).toBeTruthy();
+    expect(report.lead.title).toBe("今週の判断ポイント");
+    expect(report.dashboardMetrics.map((metric) => metric.label)).toContain("高優先度");
+    expect(report.dashboardMetrics.map((metric) => metric.label)).toContain("一次情報");
+    expect(report.topicCards.map((card) => card.theme)).toContain("AI/LLM/エージェント");
+    expect(report.topicCards.map((card) => card.theme)).toContain("半導体・AIインフラ");
+    expect(report.topicCards.find((card) => card.title.includes("Qualcomm"))).toMatchObject({
+      sourceType: "一次情報",
+      sourceUrl: "https://www.qualcomm.com/news/releases/2026/06/qualcomm-to-acquire-modular"
+    });
+    expect(report.sources.find((source) => source.title.includes("Axios"))).toMatchObject({
+      sourceType: "二次情報"
+    });
+    expect(report.sources.map((source) => source.url)).toContain("https://productzine.jp/article/detail/4393");
+    expect(report.sections.some((section) => section.title === "今週検討すべき対応アクション")).toBe(true);
+    expect(report.sections.some((section) => section.title === "注目すべき仮説")).toBe(true);
+    expect(report.sections.some((section) => section.title === "解くべき課題")).toBe(true);
+    expect(report.sections.some((section) => section.title === "取得エラー")).toBe(true);
+    expect(report.sections.find((section) => section.title === "今週検討すべき対応アクション").items).toContain(
+      "プロダクト責任者: AI機能の権限境界と監査ログを棚卸しする (2026-07-12まで)"
+    );
+    expect(report.sections.find((section) => section.title === "調査条件").items.join(" ")).toContain("14日以内ではない");
   });
 });
