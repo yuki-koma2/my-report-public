@@ -435,7 +435,9 @@ export const reports = [
         title: "地域差と紙・人手依存の運営による提供体制のひずみ",
         summary:
           "厚生労働省の介護DX資料は、2040年頃に向けて85歳以上人口が増え、介護サービス需要が増大・多様化する一方、生産年齢人口が急減すると説明している。介護情報基盤は、紙を使ったアナログな情報共有を電子化し、職員負担軽減と迅速な情報共有を実現する目的で進められている。",
-        date: "2026-07-01",
+        dateLabel: "公開・更新日",
+        date: "未確認",
+        checkedAt: "2026-07-01",
         sourceTitle: "厚生労働省 介護DXの推進",
         sourceUrl: "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/hukushi_kaigo/kaigo_koureisha/DX_suishin.html",
         sourceType: "一次情報",

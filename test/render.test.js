@@ -85,6 +85,18 @@ describe("reports", () => {
     expect(report.sources.map((source) => source.title)).toContain("OECD Health at a Glance 2023");
   });
 
+  it("公開日が未確認のトピックでは確認日と出典日付を分ける", () => {
+    const report = reports.find((item) => item.id === "japan-care-industry-challenges-2026");
+    const topic = report.topicCards.find((item) => item.sourceTitle === "厚生労働省 介護DXの推進");
+
+    expect(topic).toMatchObject({
+      dateLabel: "公開・更新日",
+      date: "未確認",
+      checkedAt: "2026-07-01"
+    });
+    expect(topic.date).not.toBe(report.checkedAt);
+  });
+
   it("各レポートが詳細表示に必要な最低限の情報を持つ", () => {
     for (const report of reports) {
       expect(report.id).toBeTruthy();

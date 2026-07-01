@@ -79,6 +79,9 @@ describe("App", () => {
     expect(screen.getByRole("heading", { name: "海外比較から見える論点" })).toBeInTheDocument();
     expect(screen.getAllByText(/ドイツ/).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/韓国/).length).toBeGreaterThan(0);
+    expect(screen.getByText("公開・更新日")).toBeInTheDocument();
+    expect(screen.getByText("未確認")).toBeInTheDocument();
+    expect(screen.getAllByText("確認日").length).toBeGreaterThan(1);
     expect(screen.getAllByRole("link", { name: "厚生労働省 第9期介護保険事業計画に基づく介護職員の必要数について" })[0]).toHaveAttribute(
       "href",
       "https://www.mhlw.go.jp/stf/newpage_41379.html"
