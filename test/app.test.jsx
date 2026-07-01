@@ -1,5 +1,6 @@
 import { act, cleanup, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { reports } from "../src/app/reports.js";
 import App from "../src/app/ui/App.jsx";
 
 afterEach(() => {
@@ -80,6 +81,41 @@ describe("App", () => {
     expect(screen.getByRole("heading", { name: "医療DXとデータ連携の遅れ" })).toBeInTheDocument();
     expect(screen.getAllByText(/英国はGPを入口に置き/).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/1961年の国民皆保険/).length).toBeGreaterThan(0);
+  });
+
+  it("セクションタイトルが欠けてもレポート詳細を表示できる", () => {
+    reports.push({
+      id: "missing-section-title-test",
+      title: "セクションタイトル欠落テスト",
+      category: "テスト",
+      articleType: "deep",
+      articleTypeLabel: "深掘り調査",
+      cadence: "テスト",
+      tags: ["医療"],
+      summary: "セクションタイトルが欠けてもレンダリングが落ちないことを確認するテスト用レポートです。",
+      publishedAt: "2026-07-01",
+      checkedAt: "2026-07-01",
+      sources: [{ title: "テスト出典", url: "https://example.com" }],
+      highlights: ["表示確認"],
+      sections: [{ items: ["タイトルなしセクションの本文"] }],
+      actionCards: [
+        {
+          owner: "テスト担当",
+          action: "表示確認をする",
+          due: "すぐ",
+          reason: "title が undefined の section で endsWith を呼ばないことを確認するため。"
+        }
+      ]
+    });
+    window.location.hash = "#/reports/missing-section-title-test";
+
+    try {
+      expect(() => render(<App />)).not.toThrow();
+      expect(screen.getByRole("heading", { name: "セクションタイトル欠落テスト", level: 1 })).toBeInTheDocument();
+      expect(screen.getByText("タイトルなしセクションの本文")).toBeInTheDocument();
+    } finally {
+      reports.pop();
+    }
   });
 
   it("存在しないページでは Not Found を表示する", () => {
