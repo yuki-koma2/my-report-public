@@ -24,8 +24,11 @@ describe("App", () => {
     expect(screen.getByRole("heading", { name: "介護" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "AI" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "エンジニアリング" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "VC" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "スタートアップ" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Academic VC / スタートアップ投資動向週次レポート 2026-07-01週" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "医療・介護領域の最新動向調査レポート 2026-06-30週" })).toBeInTheDocument();
-    expect(screen.getByText("2件の記事を掲載中")).toBeInTheDocument();
+    expect(screen.getByText("3件の記事を掲載中")).toBeInTheDocument();
     expect(screen.queryByText(/サンプル/)).not.toBeInTheDocument();
   });
 
@@ -61,7 +64,7 @@ describe("App", () => {
     expect(screen.getByRole("heading", { name: "テーマ別の調査結果" })).toBeInTheDocument();
     expect(screen.getByText(/標準型電子カルテ導入版/)).toBeInTheDocument();
     expect(screen.getAllByText(/今週確認できた重要な新規情報なし/).length).toBeGreaterThan(0);
-    expect(screen.getByRole("heading", { name: "引用元・確認した一次情報" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "引用元・確認した出典" })).toBeInTheDocument();
     expect(screen.getAllByRole("link", { name: "厚生労働省 新着情報RSS" })[0]).toHaveAttribute("href", "https://www.mhlw.go.jp/stf/news.rdf");
   });
 
@@ -86,6 +89,38 @@ describe("App", () => {
       "href",
       "https://www.mhlw.go.jp/stf/newpage_41379.html"
     );
+  });
+
+  it("Academic VC週次レポートの詳細に主要トピック、出典、取得エラーを表示する", () => {
+    window.location.hash = "#/reports/academic-vc-weekly-2026-07-01";
+
+    render(<App />);
+
+    expect(screen.getByRole("heading", { name: "Academic VC / スタートアップ投資動向週次レポート 2026-07-01週", level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "今週の投資判断ポイント" })).toBeInTheDocument();
+    expect(screen.getByText("対象期間内候補")).toBeInTheDocument();
+    expect(screen.getAllByText("重要度 高").length).toBeGreaterThan(0);
+    expect(screen.getByText(/欧州でリピート創業者・deeptech向けの新ファンド形成/)).toBeInTheDocument();
+    expect(screen.getByText(/AIインフラとエージェント周辺で大型資金調達/)).toBeInTheDocument();
+    expect(screen.getByText(/Academic VC \/ 大学発スタートアップは今週採用すべき新規情報なし/)).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "取得エラー" })).toBeInTheDocument();
+    expect(screen.getByText("VC Adventure")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "https://www.sethlevine.com/feed" })).toHaveAttribute("href", "https://www.sethlevine.com/feed");
+    expect(screen.getByRole("heading", { name: "引用元・確認した出典" })).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: "Sifted: Tapestry VC launches $80m fund aimed at backing repeat founders" })[0]).toHaveAttribute(
+      "href",
+      "https://sifted.eu/articles/tapestry-vc-london-office-vc-fund-openai/"
+    );
+    expect(screen.getByRole("link", { name: "VC News Daily: Tetrix Announces $15M Series A Financing" })).toHaveAttribute(
+      "href",
+      "https://vcnewsdaily.com/tetrix/venture-capital-funding/rnzmprrjyv"
+    );
+    expect(screen.getByRole("link", { name: "VC News Daily: Caplight Closes $16M Series A Round" })).toHaveAttribute(
+      "href",
+      "https://vcnewsdaily.com/caplight/venture-capital-funding/zqjsvjrngc"
+    );
+    expect(screen.queryByText(/Omen AI/)).not.toBeInTheDocument();
+    expect(screen.getAllByText("メディア記事").length).toBeGreaterThan(0);
   });
 
   it("存在しないページでは Not Found を表示する", () => {
