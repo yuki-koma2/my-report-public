@@ -40,6 +40,7 @@ describe("reports", () => {
     expect(reports.map((report) => report.id)).toContain("tech-landscape-weekly-2026-07-02");
     expect(reports.map((report) => report.id)).toContain("academic-vc-weekly-2026-07-01");
     expect(reports.map((report) => report.id)).toContain("tech-landscape-weekly-2026-07-01");
+    expect(reports.map((report) => report.id)).toContain("healthcare-care-weekly-2026-07-01");
     expect(reports.map((report) => report.id)).toContain("healthcare-care-weekly-2026-06-30");
     expect(reports.map((report) => report.id)).toContain("japan-healthcare-industry-structural-challenges-2026-07-01");
     expect(reports.map((report) => report.id)).toContain("japan-care-industry-challenges-2026");
@@ -64,6 +65,7 @@ describe("reports", () => {
         "tech-landscape-weekly-2026-07-02",
         "academic-vc-weekly-2026-07-01",
         "tech-landscape-weekly-2026-07-01",
+        "healthcare-care-weekly-2026-07-01",
         "healthcare-care-weekly-2026-06-30"
       ])
     );
@@ -74,7 +76,11 @@ describe("reports", () => {
 
   it("タグで記事を分類できる", () => {
     expect(getReportsByTag("医療").map((report) => report.id)).toEqual(
-      expect.arrayContaining(["healthcare-care-weekly-2026-06-30", "japan-healthcare-industry-structural-challenges-2026-07-01"])
+      expect.arrayContaining([
+        "healthcare-care-weekly-2026-07-01",
+        "healthcare-care-weekly-2026-06-30",
+        "japan-healthcare-industry-structural-challenges-2026-07-01"
+      ])
     );
     expect(getReportsByTag("プロダクト").map((report) => report.id)).toContain("product-tech-weekly-2026-07-01");
     expect(getReportsByTag("マーケティング").map((report) => report.id)).toContain("product-tech-weekly-2026-07-01");
@@ -249,6 +255,36 @@ describe("reports", () => {
       sourceType: "一次情報"
     });
     expect(report.topicCards[0].relevance).toBeGreaterThanOrEqual(80);
+  });
+
+  it("最新の医療介護レポートは全テーマ、期限、公募必須項目、出典日付を保持する", () => {
+    const report = reports.find((item) => item.id === "healthcare-care-weekly-2026-07-01");
+
+    expect(report).toBeDefined();
+
+    const themeSection = report.sections.find((section) => section.title === "テーマ別の調査結果");
+    const themeText = themeSection?.items.join("\n") ?? "";
+
+    expect(report.dashboardMetrics.map((metric) => metric.label)).toContain("最短期限");
+    expect(report.highlights.join("\n")).toContain("今週確認できた重要な新規情報なし");
+    expect(themeText).toContain("1. 医療・介護制度改正");
+    expect(themeText).toContain("4. 医療DX、介護DX、電子カルテ、標準化");
+    expect(themeText).toContain("10. 海外の医療・介護DX動向");
+    expect(themeText).toContain("一次情報。影響を受ける主体");
+    expect(themeText).toContain("https://www.mhlw.go.jp/stf/newpage_74150.html");
+    expect(report.topicCards.find((topic) => topic.sourceTitle === "厚生労働省 介護給付費等実態統計月報")).toMatchObject({
+      date: "2026-06-24",
+      timing: "遡及参照"
+    });
+    expect(themeText).toContain("公募締切: 2026-07-31必着");
+    expect(themeText).toContain("補助率・補助上限額: 公募要領で確認が必要");
+    expect(report.sources.map((source) => source.title)).toContain("厚生労働省 抗菌薬等医薬品備蓄体制整備事業 公募");
+    expect(report.sources.map((source) => source.title)).toContain("厚生労働省 医療提供体制施設整備交付金の内示");
+    expect(report.sources.every((source) => source.checkedAt === "2026-07-01")).toBe(true);
+    expect(report.sources.find((source) => source.title === "厚生労働省 抗菌薬等医薬品備蓄体制整備事業 公募")).toMatchObject({
+      publishedAt: "2026-06-29",
+      checkedAt: "2026-07-01"
+    });
   });
 
   it("Academic VC週次レポートが投資判断向けの主要トピックと取得エラーを持つ", () => {
