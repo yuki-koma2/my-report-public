@@ -572,7 +572,8 @@ function TopicCard({ topic, index }) {
         </div>
         <div className="rounded-md border border-[#050505]/15 bg-[#f8fafc] p-4">
           <dl className="space-y-3">
-            <TopicFact label="公開日" value={topic.date} />
+            <TopicFact label={topic.dateLabel ?? "公開日"} value={topic.date} />
+            {topic.checkedAt && <TopicFact label="確認日" value={topic.checkedAt} />}
             <TopicFact label="引用種別" value={topic.sourceType} />
             <TopicFact label="影響主体" value={topic.affected.join(" / ")} />
           </dl>
