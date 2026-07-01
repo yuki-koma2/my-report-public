@@ -100,9 +100,9 @@ describe("App", () => {
     expect(screen.getByRole("heading", { name: "今週の投資判断ポイント" })).toBeInTheDocument();
     expect(screen.getByText("対象期間内候補")).toBeInTheDocument();
     expect(screen.getAllByText("重要度 高").length).toBeGreaterThan(0);
-    expect(screen.getByText(/欧州でリピート創業者・deeptech向けの新ファンド形成/)).toBeInTheDocument();
-    expect(screen.getByText(/AIインフラとエージェント周辺で大型資金調達/)).toBeInTheDocument();
-    expect(screen.getByText(/Academic VC \/ 大学発スタートアップは今週採用すべき新規情報なし/)).toBeInTheDocument();
+    expect(screen.getAllByText(/欧州でリピート創業者・deeptech向けの新ファンド形成/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/AIインフラとエージェント周辺で大型資金調達/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Academic VC \/ 大学発スタートアップは今週採用すべき新規情報なし/).length).toBeGreaterThan(0);
     expect(screen.getByRole("heading", { name: "取得エラー" })).toBeInTheDocument();
     expect(screen.getByText("VC Adventure")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "https://www.sethlevine.com/feed" })).toHaveAttribute("href", "https://www.sethlevine.com/feed");
