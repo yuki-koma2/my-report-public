@@ -26,9 +26,10 @@ describe("App", () => {
     expect(screen.getByRole("heading", { name: "エンジニアリング" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "VC" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "スタートアップ" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-07-02週" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Academic VC / スタートアップ投資動向週次レポート 2026-07-01週" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "医療・介護領域の最新動向調査レポート 2026-06-30週" })).toBeInTheDocument();
-    expect(screen.getByText("2件の記事を掲載中")).toBeInTheDocument();
+    expect(screen.getByText("3件の記事を掲載中")).toBeInTheDocument();
     expect(screen.queryByText(/サンプル/)).not.toBeInTheDocument();
   });
 
@@ -98,6 +99,31 @@ describe("App", () => {
     );
     expect(screen.queryByText(/Omen AI/)).not.toBeInTheDocument();
     expect(screen.getAllByText("メディア記事").length).toBeGreaterThan(0);
+  });
+
+  it("テック情勢週次レポートの詳細に主要トピック、出典、仮説課題を表示する", () => {
+    window.location.hash = "#/reports/tech-landscape-weekly-2026-07-02";
+
+    render(<App />);
+
+    expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-07-02週", level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "今週の判断ポイント" })).toBeInTheDocument();
+    expect(screen.getByText("短期対応リスク")).toBeInTheDocument();
+    expect(screen.getByText(/CloudflareがAIクローラのデフォルトブロックと課金分離/)).toBeInTheDocument();
+    expect(screen.getByText(/Together AIの大型調達がオープンモデル向けAIクラウド競争/)).toBeInTheDocument();
+    expect(screen.getByText(/GitHub Copilotが初のopen-weight選択モデル/)).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "注目すべき仮説と解くべき課題" })).toBeInTheDocument();
+    expect(screen.getByText(/AIエージェントの実運用コストはモデル単価ではなく/)).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "取得エラー" })).toBeInTheDocument();
+    expect(screen.getByText("主要確認入口7件はすべて取得可能。取得エラーなし。")).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: "TechCrunch: Cloudflare's new policy pushes AI companies to pay for publishers' content" })[0]).toHaveAttribute(
+      "href",
+      "https://techcrunch.com/2026/07/01/cloudflares-new-policy-pushes-ai-companies-to-pay-for-publishers-content/"
+    );
+    expect(screen.getAllByRole("link", { name: "GitHub Changelog: Kimi K2.7 Code is generally available in GitHub Copilot" })[0]).toHaveAttribute(
+      "href",
+      "https://github.blog/changelog/2026-07-01-kimi-k2-7-is-now-available-in-github-copilot/"
+    );
   });
 
   it("存在しないページでは Not Found を表示する", () => {
