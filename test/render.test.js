@@ -32,27 +32,29 @@ describe("routing", () => {
 
 describe("reports", () => {
   it("実調査に基づく週次レポートを保持する", () => {
-    expect(reports).toHaveLength(2);
+    expect(reports).toHaveLength(3);
+    expect(reports.map((report) => report.id)).toContain("tech-landscape-weekly-2026-07-02");
     expect(reports.map((report) => report.id)).toContain("academic-vc-weekly-2026-07-01");
-    expect(reports[0].title).toBe("Academic VC / スタートアップ投資動向週次レポート 2026-07-01週");
+    expect(reports[0].title).toBe("テック情勢週次レポート 2026-07-02週");
     for (const report of reports) {
       expect(report.summary).not.toContain("サンプル");
     }
   });
 
   it("週次記事と深掘り記事を分類できる", () => {
-    expect(getReportsByType("weekly")).toHaveLength(2);
+    expect(getReportsByType("weekly")).toHaveLength(3);
     expect(getReportsByType("deep")).toHaveLength(0);
   });
 
   it("タグで記事を分類できる", () => {
     expect(getReportsByTag("医療")).toHaveLength(1);
     expect(getReportsByTag("介護")).toHaveLength(1);
-    expect(getReportsByTag("AI")).toHaveLength(2);
-    expect(getReportsByTag("エンジニアリング")).toHaveLength(1);
+    expect(getReportsByTag("AI")).toHaveLength(3);
+    expect(getReportsByTag("エンジニアリング")).toHaveLength(2);
     expect(getReportsByTag("VC")).toHaveLength(1);
-    expect(getReportsByTag("スタートアップ")).toHaveLength(1);
-    expect(getReportsByTag("資金調達")).toHaveLength(1);
+    expect(getReportsByTag("スタートアップ")).toHaveLength(2);
+    expect(getReportsByTag("資金調達")).toHaveLength(2);
+    expect(getReportsByTag("市場インテリジェンス")).toHaveLength(2);
     expect(getTagSummaries().map((tag) => tag.name)).toEqual(["医療", "介護", "AI", "エンジニアリング", "制度", "DX", "VC", "スタートアップ", "資金調達", "市場インテリジェンス"]);
   });
 
@@ -103,5 +105,22 @@ describe("reports", () => {
     expect(report.sources.map((source) => source.title)).toContain("VC News Daily: Caplight Closes $16M Series A Round");
     expect(JSON.stringify(report.topicCards.find((topic) => topic.theme === "ヘルスケア・ライフサイエンス"))).not.toContain("Omen AI");
     expect(report.sections.some((section) => section.title === "取得エラー")).toBe(true);
+  });
+
+  it("テック情勢週次レポートがAIクローラ、AI基盤、開発者ツール、仮説課題を持つ", () => {
+    const report = reports.find((item) => item.id === "tech-landscape-weekly-2026-07-02");
+
+    expect(report.category).toBe("テック情勢");
+    expect(report.lead.title).toBe("今週の判断ポイント");
+    expect(report.dashboardMetrics.map((metric) => metric.label)).toContain("短期対応リスク");
+    expect(report.topicCards.map((topic) => topic.title)).toContain("CloudflareがAIクローラのデフォルトブロックと課金分離を打ち出す");
+    expect(report.topicCards.map((topic) => topic.title)).toContain("Together AIの大型調達がオープンモデル向けAIクラウド競争を押し上げる");
+    expect(report.topicCards.map((topic) => topic.title)).toContain("GitHub Copilotが初のopen-weight選択モデルとしてKimi K2.7 Codeを提供");
+    expect(report.sources.map((source) => source.title)).toContain("TechCrunch: Cloudflare's new policy pushes AI companies to pay for publishers' content");
+    expect(report.sources.map((source) => source.title)).toContain("GitHub Changelog: Kimi K2.7 Code is generally available in GitHub Copilot");
+    expect(report.sources.map((source) => source.title)).toContain("Google: Now open source: our Zero-Knowledge Proof (ZKP) libraries for age assurance");
+    expect(report.sections.some((section) => section.title === "注目すべき仮説と解くべき課題")).toBe(true);
+    expect(report.sections.some((section) => section.title === "取得エラー")).toBe(true);
+    expect(report.sections.find((section) => section.title === "取得エラー").items).toContain("主要確認入口7件はすべて取得可能。取得エラーなし。");
   });
 });
