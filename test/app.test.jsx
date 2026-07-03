@@ -1,5 +1,6 @@
 import { act, cleanup, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { reports } from "../src/app/reports.js";
 import App from "../src/app/ui/App.jsx";
 
 afterEach(() => {
@@ -26,9 +27,12 @@ describe("App", () => {
     expect(screen.getByRole("heading", { name: "エンジニアリング" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "VC" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "スタートアップ" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-07-02週" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Academic VC / スタートアップ投資動向週次レポート 2026-07-01週" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "医療・介護領域の最新動向調査レポート 2026-06-30週" })).toBeInTheDocument();
-    expect(screen.getByText("3件の記事を掲載中")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "日本の医療業界が直面する3つの構造課題" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "日本の介護業界における3つの構造課題" })).toBeInTheDocument();
+    expect(screen.getByText("5件の記事を掲載中")).toBeInTheDocument();
     expect(screen.queryByText(/サンプル/)).not.toBeInTheDocument();
   });
 
@@ -68,6 +72,24 @@ describe("App", () => {
     expect(screen.getAllByRole("link", { name: "厚生労働省 新着情報RSS" })[0]).toHaveAttribute("href", "https://www.mhlw.go.jp/stf/news.rdf");
   });
 
+  it("日本の医療業界課題レポートに3課題、歴史背景、国際比較を表示する", () => {
+    window.location.hash = "#/reports/japan-healthcare-industry-structural-challenges-2026-07-01";
+
+    render(<App />);
+
+    expect(screen.getByRole("heading", { name: "日本の医療業界が直面する3つの構造課題", level: 1 })).toBeInTheDocument();
+    expect(screen.getByText("深掘り調査")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "歴史的背景" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "国際比較から見える差分" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "人材・地域偏在の二重制約" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "高齢化で強まる財政持続性の圧力" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "医療DXとデータ連携の遅れ" })).toBeInTheDocument();
+    expect(screen.getAllByText(/英国はGPを入口に置き/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/1961年の国民皆保険/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText("二次情報").length).toBe(5);
+    expect(screen.getByRole("link", { name: "Commonwealth Fund International Health Care System Profiles: Japan" })).toBeInTheDocument();
+  });
+
   it("介護業界課題レポートの3課題を表示する", () => {
     window.location.hash = "#/reports/japan-care-industry-challenges-2026";
 
@@ -89,6 +111,41 @@ describe("App", () => {
       "href",
       "https://www.mhlw.go.jp/stf/newpage_41379.html"
     );
+  });
+
+  it("セクションタイトルが欠けてもレポート詳細を表示できる", () => {
+    reports.push({
+      id: "missing-section-title-test",
+      title: "セクションタイトル欠落テスト",
+      category: "テスト",
+      articleType: "deep",
+      articleTypeLabel: "深掘り調査",
+      cadence: "テスト",
+      tags: ["医療"],
+      summary: "セクションタイトルが欠けてもレンダリングが落ちないことを確認するテスト用レポートです。",
+      publishedAt: "2026-07-01",
+      checkedAt: "2026-07-01",
+      sources: [{ title: "テスト出典", url: "https://example.com" }],
+      highlights: ["表示確認"],
+      sections: [{ items: ["タイトルなしセクションの本文"] }],
+      actionCards: [
+        {
+          owner: "テスト担当",
+          action: "表示確認をする",
+          due: "すぐ",
+          reason: "title が undefined の section で endsWith を呼ばないことを確認するため。"
+        }
+      ]
+    });
+    window.location.hash = "#/reports/missing-section-title-test";
+
+    try {
+      expect(() => render(<App />)).not.toThrow();
+      expect(screen.getByRole("heading", { name: "セクションタイトル欠落テスト", level: 1 })).toBeInTheDocument();
+      expect(screen.getByText("タイトルなしセクションの本文")).toBeInTheDocument();
+    } finally {
+      reports.pop();
+    }
   });
 
   it("Academic VC週次レポートの詳細に主要トピック、出典、取得エラーを表示する", () => {
@@ -123,6 +180,35 @@ describe("App", () => {
     expect(screen.getAllByText("メディア記事").length).toBeGreaterThan(0);
   });
 
+  it("テック情勢週次レポートの詳細に主要トピック、出典、仮説課題を表示する", () => {
+    window.location.hash = "#/reports/tech-landscape-weekly-2026-07-02";
+
+    render(<App />);
+
+    expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-07-02週", level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "今週の判断ポイント" })).toBeInTheDocument();
+    expect(screen.getByText("短期対応リスク")).toBeInTheDocument();
+    expect(screen.getByText(/CloudflareがAIクローラのデフォルトブロックと課金分離/)).toBeInTheDocument();
+    expect(screen.getByText(/Together AIの大型調達がオープンモデル向けAIクラウド競争/)).toBeInTheDocument();
+    expect(screen.getByText(/GitHub Copilotが初のopen-weight選択モデル/)).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "注目すべき仮説と解くべき課題" })).toBeInTheDocument();
+    expect(screen.getByText(/AIエージェントの実運用コストはモデル単価ではなく/)).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "今週検討すべき対応アクション" })).toBeInTheDocument();
+    expect(screen.getByText("AIプロダクト責任者")).toBeInTheDocument();
+    expect(screen.getByText("期限 2026-07-15まで")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "取得エラー" })).toBeInTheDocument();
+    expect(screen.getByText("主要確認入口7件はすべて取得可能。取得エラーなし。")).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: "TechCrunch: Cloudflare's new policy pushes AI companies to pay for publishers' content" })[0]).toHaveAttribute(
+      "href",
+      "https://techcrunch.com/2026/07/01/cloudflares-new-policy-pushes-ai-companies-to-pay-for-publishers-content/"
+    );
+    expect(screen.getByRole("link", { name: "Product Hunt: scritty" })).toHaveAttribute("href", "https://www.producthunt.com/products/scritty");
+    expect(screen.getAllByRole("link", { name: "GitHub Changelog: Kimi K2.7 Code is generally available in GitHub Copilot" })[0]).toHaveAttribute(
+      "href",
+      "https://github.blog/changelog/2026-07-01-kimi-k2-7-is-now-available-in-github-copilot/"
+    );
+  });
+
   it("存在しないページでは Not Found を表示する", () => {
     window.location.hash = "#/missing";
 
@@ -139,6 +225,7 @@ describe("App", () => {
 
     expect(screen.getByRole("heading", { name: "#エンジニアリング", level: 1 })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "医療・介護領域の最新動向調査レポート 2026-06-30週" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "日本の医療業界が直面する3つの構造課題" })).toBeInTheDocument();
   });
 
   it("hashchange に応じて表示を切り替える", () => {

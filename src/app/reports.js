@@ -1,5 +1,336 @@
 export const reports = [
   {
+    id: "tech-landscape-weekly-2026-07-02",
+    title: "テック情勢週次レポート 2026-07-02週",
+    category: "テック情勢",
+    articleType: "weekly",
+    articleTypeLabel: "週次最新情報",
+    cadence: "週次で自動更新・追加",
+    tags: ["AI", "エンジニアリング", "スタートアップ", "資金調達", "市場インテリジェンス"],
+    summary:
+      "2026年6月25日00:00 JSTから2026年7月2日19:05 JSTまでに確認できた公開情報をもとに、AIクローラ課金、AIクラウド、開発者ツール、産業データ、プロダクト開発AIの変化を整理した週次レポートです。",
+    publishedAt: "2026-07-02",
+    checkedAt: "2026-07-02",
+    sources: [
+      {
+        title: "TechCrunch: Cloudflare's new policy pushes AI companies to pay for publishers' content",
+        url: "https://techcrunch.com/2026/07/01/cloudflares-new-policy-pushes-ai-companies-to-pay-for-publishers-content/",
+        type: "メディア記事",
+        publishedAt: "2026-07-01",
+        checkedAt: "2026-07-02"
+      },
+      {
+        title: "TechCrunch: Neocloud Together AI raises $800M, leaps to $8.3B valuation",
+        url: "https://techcrunch.com/2026/07/01/neocloud-together-ai-raises-800m-leaps-to-8-3b-valuation/",
+        type: "メディア記事",
+        publishedAt: "2026-07-01",
+        checkedAt: "2026-07-02"
+      },
+      {
+        title: "GitHub Changelog: Kimi K2.7 Code is generally available in GitHub Copilot",
+        url: "https://github.blog/changelog/2026-07-01-kimi-k2-7-is-now-available-in-github-copilot/",
+        type: "一次情報",
+        publishedAt: "2026-07-01",
+        checkedAt: "2026-07-02"
+      },
+      {
+        title: "Google: Now open source: our Zero-Knowledge Proof (ZKP) libraries for age assurance",
+        url: "https://blog.google/innovation-and-ai/technology/safety-security/opening-up-zero-knowledge-proof-technology-to-promote-privacy-in-age-assurance/",
+        type: "対象期間外の参考情報",
+        publishedAt: "2025-07-03",
+        checkedAt: "2026-07-02"
+      },
+      {
+        title: "Forrester: Stripe's New Stablecoin Bet: Open USD",
+        url: "https://www.forrester.com/blogs/stripes-new-stablecoin-bet-open-usd/",
+        type: "アナリストブログ",
+        publishedAt: "2026-06-30",
+        checkedAt: "2026-07-02"
+      },
+      {
+        title: "Forrester: The CIO's Responsibilities For AI Transformation Burst The Boundaries Of IT",
+        url: "https://www.forrester.com/blogs/the-cios-responsibilities-for-ai-transformation-burst-the-boundaries-of-it/",
+        type: "アナリストブログ",
+        publishedAt: "2026-06-30",
+        checkedAt: "2026-07-02"
+      },
+      {
+        title: "Qualcomm Investor Relations: Qualcomm to Acquire Modular",
+        url: "https://investor.qualcomm.com/news-events/press-releases/news-details/2026/Qualcomm-to-Acquire-Modular/default.aspx",
+        type: "一次情報",
+        publishedAt: "2026-06-24",
+        checkedAt: "2026-07-03"
+      },
+      {
+        title: "TechFeed: クアルコムがPythonライクな新言語「Mojo」開発元のModular社買収を発表",
+        url: "https://techfeed.io/categories/Startup%20%2F%20Innovation/selections/daily/2026/7/1?from=rss",
+        type: "RSSランキング",
+        publishedAt: "2026-07-01",
+        checkedAt: "2026-07-02"
+      },
+      {
+        title: "ProductZine: エクスプラザ、「AI × 要件定義」テーマのLTイベントを7月9日開催",
+        url: "https://productzine.jp/article/detail/4401",
+        type: "メディア記事",
+        publishedAt: "2026-06-30",
+        checkedAt: "2026-07-02"
+      },
+      {
+        title: "ProductZine: 「AIを使う前にやるべきUIの整え方」7月23日開催",
+        url: "https://productzine.jp/article/detail/4404",
+        type: "メディア記事",
+        publishedAt: "2026-07-01",
+        checkedAt: "2026-07-02"
+      },
+      {
+        title: "Product Hunt: scritty",
+        url: "https://www.producthunt.com/products/scritty",
+        type: "プロダクト掲載",
+        publishedAt: "2026-07-01",
+        checkedAt: "2026-07-02"
+      },
+      {
+        title: "Product Hunt: Macro",
+        url: "https://www.producthunt.com/products/macro-workspace",
+        type: "プロダクト掲載",
+        publishedAt: "2026-06-26",
+        checkedAt: "2026-07-02"
+      },
+      {
+        title: "Product Hunt: Solaris",
+        url: "https://www.producthunt.com/products/build-club",
+        type: "プロダクト掲載",
+        publishedAt: "2026-06-30",
+        checkedAt: "2026-07-02"
+      }
+    ],
+    highlights: [
+      "CloudflareはAI企業に対し、検索用クローラとAI学習・エージェント用クローラを分けるよう求め、2026年9月15日までに対応しない場合は多くの出版社サイトでデフォルトブロックされうると報じられた。",
+      "Together AIの8億ドル調達と83億ドル評価は、オープンモデル運用に特化したAIクラウドの資本競争が続いていることを示す。",
+      "GitHub CopilotはKimi K2.7 Codeを一般提供し、Copilotのモデル選択肢に初のopen-weightモデルを加えた。",
+      "Googleの年齢確認向けZero-Knowledge Proofライブラリ公開記事は2025年7月3日の対象期間外情報だったため、今週の新規重要トピックから除外した。",
+      "プロダクト開発では、AIを入れる前のUI整理、要件定義、共有メモリ、エージェント向けワークフローが継続テーマになっている。"
+    ],
+    lead: {
+      title: "今週の判断ポイント",
+      body:
+        "今週は、AIがWeb、クラウド、開発者ツール、金融、プロダクト開発の前提を同時に変えていることが見えた。特にCloudflareのAIクローラ分離要求は2026年9月15日という期限を伴うため、AIエージェントやRAGで外部Webを使う事業者は、データ取得・権利・課金の設計を早く見直す必要がある。",
+      quote:
+        "AI活用の競争軸はモデル性能だけでなく、データ取得の権利、推論インフラの調達、開発者体験、規制対応、現場ワークフローへの埋め込みに移っている。"
+    },
+    dashboardMetrics: [
+      {
+        label: "対象期間",
+        value: "7日",
+        caption: "2026-06-25 00:00 JSTから2026-07-02 19:05 JSTまで。14日遡及なし",
+        tone: "primary"
+      },
+      {
+        label: "短期対応リスク",
+        value: "9/15",
+        caption: "Cloudflare報道で示されたAIクローラ分離・ブロック方針の期限",
+        tone: "deadline"
+      },
+      {
+        label: "高優先度",
+        value: "3テーマ",
+        caption: "AIクローラ、AIクラウド、開発者ツール",
+        tone: "high"
+      },
+      {
+        label: "取得エラー",
+        value: "0件",
+        caption: "主要確認入口7件は取得可能。TechFeed未来timestampはRSS上の配信仕様として扱う",
+        tone: "primary"
+      }
+    ],
+    topicCards: [
+      {
+        theme: "今週の大きな変化",
+        title: "CloudflareがAIクローラのデフォルトブロックと課金分離を打ち出す",
+        summary:
+          "TechCrunchは、CloudflareがAI企業に対し、検索用クローラとAI学習・エージェント用クローラを2026年9月15日までに分けるよう求め、従わない場合は多くの出版社サイトでデフォルトブロックされる可能性があると報じた。",
+        date: "2026-07-01",
+        sourceTitle: "TechCrunch: Cloudflare's new policy pushes AI companies to pay for publishers' content",
+        sourceUrl: "https://techcrunch.com/2026/07/01/cloudflares-new-policy-pushes-ai-companies-to-pay-for-publishers-content/",
+        sourceType: "メディア記事",
+        priority: "高",
+        timing: "2026-09-15まで",
+        relevance: 97,
+        relatedTags: ["AI", "市場インテリジェンス", "エンジニアリング"],
+        affected: ["AI検索事業者", "RAG/エージェント開発者", "出版社", "SaaS事業者", "法務・データガバナンス担当"],
+        change: "AIによるWeb取得が、検索インデックス、学習、エージェント利用で同じ扱いでは済まなくなる。",
+        importance: "外部WebをAI機能に使うプロダクトは、robots.txtだけでなく、取得目的、権利、課金、キャッシュ、出典表示の設計が必要になる。",
+        implication: "AIエージェントの市場投入では、データソース契約、クローラ識別、アクセスログ、補償コストをプロダクト要件に含めるべき。",
+        uncertainty: "Cloudflare側の課金条件、AI企業側の対応、出版社別の運用、検索用クローラとエージェント用クローラの境界は追加確認が必要。"
+      },
+      {
+        theme: "AI/LLM/エージェント基盤",
+        title: "Together AIの大型調達がオープンモデル向けAIクラウド競争を押し上げる",
+        summary:
+          "TechCrunchは、オープンソースモデルのホスティングに特化するAI neocloudのTogether AIが8億ドルを調達し、評価額が83億ドルになったと報じた。",
+        date: "2026-07-01",
+        sourceTitle: "TechCrunch: Neocloud Together AI raises $800M, leaps to $8.3B valuation",
+        sourceUrl: "https://techcrunch.com/2026/07/01/neocloud-together-ai-raises-800m-leaps-to-8-3b-valuation/",
+        sourceType: "メディア記事",
+        priority: "高",
+        timing: "すぐ",
+        relevance: 94,
+        relatedTags: ["AI", "スタートアップ", "資金調達"],
+        affected: ["AIクラウド事業者", "基盤モデル利用企業", "GPU供給網", "開発者プラットフォーム", "VC"],
+        change: "AIクラウド競争は、汎用GPU供給だけでなく、オープンモデルの運用、推論最適化、開発者体験へ分化している。",
+        importance: "AIアプリの粗利はモデル単価とGPU調達だけでなく、推論最適化、稼働率、モデル選択自由度に左右される。",
+        implication: "AI基盤選定では、価格、モデルラインアップ、データ保持、SLA、推論レイテンシ、vendor lock-inを分けて評価する必要がある。",
+        uncertainty: "調達条件、投資家構成、実売上、GPU契約、顧客集中、オープンモデル依存の収益性は一次情報で追加確認が必要。"
+      },
+      {
+        theme: "開発者ツール・OSS",
+        title: "GitHub Copilotが初のopen-weight選択モデルとしてKimi K2.7 Codeを提供",
+        summary:
+          "GitHubは、Kimi K2.7 CodeをGitHub Copilotで一般提供し、Copilotのmodel pickerで選べる初のopen-weightモデルだと説明した。Business/Enterpriseでは管理者がモデル利用を有効化する必要がある。",
+        date: "2026-07-01",
+        sourceTitle: "GitHub Changelog: Kimi K2.7 Code is generally available in GitHub Copilot",
+        sourceUrl: "https://github.blog/changelog/2026-07-01-kimi-k2-7-is-now-available-in-github-copilot/",
+        sourceType: "一次情報",
+        priority: "中",
+        timing: "すぐ",
+        relevance: 88,
+        relatedTags: ["AI", "エンジニアリング"],
+        affected: ["開発組織", "Copilot管理者", "エンタープライズIT", "AI coding tool開発者"],
+        change: "AI coding assistantの選定軸に、閉じた商用モデルだけでなくopen-weightモデルの選択可能性が入る。",
+        importance: "企業はコーディングAIの精度、コスト、データ扱い、管理者制御、モデル多様性を同じ製品内で比較しやすくなる。",
+        implication: "開発生産性の評価では、単一モデルのベンチマークではなく、タスク別にモデルを切り替える運用ルールと監査ログが必要になる。",
+        uncertainty: "Kimi K2.7 Codeのライセンス条件、組織別利用制限、コード品質、セキュリティレビューへの影響は継続検証が必要。"
+      },
+      {
+        theme: "スタートアップ/市場/資本",
+        title: "QualcommのModular買収発表がAIデータセンターのソフトウェア統合競争を示す",
+        summary:
+          "Qualcommは2026年6月24日、Modular Incを買収する合意を発表した。AI-native software platformをQualcomm Technologiesのシリコンと組み合わせ、edge-to-cloudの生成AI/エージェントAI基盤とオープンな開発者エコシステムを強化する狙いを示している。",
+        date: "2026-06-24",
+        sourceTitle: "Qualcomm Investor Relations: Qualcomm to Acquire Modular",
+        sourceUrl: "https://investor.qualcomm.com/news-events/press-releases/news-details/2026/Qualcomm-to-Acquire-Modular/default.aspx",
+        sourceType: "一次情報",
+        priority: "中",
+        timing: "継続ウォッチ",
+        relevance: 82,
+        relatedTags: ["AI", "スタートアップ", "市場インテリジェンス"],
+        affected: ["半導体企業", "AIコンパイラ/ランタイム企業", "データセンター事業者", "開発者エコシステム"],
+        change: "AIデータセンター競争では、チップ単体ではなく、開発言語、ランタイム、コンパイラ、モデル運用を束ねる動きが重要になる。",
+        importance: "ハードウェアの差別化は、開発者が実際に使えるソフトウェアスタックと一体で評価される。",
+        implication: "AIインフラのDDでは、半導体性能、ソフトウェア互換性、開発者採用、既存PyTorch/CUDA資産との接続を同時に見る必要がある。",
+        uncertainty: "買収完了時期、規制承認、Modular製品の継続提供条件、Qualcomm側の具体的な製品統合ロードマップは継続確認が必要。"
+      },
+      {
+        theme: "重要な新規情報なし",
+        title: "ブラウザ/OS/モバイルの大規模仕様変更は今週採用すべき一次情報なし",
+        summary:
+          "HNやTechCrunchではApple、Android、WhatsApp関連の話題はあったが、今回の主要判断材料として採用できる一次情報の大規模仕様変更は確認できなかった。",
+        date: "2026-07-02",
+        sourceTitle: "Hacker News RSS / TechCrunch RSS",
+        sourceUrl: "https://news.ycombinator.com/rss",
+        sourceType: "RSS",
+        priority: "低",
+        timing: "継続ウォッチ",
+        relevance: 64,
+        relatedTags: ["エンジニアリング", "市場インテリジェンス"],
+        affected: ["モバイルアプリ開発者", "セキュリティ担当", "プロダクト責任者"],
+        change: "今週の確認範囲では、OS/ブラウザ/モバイルでプロダクト戦略を直ちに変える一次情報は採用しない。",
+        importance: "話題性のある記事と、仕様・規制・プラットフォーム運用の実変更を分ける必要がある。",
+        implication: "来週以降もApple、Google、Meta、主要ブラウザベンダーの公式発表を優先して確認する。",
+        uncertainty: "個別の脆弱性報告や報道は追加検証の余地がある。"
+      }
+    ],
+    actionCards: [
+      {
+        owner: "AIプロダクト責任者",
+        action: "外部Webを使うAI機能について、クローラ識別、取得目的、キャッシュ、出典表示、権利処理を棚卸しする",
+        due: "2026-07-15まで",
+        reason: "CloudflareのAIクローラ分離要求により、Web取得を前提にしたAI機能の運用リスクが上がるため。"
+      },
+      {
+        owner: "インフラ/FinOps担当",
+        action: "AIクラウド候補を、推論単価、モデル選択、SLA、データ保持、ロックインで比較する",
+        due: "1か月以内",
+        reason: "Together AIの大型調達で、オープンモデル運用基盤の選択肢と価格競争が変わりうるため。"
+      },
+      {
+        owner: "開発組織リード",
+        action: "Copilotのモデル選択ポリシーと、open-weightモデル利用時のコードレビュー基準を定義する",
+        due: "すぐ",
+        reason: "Kimi K2.7 Codeの追加により、モデル別の品質・安全性・コストの比較運用が必要になるため。"
+      }
+    ],
+    sections: [
+      {
+        title: "調査条件",
+        items: [
+          "主対象期間: 2026-06-25 00:00 JSTから2026-07-02 19:05 JSTまで。直近7日間で重要候補が十分あったため、過去14日への遡りは行っていない。",
+          "主要確認入口: TechCrunch、Hacker News、Product Hunt、ProductZine、Forrester Blogs、TechFeed Startup / Innovation、TechFeed Marketing。",
+          "確認方針: RSSで候補を抽出し、可能なものは公式ブログ、GitHub Changelog、Google公式ブログ、Forrester、TechCrunch本文、Qualcomm Investor Relationsで確認した。",
+          "注意事項: Qualcomm/ModularはTechFeedの7月1日ランキングで再浮上したため採用し、買収の事実関係は対象期間前日の2026年6月24日に公開されたQualcomm一次発表で裏取りした。公式ロードマップや統合条件は断定しない。",
+          "TechFeedの週次エントリにはRSS上で2026-07-05の未来timestampが含まれていたため、実行時点で配信済みの7月2日デイリーまでを主対象にした。"
+        ]
+      },
+      {
+        title: "エグゼクティブサマリー",
+        items: [
+          "AIとWeb: Cloudflare報道により、AIクローラの目的別分離、出版社への補償、デフォルトブロックが短期対応リスクになった。",
+          "AI基盤: Together AIの大型調達は、オープンモデル運用に特化したAIクラウドが資本市場で高く評価されていることを示す。",
+          "開発者ツール: GitHub Copilotがopen-weightモデルをモデルピッカーに加え、コーディングAIのモデル選択が実運用論点になった。",
+          "除外判断: GoogleのZKP公開記事は2025年7月3日の情報だったため、対象期間内の新規トピックとしては採用しない。",
+          "プロダクト開発: Product HuntとProductZineでは、AIエージェントの共有メモリ、AI要件定義、AIを入れる前のUI整理が継続テーマとして確認できた。"
+        ]
+      },
+      {
+        title: "テーマ別の調査結果",
+        items: [
+          "1. 今週の大きな変化 / CloudflareがAIクローラのデフォルトブロックと課金分離を打ち出す。出典: TechCrunch。公開日: 2026-07-01。想定影響: AI検索、RAG、エージェント、コンテンツ事業者はデータ取得の権利と費用を再設計する必要がある。",
+          "2. AI/LLM/エージェント / Together AIの大型調達がオープンモデル向けAIクラウド競争を押し上げる。出典: TechCrunch。公開日: 2026-07-01。想定影響: AI基盤選定ではGPU供給だけでなく、推論最適化、モデル選択自由度、SLA、データ保持を比較する必要がある。",
+          "3. 開発者・インフラ動向 / GitHub Copilotが初のopen-weight選択モデルとしてKimi K2.7 Codeを提供。出典: GitHub Changelog。公開日: 2026-07-01。想定影響: 開発組織はモデル別の利用許可、品質評価、コードレビュー基準を明確にする必要がある。",
+          "4. スタートアップ/市場/資本 / QualcommのModular買収発表がAIデータセンターのソフトウェア統合競争を示す。出典: Qualcomm Investor Relations。公開日: 2026-06-24。想定影響: 半導体競争はチップ性能だけでなく、開発者スタックとランタイムの統合で評価される。",
+          "5. 見逃し注意 / Open USDとagentic commerce。ForresterはOpen USDをステーブルコイン標準化の動きとして取り上げ、Money20/20の文脈で信頼とagentic commerceを論点化した。金融・決済プロダクトは規制、本人確認、決済体験を継続ウォッチする。",
+          "6. 対象期間外として除外 / Googleの年齢確認向けZKPライブラリ公開記事は2025-07-03公開で、主対象期間の2026-06-25から2026-07-02に含まれない。週次の新規重要トピックではなく、プライバシー保護型ID連携の参考情報としてのみ扱う。",
+          "7. 重要な新規情報なし / ブラウザ/OS/モバイルの大規模仕様変更は今週採用すべき一次情報なし。HNやTechCrunchの話題は確認したが、公式一次情報で直ちに戦略変更を要する更新は採用しない。"
+        ]
+      },
+      {
+        title: "注目すべき仮説と解くべき課題",
+        items: [
+          "仮説: AIエージェントの実運用コストはモデル単価ではなく、外部データ取得権利、クローラ識別、課金、キャッシュ、監査ログの総コストで決まる可能性が高い。",
+          "反証すべき点: AI企業がCloudflareや出版社の要求に対応しても、ユーザー体験や検索/エージェント品質を大きく落とさず運用できるか。",
+          "仮説: open-weightモデルがCopilotのような既存開発者ツールに入ると、企業はモデル単体契約よりも、統合された管理・監査・切替体験を重視する可能性がある。",
+          "解くべき課題: AI coding assistantの評価を、ベンチマーク点数ではなく、レビュー工数、バグ混入率、セキュリティ指摘、チーム別採用率で測る方法。",
+          "解くべき課題: open-weightモデルを使う開発支援で、ライセンス、セキュリティ、コード品質、管理者制御を同時に満たす運用設計。"
+        ]
+      },
+      {
+        title: "今週検討すべき対応アクション",
+        items: [
+          "事業/プロダクト: 外部Webデータを使うAI機能を、契約済みデータ、公開Web、ユーザー提供データ、生成キャッシュに分けて棚卸しする。",
+          "エンジニアリング: CopilotやAI coding toolのモデル選択権限、ログ、禁止用途、コードレビュー基準を管理者設定として明文化する。",
+          "インフラ/FinOps: AIクラウドの比較表を更新し、Together AIのようなneocloudを採用候補に入れる場合のリスクと出口戦略を整理する。",
+          "市場調査: Open USD、agentic commerce、Qualcomm/Modularは、規制承認、買収完了時期、製品統合ロードマップを追加確認するまで投資判断を保留する。"
+        ]
+      },
+      {
+        title: "継続ウォッチすべきテーマ",
+        items: [
+          "CloudflareのAIクローラ分離方針に対するAI企業、出版社、検索事業者の対応。",
+          "AI neocloudの調達、GPU契約、価格体系、オープンモデル運用の粗利。",
+          "GitHub Copilot、Cursor、Zed、JetBrainsなどAI coding toolのモデル選択・管理・監査機能。",
+          "ZKP、年齢確認、オンライン安全規制、プライバシー保護型ID連携の実装事例。",
+          "AIデータセンターでの半導体、コンパイラ、ランタイム、開発言語の統合競争。",
+          "Product Huntで見えた共有メモリ、AIエージェント接続、AI採用教育プラットフォームの実利用。"
+        ]
+      },
+      {
+        title: "取得エラー",
+        items: ["主要確認入口7件はすべて取得可能。取得エラーなし。"]
+      }
+    ]
+  },
+  {
     id: "academic-vc-weekly-2026-07-01",
     title: "Academic VC / スタートアップ投資動向週次レポート 2026-07-01週",
     category: "Academic VC / スタートアップ投資",
@@ -669,6 +1000,280 @@ export const reports = [
     ]
   },
   {
+    id: "japan-healthcare-industry-structural-challenges-2026-07-01",
+    title: "日本の医療業界が直面する3つの構造課題",
+    category: "医療",
+    articleType: "deep",
+    articleTypeLabel: "深掘り調査",
+    cadence: "不定期で深く調査",
+    tags: ["医療", "制度", "DX", "エンジニアリング", "国際比較"],
+    summary:
+      "日本の医療業界について、人材・地域偏在、財政持続性、医療DXとデータ連携の3課題を、制度史、人口動態、国際比較、事業・政策上の示唆から整理した深掘りレポートです。",
+    publishedAt: "2026-07-01",
+    checkedAt: "2026-07-01",
+    sources: [
+      {
+        title: "内閣府 令和7年版高齢社会白書 高齢化の現状と将来像",
+        url: "https://www8.cao.go.jp/kourei/whitepaper/w-2025/html/zenbun/s1_1_1.html"
+      },
+      {
+        title: "厚生労働省 令和5年度 国民医療費の概況 結果の概要",
+        url: "https://www.mhlw.go.jp/toukei/saikin/hw/k-iryohi/23/dl/R05kekka.pdf"
+      },
+      {
+        title: "厚生労働省 令和6年 医師・歯科医師・薬剤師統計の概況",
+        url: "https://www.mhlw.go.jp/toukei/saikin/hw/ishi/24/dl/R06_kekka-1.pdf"
+      },
+      {
+        title: "厚生労働省 令和6年 医療施設調査 結果の概要",
+        url: "https://www.mhlw.go.jp/toukei/saikin/hw/iryosd/24/dl/02sisetu06.pdf"
+      },
+      {
+        title: "厚生労働省 医師の働き方改革",
+        url: "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/kenkou_iryou/iryou/ishi-hatarakikata_34355.html"
+      },
+      {
+        title: "厚生労働省 医療DXについて",
+        url: "https://www.mhlw.go.jp/stf/iryoudx.html"
+      },
+      {
+        title: "Commonwealth Fund International Health Care System Profiles: Japan",
+        url: "https://www.commonwealthfund.org/international-health-policy-center/countries/japan",
+        type: "二次情報"
+      },
+      {
+        title: "Commonwealth Fund International Health Care System Profiles: England",
+        url: "https://www.commonwealthfund.org/international-health-policy-center/countries/england",
+        type: "二次情報"
+      },
+      {
+        title: "Commonwealth Fund International Health Care System Profiles: Germany",
+        url: "https://www.commonwealthfund.org/international-health-policy-center/countries/germany",
+        type: "二次情報"
+      },
+      {
+        title: "Commonwealth Fund International Health Care System Profiles: Denmark",
+        url: "https://www.commonwealthfund.org/international-health-policy-center/countries/denmark",
+        type: "二次情報"
+      },
+      {
+        title: "Commonwealth Fund International Health Care System Profiles: United States",
+        url: "https://www.commonwealthfund.org/international-health-policy-center/countries/united-states",
+        type: "二次情報"
+      }
+    ],
+    highlights: [
+      "日本の医療課題は、医療技術や制度運用の失敗というより、国民皆保険、自由開業、フリーアクセス、民間中心の病院供給という成功モデルが、高齢化と人口減少の局面で制約に変わったことにある。",
+      "最大の論点は医師数の総量だけではない。医師は増えている一方で、都市集中、診療科偏在、病院外来への依存、医師の働き方改革が同時に進み、地域の診療継続力が薄くなっている。",
+      "財政面では、令和5年度の国民医療費が48兆915億円に達し、後期高齢者医療給付分が35.8%を占める。医療の質を落とさずに価格統制だけで抑える余地は狭くなっている。",
+      "医療DXは単なる電子化ではない。全国医療情報プラットフォーム、電子カルテ情報共有、標準型電子カルテ、診療報酬改定DXが進むほど、紙・FAX・個別ベンダー最適化で回してきた運用の再設計が避けられない。",
+      "英国はGPを入口に置き、デンマークは患者ポータルで記録・検査結果・薬剤情報を見せる。日本はアクセスの良さを守ったまま、入口整理と情報連携を後付けで作る難しい移行期にある。"
+    ],
+    lead: {
+      title: "結論: 成功した医療モデルの副作用を処理する段階に入った",
+      body:
+        "日本の医療は、国民皆保険とフリーアクセスによって、低い自己負担で質の高い医療に広くアクセスできる仕組みを作った。一方で、その仕組みは人口が増え、若い現役世代が多く、地域の病院・診療所が一定数維持されることを暗黙の前提にしていた。2026年時点の課題は、この前提が崩れる中で、アクセス、財政、現場負荷、データ連携を同時に作り直すことにある。",
+      quote:
+        "改革の焦点は、医療費を削ることでも、デジタルを入れることでもない。誰が入口を担い、どの患者をどこで診て、どの情報を次の担い手へ渡すかを、制度と現場運用の両方で再設計することにある。"
+    },
+    dashboardMetrics: [
+      {
+        label: "高齢化率",
+        value: "29.3%",
+        caption: "令和6年10月1日時点。75歳以上は総人口の16.8%",
+        tone: "high"
+      },
+      {
+        label: "国民医療費",
+        value: "48.1兆円",
+        caption: "令和5年度。前年度比3.0%増、GDP比8.08%",
+        tone: "deadline"
+      },
+      {
+        label: "医師数",
+        value: "34.8万人",
+        caption: "令和6年届出医師数。人口10万対280.9人",
+        tone: "primary"
+      },
+      {
+        label: "重点課題",
+        value: "3領域",
+        caption: "人材・財政・DXを別問題ではなく連動課題として扱う",
+        tone: "watch"
+      }
+    ],
+    topicCards: [
+      {
+        theme: "人材・地域偏在",
+        title: "人材・地域偏在の二重制約",
+        summary:
+          "日本では医師数自体は増加しているが、都市部・大病院・特定診療科に人的資源が寄りやすく、人口減少地域では医療提供体制の維持が難しくなっている。さらに2024年4月から医師の働き方改革が始まり、長時間労働を前提にした地域医療の継続は制度的にも限界を迎えつつある。",
+        date: "2025-12-23",
+        sourceTitle: "厚生労働省 令和6年 医師・歯科医師・薬剤師統計の概況",
+        sourceUrl: "https://www.mhlw.go.jp/toukei/saikin/hw/ishi/24/dl/R06_kekka-1.pdf",
+        sourceType: "一次情報",
+        priority: "高",
+        timing: "すぐ",
+        relevance: 96,
+        relatedTags: ["医療", "制度", "エンジニアリング"],
+        affected: ["地域病院", "診療所", "救急医療", "自治体", "患者", "医療従事者"],
+        change: "医師の増員だけで地域医療を維持する発想から、役割分担、タスクシフト、オンライン診療、病院再編を組み合わせる発想へ移る。",
+        importance: "地域の診療継続力が落ちると、救急、分娩、在宅、慢性疾患管理が連鎖的に弱くなる。単一病院の経営問題ではなく、地域インフラの問題になる。",
+        implication: "プロダクト面では、医師を増やす代替ではなく、予約・紹介・検査・記録・遠隔連携を短時間で回せる運用設計が価値になる。",
+        uncertainty: "地域別・診療科別の不足度、医師派遣政策、大学医局の影響、自治体病院の再編方針は地域差が大きく、個別確認が必要。"
+      },
+      {
+        theme: "財政持続性",
+        title: "高齢化で強まる財政持続性の圧力",
+        summary:
+          "国民皆保険は日本の医療の中核だが、高齢化、医療技術の高度化、薬剤費、慢性疾患管理、後期高齢者医療の比重増により、負担と給付の均衡が厳しくなっている。価格を全国一律の診療報酬で管理する方式は強力だが、現場賃上げ、設備更新、地域医療維持との緊張が高まっている。",
+        date: "2025-10-10",
+        sourceTitle: "厚生労働省 令和5年度 国民医療費の概況 結果の概要",
+        sourceUrl: "https://www.mhlw.go.jp/toukei/saikin/hw/k-iryohi/23/dl/R05kekka.pdf",
+        sourceType: "一次情報",
+        priority: "高",
+        timing: "1年以内",
+        relevance: 94,
+        relatedTags: ["医療", "制度"],
+        affected: ["保険者", "医療機関", "薬局", "患者", "現役世代", "高齢者"],
+        change: "医療費抑制は単なる単価引き下げから、重症化予防、入院期間短縮、在宅移行、薬剤適正化、データにもとづく資源配分へ比重が移る。",
+        importance: "財政制約が強まるほど、医療機関は収益を守りながら提供量・人員・設備を再設計する必要がある。制度改定は経営戦略そのものになる。",
+        implication: "経営支援、患者導線最適化、在院日数管理、地域連携、薬剤費・材料費可視化、予防介入の費用対効果分析に需要が出る。",
+        uncertainty: "今後の診療報酬改定、後期高齢者負担、薬価制度、高額療養費制度の見直しは政治的判断の影響が大きい。"
+      },
+      {
+        theme: "医療DX・データ連携",
+        title: "医療DXとデータ連携の遅れ",
+        summary:
+          "日本は技術大国でありながら、医療情報の標準化と相互運用性は遅れてきた。個別医療機関・個別ベンダー最適の電子カルテ、紙・FAXを含む院外連携、診療報酬改定ごとのシステム改修負荷が、現場の生産性と政策実装速度を下げている。",
+        date: "2026-06-19",
+        sourceTitle: "厚生労働省 医療DXについて",
+        sourceUrl: "https://www.mhlw.go.jp/stf/iryoudx.html",
+        sourceType: "一次情報",
+        priority: "高",
+        timing: "すぐ",
+        relevance: 92,
+        relatedTags: ["医療", "DX", "エンジニアリング"],
+        affected: ["医療機関", "薬局", "電子カルテベンダー", "レセコンベンダー", "自治体", "患者"],
+        change: "全国医療情報プラットフォーム、電子カルテ情報共有、標準型電子カルテ、診療報酬改定DXが、医療情報を施設内資産から社会基盤へ変えようとしている。",
+        importance: "人材不足と財政制約が強まる中、情報がつながらない医療は重複検査、説明の反復、退院・紹介の遅延を生み、現場負担を増やす。",
+        implication: "単体SaaSより、標準コード、FHIR等の相互運用性、本人同意、監査ログ、院内ワークフロー変更まで含む導入支援が重要になる。",
+        uncertainty: "標準仕様の実装範囲、既存電子カルテからの移行負担、医療機関の費用負担、患者同意と二次利用の制度設計は継続確認が必要。"
+      }
+    ],
+    actionCards: [
+      {
+        owner: "医療機関経営者",
+        action: "地域で担う機能と紹介・逆紹介の導線を棚卸しする",
+        due: "3か月以内",
+        reason: "人材不足の中で、すべてを自院で抱える前提を見直し、救急、外来、在宅、慢性期の役割を明確にするため。"
+      },
+      {
+        owner: "医療DX責任者",
+        action: "電子カルテ情報共有と標準型電子カルテへの接続要件を確認する",
+        due: "すぐ",
+        reason: "個別システム改修ではなく、標準化される情報項目と院内業務フローの変更を早期に把握するため。"
+      },
+      {
+        owner: "政策・事業企画担当",
+        action: "国際比較を使って日本で残すべき強みと変えるべき運用を分ける",
+        due: "1か月以内",
+        reason: "英国型の強いゲートキーピングを単純移植するのではなく、日本のアクセスの良さを壊さない移行設計にするため。"
+      },
+      {
+        owner: "プロダクト責任者",
+        action: "医療費抑制ではなく現場時間を減らす指標を設定する",
+        due: "3か月以内",
+        reason: "財政、働き方改革、DXをつなぐ実務指標は、点数や売上だけでなく、紹介処理時間、重複入力、退院調整日数などに現れるため。"
+      }
+    ],
+    sections: [
+      {
+        title: "調査条件",
+        items: [
+          "確認日: 2026-07-01。人口、医療費、医師数、医療施設、医療DX施策について、内閣府と厚生労働省の公開情報を優先した。",
+          "国際比較: 英国、ドイツ、デンマーク、米国との比較は、Commonwealth Fund の 2026 Country Profile を中心に、制度設計の違いを把握するために用いた。",
+          "分析範囲: 医療業界全体の構造課題を扱う。個別病院の経営状況、未公開データ、地域別の詳細採算は扱わない。",
+          "注意事項: 本文は公開情報にもとづく構造分析であり、制度改定・診療報酬・自治体施策は今後変わりうる。実務判断では原典と最新通知を確認する。"
+        ]
+      },
+      {
+        title: "エグゼクティブサマリー",
+        items: [
+          "結論: 日本の医療業界の3大課題は、人材・地域偏在、財政持続性、医療DXとデータ連携である。これらは別々の問題ではなく、高齢化と人口減少のもとで互いに増幅し合っている。",
+          "背景: 1961年の国民皆保険、1973年の老人医療無料化と高額療養費制度、2000年の介護保険、2024年の医師の働き方改革、現在の医療DXは、いずれも当時の課題に対する合理的対応だった。しかし積み重なった制度は、現場には複雑な運用負荷として現れている。",
+          "最も重要な見方: 日本の強みはアクセスの良さと価格統制である。一方、その強みは病院外来集中、長期入院、情報分断、過小なプライマリケア機能を生みやすい。",
+          "国際比較の示唆: 英国はGPを入口に置き、ドイツは社会保険と地域医師団体で運用し、デンマークは患者ポータルを基盤にする。日本は強い入口制限を置かないまま、後付けで連携と標準化を進める必要がある。",
+          "事業機会: 医師を増やすだけ、医療費を削るだけ、電子化するだけでは足りない。患者導線、地域連携、在院日数、紹介、薬剤、データ標準を横断して現場時間を減らすサービスが求められる。"
+        ]
+      },
+      {
+        title: "歴史的背景",
+        items: [
+          "戦後から1961年: 日本は被用者保険と国民健康保険を広げ、1961年の国民皆保険によって医療への経済的アクセスを大きく改善し、戦後復興期の社会的安定を支えた。",
+          "1970年代: 高度成長により給付拡大が可能になり、1973年には高額療養費制度や老人医療無料化が導入された。高齢者医療を社会で支える発想はここで強くなったが、後の高齢化局面では財政負担として戻ってくる。",
+          "1990年代から2000年代: 高齢化が進み、医療だけで高齢者ケアを支える限界が明確になった。2000年の介護保険は、医療と介護を分けて制度化する大きな転換だったが、現場では退院調整、在宅移行、施設連携という新たな接続問題も生んだ。",
+          "2010年代から2020年代: 地域医療構想、医師偏在対策、働き方改革、医療DXが重なった。これは個別改革の寄せ集めではなく、人口減少下で医療提供体制を維持するための再設計フェーズと見るべきである。",
+          "なぜ今難しいのか: 日本の医療は、患者が自由に医療機関を選び、民間医療機関が多数存在し、全国一律の診療報酬で価格を管理する構造で発展した。この構造はアクセスの公平性を高めた一方、入口管理、データ標準、地域での機能分担を後回しにしやすかった。"
+        ]
+      },
+      {
+        title: "テーマ別の調査結果",
+        items: []
+      },
+      {
+        title: "深掘り分析",
+        items: [
+          "人材・地域偏在: 令和6年の届出医師数は347,772人、人口10万対280.9人で、総量は増えている。しかし地域医療のボトルネックは、医師総数よりも、救急、産科、小児、在宅、外来、当直を誰が担うかという配置と勤務時間の問題である。",
+          "人材・地域偏在の本質: 長時間労働と医局派遣で維持してきた地域医療は、働き方改革により持続しにくくなる。これは悪いことではなく、見えにくかった無償の調整コストを制度上可視化する改革である。",
+          "財政持続性: 令和5年度の国民医療費は48兆915億円、人口一人当たり38万6,700円である。後期高齢者医療給付分は35.8%を占め、65歳以上人口が約3割に達した日本では、高齢者医療の比重が制度全体の安定性を左右する。",
+          "財政持続性の本質: 日本は診療報酬で価格を強く統制できるが、医療従事者の賃上げ、薬剤・医療機器の高度化、病院設備更新、地域医療維持を同時に求めると、単価抑制だけでは現場の再投資力を削りやすい。",
+          "医療DX: 厚生労働省は全国医療情報プラットフォーム、電子カルテ情報の標準化、診療報酬改定DXを柱にしている。これは、医療の質向上だけでなく、医療機関の業務効率化とシステム人材の有効活用を目的に含む。",
+          "医療DXの本質: 医療DXが遅れた理由は、現場のITリテラシー不足だけではない。医療機関が分散し、ベンダーごとに最適化され、診療報酬改定ごとに個別改修が発生し、患者本人のデータ利用も制度的に慎重に扱われてきたためである。"
+        ]
+      },
+      {
+        title: "国際比較から見える差分",
+        items: [
+          "英国: NHS は税財源で、GPが非緊急の入口になり、専門医紹介を担う。日本のような自由受診の利便性は弱いが、入口を整理することで病院への流入を制御しやすい。",
+          "ドイツ: 日本と同じ社会保険型に近いが、疾病金庫や地域医師団体が運用の中間組織として機能する。社会保険方式でも、地域単位の調整主体をどう置くかで現場の動きは変わる。",
+          "デンマーク: 患者ポータル Sundhed.dk で医療記録、検査結果、共有薬剤記録へのアクセスを提供している。小国で制度集中度が高い利点はあるが、患者が自分の情報にアクセスできることを医療基盤に組み込む発想は日本にも重要である。",
+          "米国: 医療費対GDP比は高く、保険未加入・過少保険がアクセスを制限する。日本は米国型の市場主導ではなく、公的価格統制と皆保険でアクセスを守ってきた点が強みである。",
+          "日本への示唆: 海外モデルの単純輸入は危険である。日本は英国のような強いゲートキーピングを急に入れるとアクセスの強みを壊す。現実的には、紹介・逆紹介、地域連携、オンライン診療、電子カルテ共有で、緩やかな入口整理を作るべきである。"
+        ]
+      },
+      {
+        title: "今後検討すべき対応アクション",
+        items: [
+          "医療機関経営者: 地域で担う機能と紹介・逆紹介の導線を棚卸しする。",
+          "医療DX責任者: 電子カルテ情報共有と標準型電子カルテへの接続要件を確認する。",
+          "政策・事業企画担当: 国際比較を使って日本で残すべき強みと変えるべき運用を分ける。",
+          "プロダクト責任者: 医療費抑制ではなく現場時間を減らす指標を設定する。"
+        ]
+      },
+      {
+        title: "事業・政策への示唆",
+        items: [
+          "示唆1: 地域医療の課題は、人材採用だけでは解けない。医師、看護師、薬剤師、事務、介護、自治体をまたぐ業務分解と再配置が必要になる。",
+          "示唆2: 医療費抑制は、支払い単価の削減よりも、重複検査、長期入院、紹介遅延、退院調整遅れ、薬剤重複を減らす方向で設計した方が、医療の質と両立しやすい。",
+          "示唆3: 医療DXの勝ち筋は、電子カルテを売ることだけではない。標準化された情報を使って、患者移動、施設間連携、請求、説明、監査を短くすることにある。",
+          "示唆4: 国際比較では、日本のアクセスの良さは明確な強みである。改革はアクセス制限から入るのではなく、患者が適切な入口へ自然に向かうインセンティブと情報設計から始めるべきである。",
+          "示唆5: 公開情報を継続監視する場合は、医師偏在対策、診療報酬改定DX、電子カルテ情報共有、後期高齢者負担、地域医療構想、医療施設数の変化を同じダッシュボードで見る必要がある。"
+        ]
+      },
+      {
+        title: "継続ウォッチすべきテーマ",
+        items: [
+          "医師偏在対策、専門医制度、医師の働き方改革後の救急・宿日直・当直体制への影響。",
+          "令和8年度診療報酬改定、診療報酬改定DX、共通算定モジュール、電子点数表の整備状況。",
+          "標準型電子カルテ、電子カルテ情報共有サービス、全国医療情報プラットフォーム、医療等情報の二次利用の制度化。",
+          "後期高齢者医療、国民医療費、薬価、患者負担、高額療養費制度の見直し議論。",
+          "地域医療構想、病床機能再編、在宅医療、介護情報基盤、医療・介護連携の実装状況。"
+        ]
+      }
+    ]
+  },
+  {
     id: "japan-care-industry-challenges-2026",
     title: "日本の介護業界における3つの構造課題",
     category: "介護",
@@ -950,6 +1555,7 @@ export const reports = [
       }
     ]
   }
+
 ];
 
 export const tagDefinitions = [
@@ -976,6 +1582,10 @@ export const tagDefinitions = [
   {
     name: "DX",
     description: "医療DX、介護DX、行政DX、業務デジタル化に関する情報"
+  },
+  {
+    name: "国際比較",
+    description: "海外制度との比較、国別プロファイル、制度設計の違いに関する情報"
   },
   {
     name: "VC",
