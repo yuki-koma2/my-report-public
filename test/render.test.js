@@ -83,6 +83,8 @@ describe("reports", () => {
     expect(report.articleType).toBe("deep");
     expect(report.topicCards).toHaveLength(3);
     expect(report.topicCards.map((topic) => topic.theme)).toEqual(["人材・地域偏在", "財政持続性", "医療DX・データ連携"]);
+    expect(report.topicCards.map((topic) => topic.date)).toEqual(["2025-12-23", "2025-10-10", "2026-06-19"]);
+    expect(report.topicCards.every((topic) => topic.date !== report.checkedAt)).toBe(true);
     expect(report.sections.map((section) => section.title)).toEqual(
       expect.arrayContaining(["調査条件", "歴史的背景", "国際比較から見える差分", "深掘り分析"])
     );

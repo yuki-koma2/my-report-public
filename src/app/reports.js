@@ -1103,7 +1103,7 @@ export const reports = [
         title: "人材・地域偏在の二重制約",
         summary:
           "日本では医師数自体は増加しているが、都市部・大病院・特定診療科に人的資源が寄りやすく、人口減少地域では医療提供体制の維持が難しくなっている。さらに2024年4月から医師の働き方改革が始まり、長時間労働を前提にした地域医療の継続は制度的にも限界を迎えつつある。",
-        date: "2026-07-01",
+        date: "2025-12-23",
         sourceTitle: "厚生労働省 令和6年 医師・歯科医師・薬剤師統計の概況",
         sourceUrl: "https://www.mhlw.go.jp/toukei/saikin/hw/ishi/24/dl/R06_kekka-1.pdf",
         sourceType: "一次情報",
@@ -1122,7 +1122,7 @@ export const reports = [
         title: "高齢化で強まる財政持続性の圧力",
         summary:
           "国民皆保険は日本の医療の中核だが、高齢化、医療技術の高度化、薬剤費、慢性疾患管理、後期高齢者医療の比重増により、負担と給付の均衡が厳しくなっている。価格を全国一律の診療報酬で管理する方式は強力だが、現場賃上げ、設備更新、地域医療維持との緊張が高まっている。",
-        date: "2026-07-01",
+        date: "2025-10-10",
         sourceTitle: "厚生労働省 令和5年度 国民医療費の概況 結果の概要",
         sourceUrl: "https://www.mhlw.go.jp/toukei/saikin/hw/k-iryohi/23/dl/R05kekka.pdf",
         sourceType: "一次情報",
@@ -1141,7 +1141,7 @@ export const reports = [
         title: "医療DXとデータ連携の遅れ",
         summary:
           "日本は技術大国でありながら、医療情報の標準化と相互運用性は遅れてきた。個別医療機関・個別ベンダー最適の電子カルテ、紙・FAXを含む院外連携、診療報酬改定ごとのシステム改修負荷が、現場の生産性と政策実装速度を下げている。",
-        date: "2026-07-01",
+        date: "2026-06-19",
         sourceTitle: "厚生労働省 医療DXについて",
         sourceUrl: "https://www.mhlw.go.jp/stf/iryoudx.html",
         sourceType: "一次情報",
