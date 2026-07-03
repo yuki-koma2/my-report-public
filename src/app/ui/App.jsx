@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useMemo, useState } from "react";
+import { trackEvent, trackPageView } from "../analytics.js";
 import { findReportById, getReportsByTag, getReportsByType, getTagSummaries, reports, tagDefinitions } from "../reports.js";
 import { getRoute } from "../routes.js";
 
@@ -17,6 +18,10 @@ function useHashRoute() {
 
 export default function App() {
   const route = useHashRoute();
+
+  useEffect(() => {
+    trackPageView(route);
+  }, [route]);
 
   return (
     <div className="min-h-screen overflow-hidden bg-white text-[#050505]">
@@ -324,7 +329,8 @@ function PolicyPage() {
   const policies = [
     ["出典を明示する", "レポート本文には、参照した公開資料の URL と確認日を記録します。"],
     ["事実と判断を分ける", "資料から直接確認できる内容と、そこから読み取れる判断を分けて記述します。"],
-    ["古くなりやすい情報を明示する", "制度、組織、予算、数値など変わりうる情報には確認日を併記します。"]
+    ["古くなりやすい情報を明示する", "制度、組織、予算、数値など変わりうる情報には確認日を併記します。"],
+    ["アクセス解析について", "サイト改善のため Google Analytics を利用します。個人を直接識別する情報を独自に送信せず、閲覧ページと出典リンククリックなどの利用状況を確認します。"]
   ];
 
   return (
@@ -334,7 +340,7 @@ function PolicyPage() {
         title="レポート作成方針"
         description="公開情報から確認できる内容だけを扱い、未確認情報を事実として扱わない方針です。"
       />
-      <section className="grid grid-cols-1 gap-5 md:grid-cols-3" aria-label="作成方針">
+      <section className="grid grid-cols-1 gap-5 md:grid-cols-2" aria-label="作成方針">
         {policies.map(([title, description]) => (
           <motion.article
             className="rounded-md border border-[#050505]/20 bg-white p-6 shadow-sm"
@@ -390,7 +396,13 @@ function ReportPage({ id }) {
           {report.sources.map((source) => (
             <li className="rounded-md border border-[#050505]/15 bg-white p-4 shadow-sm transition hover:border-[#0718c8] hover:shadow-[6px_6px_0_#0718c8]" key={source.url}>
               <p className="mb-2 font-mono text-xs font-black uppercase tracking-[0.08em] text-[#0718c8]">{source.type ?? "一次情報"}</p>
-              <a className="font-bold leading-6 text-[#050505] underline decoration-[#0718c8] decoration-2 underline-offset-4" href={source.url} target="_blank" rel="noreferrer">
+              <a
+                className="font-bold leading-6 text-[#050505] underline decoration-[#0718c8] decoration-2 underline-offset-4"
+                href={source.url}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => trackSourceClick(report.id, source)}
+              >
                 {source.title}
               </a>
               {(source.publishedAt || source.checkedAt) && (
@@ -577,7 +589,18 @@ function TopicCard({ topic, index }) {
             <TopicFact label="引用種別" value={topic.sourceType} />
             <TopicFact label="影響主体" value={topic.affected.join(" / ")} />
           </dl>
-          <a className="mt-4 inline-block font-bold text-[#0718c8] underline decoration-2 underline-offset-4" href={topic.sourceUrl} target="_blank" rel="noreferrer">
+          <a
+            className="mt-4 inline-block font-bold text-[#0718c8] underline decoration-2 underline-offset-4"
+            href={topic.sourceUrl}
+            target="_blank"
+            rel="noreferrer"
+            onClick={() =>
+              trackSourceClick("topic-card", {
+                title: topic.sourceTitle,
+                url: topic.sourceUrl
+              })
+            }
+          >
             {topic.sourceTitle}
           </a>
         </div>
@@ -662,6 +685,22 @@ function renderLinkedText(text) {
     }
     return part;
   });
+}
+
+function trackSourceClick(reportId, source) {
+  trackEvent("source_click", {
+    report_id: reportId,
+    source_title: source.title,
+    source_domain: getSourceDomain(source.url)
+  });
+}
+
+function getSourceDomain(url) {
+  try {
+    return new URL(url).hostname;
+  } catch {
+    return "unknown";
+  }
 }
 
 function TagPage({ tag }) {

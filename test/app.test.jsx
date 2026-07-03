@@ -44,6 +44,7 @@ describe("App", () => {
     expect(screen.getByRole("heading", { name: "レポート作成方針", level: 1 })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "出典を明示する" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "事実と判断を分ける" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "アクセス解析について" })).toBeInTheDocument();
   });
 
   it("レポート詳細に公開日、確認日、出典を表示する", () => {
