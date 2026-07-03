@@ -1,5 +1,6 @@
 import { act, cleanup, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { reports } from "../src/app/reports.js";
 import App from "../src/app/ui/App.jsx";
 
 afterEach(() => {
@@ -29,7 +30,8 @@ describe("App", () => {
     expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-07-02週" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Academic VC / スタートアップ投資動向週次レポート 2026-07-01週" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "医療・介護領域の最新動向調査レポート 2026-06-30週" })).toBeInTheDocument();
-    expect(screen.getByText("3件の記事を掲載中")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "日本の医療業界が直面する3つの構造課題" })).toBeInTheDocument();
+    expect(screen.getByText("4件の記事を掲載中")).toBeInTheDocument();
     expect(screen.queryByText(/サンプル/)).not.toBeInTheDocument();
   });
 
@@ -67,6 +69,59 @@ describe("App", () => {
     expect(screen.getAllByText(/今週確認できた重要な新規情報なし/).length).toBeGreaterThan(0);
     expect(screen.getByRole("heading", { name: "引用元・確認した出典" })).toBeInTheDocument();
     expect(screen.getAllByRole("link", { name: "厚生労働省 新着情報RSS" })[0]).toHaveAttribute("href", "https://www.mhlw.go.jp/stf/news.rdf");
+  });
+
+  it("日本の医療業界課題レポートに3課題、歴史背景、国際比較を表示する", () => {
+    window.location.hash = "#/reports/japan-healthcare-industry-structural-challenges-2026-07-01";
+
+    render(<App />);
+
+    expect(screen.getByRole("heading", { name: "日本の医療業界が直面する3つの構造課題", level: 1 })).toBeInTheDocument();
+    expect(screen.getByText("深掘り調査")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "歴史的背景" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "国際比較から見える差分" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "人材・地域偏在の二重制約" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "高齢化で強まる財政持続性の圧力" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "医療DXとデータ連携の遅れ" })).toBeInTheDocument();
+    expect(screen.getAllByText(/英国はGPを入口に置き/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/1961年の国民皆保険/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText("二次情報").length).toBe(5);
+    expect(screen.getByRole("link", { name: "Commonwealth Fund International Health Care System Profiles: Japan" })).toBeInTheDocument();
+  });
+
+  it("セクションタイトルが欠けてもレポート詳細を表示できる", () => {
+    reports.push({
+      id: "missing-section-title-test",
+      title: "セクションタイトル欠落テスト",
+      category: "テスト",
+      articleType: "deep",
+      articleTypeLabel: "深掘り調査",
+      cadence: "テスト",
+      tags: ["医療"],
+      summary: "セクションタイトルが欠けてもレンダリングが落ちないことを確認するテスト用レポートです。",
+      publishedAt: "2026-07-01",
+      checkedAt: "2026-07-01",
+      sources: [{ title: "テスト出典", url: "https://example.com" }],
+      highlights: ["表示確認"],
+      sections: [{ items: ["タイトルなしセクションの本文"] }],
+      actionCards: [
+        {
+          owner: "テスト担当",
+          action: "表示確認をする",
+          due: "すぐ",
+          reason: "title が undefined の section で endsWith を呼ばないことを確認するため。"
+        }
+      ]
+    });
+    window.location.hash = "#/reports/missing-section-title-test";
+
+    try {
+      expect(() => render(<App />)).not.toThrow();
+      expect(screen.getByRole("heading", { name: "セクションタイトル欠落テスト", level: 1 })).toBeInTheDocument();
+      expect(screen.getByText("タイトルなしセクションの本文")).toBeInTheDocument();
+    } finally {
+      reports.pop();
+    }
   });
 
   it("Academic VC週次レポートの詳細に主要トピック、出典、取得エラーを表示する", () => {
@@ -146,6 +201,7 @@ describe("App", () => {
 
     expect(screen.getByRole("heading", { name: "#エンジニアリング", level: 1 })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "医療・介護領域の最新動向調査レポート 2026-06-30週" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "日本の医療業界が直面する3つの構造課題" })).toBeInTheDocument();
   });
 
   it("hashchange に応じて表示を切り替える", () => {
