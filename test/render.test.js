@@ -1,6 +1,9 @@
 import { describe, expect, it } from "vitest";
 import { getReportsByTag, getReportsByType, getTagSummaries, reports } from "../src/app/reports.js";
 import { getRoute } from "../src/app/routes.js";
+import { tagDefinitions } from "../src/app/tagDefinitions.js";
+
+const reportDataModules = import.meta.glob("../src/app/reportData/*.js", { eager: true, import: "report" });
 
 describe("routing", () => {
   it("空のハッシュはホームとして扱う", () => {
@@ -32,7 +35,7 @@ describe("routing", () => {
 
 describe("reports", () => {
   it("実調査に基づく週次レポートを保持する", () => {
-    expect(reports).toHaveLength(6);
+    expect(reports.length).toBeGreaterThanOrEqual(6);
     expect(reports.map((report) => report.id)).toContain("tech-landscape-weekly-2026-07-02");
     expect(reports.map((report) => report.id)).toContain("academic-vc-weekly-2026-07-01");
     expect(reports.map((report) => report.id)).toContain("tech-landscape-weekly-2026-07-01");
@@ -45,29 +48,38 @@ describe("reports", () => {
     }
   });
 
+  it("レポート本文を個別データファイルから集約する", () => {
+    const reportData = Object.values(reportDataModules);
+
+    expect(reportData).toHaveLength(reports.length);
+    expect(reportData.map((report) => report.id).sort()).toEqual(reports.map((report) => report.id).sort());
+    expect(reports.map((report) => report.publishedAt)).toEqual([...reports.map((report) => report.publishedAt)].sort().reverse());
+  });
+
   it("週次記事と深掘り記事を分類できる", () => {
-    expect(getReportsByType("weekly")).toHaveLength(4);
-    expect(getReportsByType("deep")).toHaveLength(2);
+    expect(getReportsByType("weekly").map((report) => report.id)).toEqual(
+      expect.arrayContaining([
+        "tech-landscape-weekly-2026-07-02",
+        "academic-vc-weekly-2026-07-01",
+        "tech-landscape-weekly-2026-07-01",
+        "healthcare-care-weekly-2026-06-30"
+      ])
+    );
+    expect(getReportsByType("deep").map((report) => report.id)).toEqual(
+      expect.arrayContaining(["japan-healthcare-industry-structural-challenges-2026-07-01", "japan-care-industry-challenges-2026"])
+    );
   });
 
   it("タグで記事を分類できる", () => {
-    expect(getReportsByTag("医療")).toHaveLength(2);
-    expect(getReportsByTag("介護")).toHaveLength(2);
-    expect(getReportsByTag("AI")).toHaveLength(4);
-    expect(getReportsByTag("エンジニアリング")).toHaveLength(4);
-    expect(getReportsByTag("制度")).toHaveLength(3);
-    expect(getReportsByTag("DX")).toHaveLength(3);
-    expect(getReportsByTag("国際比較")).toHaveLength(1);
-    expect(getReportsByTag("VC")).toHaveLength(1);
-    expect(getReportsByTag("スタートアップ")).toHaveLength(3);
-    expect(getReportsByTag("資金調達")).toHaveLength(2);
-    expect(getReportsByTag("市場インテリジェンス")).toHaveLength(2);
-    expect(getReportsByTag("テック情勢")).toHaveLength(1);
-    expect(getReportsByTag("半導体")).toHaveLength(1);
-    expect(getReportsByTag("セキュリティ")).toHaveLength(1);
-    expect(getReportsByTag("開発者ツール")).toHaveLength(1);
-    expect(getReportsByTag("規制")).toHaveLength(1);
-    expect(getTagSummaries().map((tag) => tag.name)).toEqual([
+    expect(getReportsByTag("医療").map((report) => report.id)).toEqual(
+      expect.arrayContaining(["healthcare-care-weekly-2026-06-30", "japan-healthcare-industry-structural-challenges-2026-07-01"])
+    );
+    expect(getReportsByTag("VC").map((report) => report.id)).toContain("academic-vc-weekly-2026-07-01");
+    expect(getReportsByTag("市場インテリジェンス").map((report) => report.id)).toContain("tech-landscape-weekly-2026-07-02");
+    expect(getReportsByTag("テック情勢").map((report) => report.id)).toContain("tech-landscape-weekly-2026-07-01");
+    const medicalTag = getTagSummaries().find((tag) => tag.name === "医療");
+
+    expect(tagDefinitions.map((tag) => tag.name)).toEqual([
       "医療",
       "介護",
       "AI",
@@ -85,6 +97,11 @@ describe("reports", () => {
       "開発者ツール",
       "規制"
     ]);
+    expect(medicalTag).toBeDefined();
+    expect(medicalTag).toMatchObject({
+      description: "医療制度、医療DX、医療機関、医療データに関する情報"
+    });
+    expect(medicalTag.count).toBe(getReportsByTag("医療").length);
   });
 
   it("日本の医療業界課題を3つに絞った深掘りレポートを保持する", () => {

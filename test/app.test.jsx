@@ -33,7 +33,7 @@ describe("App", () => {
     expect(screen.getByRole("heading", { name: "医療・介護領域の最新動向調査レポート 2026-06-30週" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "日本の医療業界が直面する3つの構造課題" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "日本の介護業界における3つの構造課題" })).toBeInTheDocument();
-    expect(screen.getByText("6件の記事を掲載中")).toBeInTheDocument();
+    expect(screen.getByText(`${reports.length}件の記事を掲載中`)).toBeInTheDocument();
     expect(screen.queryByText(/サンプル/)).not.toBeInTheDocument();
   });
 

@@ -27,15 +27,16 @@
 .
 ├── src/              # ビルド前の SPA ソース
 │   ├── app/          # React コンポーネント、ルーティング、レポートデータ
+│   │   └── reportData/ # 1ファイル1レポートの本文データ
 │   ├── assets/       # Tailwind CSS エントリーポイント
 │   └── index.html    # SPA のエントリーポイント
-├── dist/             # ビルド後の公開対象。GitHub Pages で配信する想定
+├── dist/             # ビルド後の公開対象。GitHub Actions で生成し、Git管理しない
 ├── .github/          # GitHub Actions workflow
 ├── vite.config.js    # Vite / React / Tailwind 設定
-└── test/             # Node.js 標準 test runner のテスト
+└── test/             # Vitest のテスト
 ```
 
-`src/` を編集し、`npm run build` で `dist/` を生成します。GitHub Pages では `dist/` を公開対象にします。
+`src/` を編集し、`npm run build` で `dist/` を生成します。レポート本文は `src/app/reportData/` に1レポート1ファイルで追加し、タグ定義は `src/app/tagDefinitions.js` で管理します。GitHub Pages では GitHub Actions が生成した `dist/` を公開対象にします。
 
 ## コマンド
 
@@ -104,7 +105,7 @@ GitHub Pages を使って公開します。公開元は GitHub Actions です。
 4. GitHub Pages にデプロイする
 5. デプロイ成功後に `deploy/pages/YYYYMMDD-HHMMSS-<run-number>-<short-sha>` 形式のタグを作成する
 
-pull request では test/build まで実行し、デプロイとタグ作成は行いません。GitHub Pages の設定では、Build and deployment の Source を `GitHub Actions` にします。
+pull request では test/build まで実行し、デプロイとタグ作成は行いません。`dist/` はPR差分に含めず、GitHub Pages の設定では、Build and deployment の Source を `GitHub Actions` にします。
 
 ## 初期セットアップ
 
