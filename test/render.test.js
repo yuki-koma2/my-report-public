@@ -129,6 +129,9 @@ describe("reports", () => {
     expect(report.sections.some((section) => section.items.some((item) => item.includes("ドイツ")))).toBe(true);
     expect(report.sections.some((section) => section.items.some((item) => item.includes("韓国")))).toBe(true);
     expect(report.sources.map((source) => source.title)).toContain("OECD Health at a Glance 2023");
+    expect(report.sources.find((source) => source.title === "OECD Health at a Glance 2023")).toMatchObject({
+      type: "二次情報"
+    });
   });
 
   it("公開日が未確認のトピックでは確認日と出典日付を分ける", () => {

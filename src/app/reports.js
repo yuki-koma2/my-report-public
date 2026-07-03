@@ -1328,7 +1328,8 @@ export const reports = [
       },
       {
         title: "OECD Health at a Glance 2023",
-        url: "https://www.oecd-ilibrary.org/social-issues-migration-health/health-at-a-glance-2023_7a7afb35-en"
+        url: "https://www.oecd-ilibrary.org/social-issues-migration-health/health-at-a-glance-2023_7a7afb35-en",
+        type: "二次情報"
       }
     ],
     highlights: [
