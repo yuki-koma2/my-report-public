@@ -100,6 +100,11 @@ describe("App", () => {
     expect(screen.getByRole("heading", { name: "介護人材の不足と処遇改善の遅れ" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "介護費用と保険料の増加による制度持続性" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "地域差と紙・人手依存の運営による提供体制のひずみ" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "3課題を支える補足根拠" })).toBeInTheDocument();
+    expect(screen.getByText("作成月")).toBeInTheDocument();
+    expect(screen.getByText("令和7年7月")).toBeInTheDocument();
+    expect(screen.getByText(/処遇改善は採用・定着の前提条件/)).toBeInTheDocument();
+    expect(screen.getByText(/在宅サービス利用者数は97万人から427万人/)).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "課題が生まれた歴史的背景" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "海外比較から見える論点" })).toBeInTheDocument();
     expect(screen.getAllByText(/ドイツ/).length).toBeGreaterThan(0);

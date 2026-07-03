@@ -108,8 +108,16 @@ describe("reports", () => {
       "介護費用と保険料の増加による制度持続性",
       "地域差と紙・人手依存の運営による提供体制のひずみ"
     ]);
+    expect(report.topicCards.find((topic) => topic.sourceTitle === "厚生労働省 介護保険制度の概要")).toMatchObject({
+      dateLabel: "作成月",
+      date: "令和7年7月",
+      checkedAt: "2026-07-01"
+    });
     expect(report.sources.map((source) => source.title)).toContain("厚生労働省 第9期介護保険事業計画に基づく介護職員の必要数について");
     expect(report.sections.some((section) => section.items.some((item) => item.includes("2026年度には約240万人")))).toBe(true);
+    expect(report.sections.map((section) => section.title)).toContain("テーマ別の調査結果");
+    expect(report.sections.map((section) => section.title)).toContain("3課題を支える補足根拠");
+    expect(report.sections.find((section) => section.title === "テーマ別の調査結果").items).toHaveLength(0);
   });
 
   it("介護業界課題レポートは歴史的背景と国際比較を持つ", () => {
