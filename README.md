@@ -49,6 +49,18 @@ npm run preview
 
 `npm run dev` は開発サーバーを起動します。`npm run preview` は `dist/` をローカル配信するため、先に `npm run build` を実行してください。
 
+## アクセス解析
+
+Google Analytics 4 を利用して、公開サイトの閲覧状況を確認します。
+
+- デフォルトの Measurement ID は `G-95VGGHF660` です
+- 別の ID を使う場合は、build 時に `VITE_GA_MEASUREMENT_ID` を設定します
+- `localhost`、`127.0.0.1`、`::1` では送信しません
+- SPA の hash route 変更に合わせて、`page_view` を手動送信します
+- gtag の自動 `page_view` は無効化し、二重計測を避けます
+- 出典リンククリックは `source_click` イベントとして送信します
+- 個人を直接識別する情報や非公開情報は送信しません
+
 ## 開発方針
 
 このリポジトリでは t-wada 式 TDD を基本にします。
