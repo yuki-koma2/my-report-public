@@ -32,32 +32,34 @@ describe("routing", () => {
 
 describe("reports", () => {
   it("実調査に基づく週次レポートを保持する", () => {
-    expect(reports).toHaveLength(3);
+    expect(reports).toHaveLength(4);
+    expect(reports.map((report) => report.id)).toContain("tech-landscape-weekly-2026-07-02");
     expect(reports.map((report) => report.id)).toContain("academic-vc-weekly-2026-07-01");
     expect(reports.map((report) => report.id)).toContain("healthcare-care-weekly-2026-06-30");
     expect(reports.map((report) => report.id)).toContain("japan-healthcare-industry-structural-challenges-2026-07-01");
-    expect(reports[0].title).toBe("Academic VC / スタートアップ投資動向週次レポート 2026-07-01週");
+    expect(reports[0].title).toBe("テック情勢週次レポート 2026-07-02週");
     for (const report of reports) {
       expect(report.summary).not.toContain("サンプル");
     }
   });
 
   it("週次記事と深掘り記事を分類できる", () => {
-    expect(getReportsByType("weekly")).toHaveLength(2);
+    expect(getReportsByType("weekly")).toHaveLength(3);
     expect(getReportsByType("deep")).toHaveLength(1);
   });
 
   it("タグで記事を分類できる", () => {
     expect(getReportsByTag("医療")).toHaveLength(2);
     expect(getReportsByTag("介護")).toHaveLength(1);
-    expect(getReportsByTag("AI")).toHaveLength(2);
-    expect(getReportsByTag("エンジニアリング")).toHaveLength(2);
+    expect(getReportsByTag("AI")).toHaveLength(3);
+    expect(getReportsByTag("エンジニアリング")).toHaveLength(3);
     expect(getReportsByTag("制度")).toHaveLength(2);
     expect(getReportsByTag("DX")).toHaveLength(2);
     expect(getReportsByTag("国際比較")).toHaveLength(1);
     expect(getReportsByTag("VC")).toHaveLength(1);
-    expect(getReportsByTag("スタートアップ")).toHaveLength(1);
-    expect(getReportsByTag("資金調達")).toHaveLength(1);
+    expect(getReportsByTag("スタートアップ")).toHaveLength(2);
+    expect(getReportsByTag("資金調達")).toHaveLength(2);
+    expect(getReportsByTag("市場インテリジェンス")).toHaveLength(2);
     expect(getTagSummaries().map((tag) => tag.name)).toEqual([
       "医療",
       "介護",
@@ -136,5 +138,42 @@ describe("reports", () => {
     expect(report.sources.map((source) => source.title)).toContain("VC News Daily: Caplight Closes $16M Series A Round");
     expect(JSON.stringify(report.topicCards.find((topic) => topic.theme === "ヘルスケア・ライフサイエンス"))).not.toContain("Omen AI");
     expect(report.sections.some((section) => section.title === "取得エラー")).toBe(true);
+  });
+
+  it("テック情勢週次レポートがAIクローラ、AI基盤、開発者ツール、仮説課題を持つ", () => {
+    const report = reports.find((item) => item.id === "tech-landscape-weekly-2026-07-02");
+
+    expect(report.category).toBe("テック情勢");
+    expect(report.lead.title).toBe("今週の判断ポイント");
+    expect(report.dashboardMetrics.map((metric) => metric.label)).toContain("短期対応リスク");
+    expect(report.topicCards.map((topic) => topic.title)).toContain("CloudflareがAIクローラのデフォルトブロックと課金分離を打ち出す");
+    expect(report.topicCards.map((topic) => topic.title)).toContain("Together AIの大型調達がオープンモデル向けAIクラウド競争を押し上げる");
+    expect(report.topicCards.map((topic) => topic.title)).toContain("GitHub Copilotが初のopen-weight選択モデルとしてKimi K2.7 Codeを提供");
+    expect(report.topicCards.map((topic) => topic.title)).not.toContain("Googleが年齢確認向けZKPライブラリを公開し、規制対応の実装部品を示す");
+    expect(report.topicCards.find((topic) => topic.title === "QualcommのModular買収発表がAIデータセンターのソフトウェア統合競争を示す")).toMatchObject({
+      date: "2026-06-24",
+      sourceTitle: "Qualcomm Investor Relations: Qualcomm to Acquire Modular",
+      sourceType: "一次情報"
+    });
+    expect(report.sources.map((source) => source.title)).toContain("TechCrunch: Cloudflare's new policy pushes AI companies to pay for publishers' content");
+    expect(report.sources.map((source) => source.title)).toContain("GitHub Changelog: Kimi K2.7 Code is generally available in GitHub Copilot");
+    expect(report.sources.find((source) => source.title === "Qualcomm Investor Relations: Qualcomm to Acquire Modular")).toMatchObject({
+      type: "一次情報",
+      publishedAt: "2026-06-24"
+    });
+    expect(report.sources.map((source) => source.title)).toContain("Product Hunt: scritty");
+    expect(report.sources.map((source) => source.title)).toContain("Product Hunt: Macro");
+    expect(report.sources.map((source) => source.title)).toContain("Product Hunt: Solaris");
+    expect(report.sources.find((source) => source.title === "Google: Now open source: our Zero-Knowledge Proof (ZKP) libraries for age assurance")).toMatchObject({
+      type: "対象期間外の参考情報",
+      publishedAt: "2025-07-03"
+    });
+    expect(report.sources.find((source) => source.title === "Forrester: Stripe's New Stablecoin Bet: Open USD")).toMatchObject({
+      publishedAt: "2026-06-30"
+    });
+    expect(report.sections.some((section) => section.title === "注目すべき仮説と解くべき課題")).toBe(true);
+    expect(report.sections.some((section) => section.title === "今週検討すべき対応アクション")).toBe(true);
+    expect(report.sections.some((section) => section.title === "取得エラー")).toBe(true);
+    expect(report.sections.find((section) => section.title === "取得エラー").items).toContain("主要確認入口7件はすべて取得可能。取得エラーなし。");
   });
 });
