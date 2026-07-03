@@ -771,7 +771,7 @@ export const reports = [
         title: "Tom's Hardware: South Korea unveils $520 billion investment plan with Samsung and SK Hynix",
         url: "https://www.tomshardware.com/tech-industry/semiconductors/south-korea-unveils-usd520-billion-investment-plan-with-samsung-and-sk-hynix-to-expand-memory-chip-dominance-plan-includes-four-new-fabs-and-hbm-facilities-amid-strong-government-support",
         sourceType: "二次情報",
-        publishedAt: "2026-06-30"
+        publishedAt: "2026-06-29"
       },
       {
         title: "arXiv: Can Open-Source LLM Agents Replace Static Application Security Testing Tools?",
@@ -803,8 +803,8 @@ export const reports = [
     dashboardMetrics: [
       {
         label: "高優先度",
-        value: "5件",
-        caption: "AIエージェント運用、AIクラウド規制、半導体供給、開発者体験",
+        value: "3件",
+        caption: "topicCardsで重要度 高 とした対象期間内・持ち越し主要トピック",
         tone: "high"
       },
       {
@@ -889,7 +889,7 @@ export const reports = [
         title: "韓国がSamsung・SK Hynixと大規模メモリ投資を進めるとの報道",
         summary:
           "Tom's Hardwareは、韓国がSamsung ElectronicsとSK Hynixを含む官民投資計画で、メモリ、HBM、先端パッケージング、AIデータセンター関連の増強を進めると報じた。",
-        date: "2026-06-30",
+        date: "2026-06-29",
         sourceTitle: "Tom's Hardware 韓国半導体投資報道",
         sourceUrl: "https://www.tomshardware.com/tech-industry/semiconductors/south-korea-unveils-usd520-billion-investment-plan-with-samsung-and-sk-hynix-to-expand-memory-chip-dominance-plan-includes-four-new-fabs-and-hbm-facilities-amid-strong-government-support",
         sourceType: "二次情報",
@@ -954,6 +954,7 @@ export const reports = [
         title: "調査条件",
         items: [
           "主対象期間: 2026-06-25 00:00 JSTから2026-07-01の実行時点まで。指定スケジュールは木曜実行だが、今回の実行日が2026-07-01のため、この範囲で公開確認できた情報を対象にした。",
+          "対象期間外の持ち越し主要トピック: 2026-06-24公開のFigma公式発表とQualcomm公式リリースは主対象期間の1日前だが、ProductZineの2026-06-25記事で再確認され、AIエージェント開発体験とAIソフトウェア基盤の文脈理解に必要なため、今週の新規情報ではなく持ち越し採用として区別した。",
           "対象期間外の背景情報: AIエージェントのセキュリティ仮説を扱うため、2026-06-10公開のSAST代替可能性研究と2026-06-04公開のADK Arena研究を背景として採用した。これは2026-07-01から14日以内ではないため、今週の新規出来事ではなく、仮説検証の背景情報として明記する。",
           "調査対象: 指定RSS、ProductZine個別記事、Figma公式発表、Qualcomm公式発表、主要ニュース記事、arXiv研究を確認した。一次情報を優先し、一次情報を確認できない法案・半導体投資は二次情報として明記した。",
           "注意事項: Cloud Security Actと韓国半導体投資は、今回確認できた範囲ではニュース記事に基づく。意思決定では法案本文、政府発表、企業IR資料を追加確認すること。"
@@ -973,7 +974,7 @@ export const reports = [
       {
         title: "テーマ別の調査結果",
         items: [
-          "Figma Config 2026、Qualcomm/Modular買収報道、AIクラウド規制報道、韓国半導体投資報道、AIエージェントSAST研究を、重要度、関連度、対象者、出典付きのトピックカードとして整理した。"
+          "Figma Config 2026、Qualcomm/Modular買収報道、AIクラウド規制報道、韓国半導体投資報道、AIエージェントSAST研究を、重要度、関連度、対象者、出典付きのトピックカードとして整理した。FigmaとQualcommは2026-06-24公開のため、主対象期間外の持ち越し主要トピックとして扱う。"
         ]
       },
       {
@@ -1029,7 +1030,7 @@ export const reports = [
           "Hacker News: https://news.ycombinator.com/rss / failure type: web.open returned no usable feed content in this run.",
           "Product Hunt: https://www.producthunt.com/feed / failure type: web.open returned no usable feed content in this run.",
           "Forrester Blogs: https://go.forrester.com/blogs/feed/ / failure type: JavaScript disabled challenge page returned instead of RSS.",
-          "TechFeed Startup / Innovation and Marketing: https://techfeed.io/feeds/categories/... / failure type: web.open returned no usable feed content in this run."
+          "TechFeed Startup / Innovation and Marketing: https://techfeed.io/feeds/categories/Startup%20%2F%20Innovation?userId=667a89b3185e12081e95a7b5 ; https://techfeed.io/feeds/categories/Marketing?userId=667a89b3185e12081e95a7b5 / failure type: web.open returned no usable feed content in this run."
         ]
       }
     ]

@@ -226,6 +226,7 @@ describe("App", () => {
     expect(screen.getByRole("heading", { name: "今週の判断ポイント" })).toBeInTheDocument();
     expect(screen.getAllByText(/FigmaがAIエージェント/).length).toBeGreaterThan(0);
     expect(screen.getByText(/関連度 94/)).toBeInTheDocument();
+    expect(screen.getByText("3件")).toBeInTheDocument();
     expect(screen.getAllByText("重要度 高").length).toBeGreaterThan(0);
     expect(screen.getByRole("heading", { name: "今週検討すべき対応アクション" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "AI機能の権限境界と監査ログを棚卸しする" })).toBeInTheDocument();
@@ -234,6 +235,7 @@ describe("App", () => {
     expect(screen.getByRole("heading", { name: "注目すべき仮説" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "解くべき課題" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "取得エラー" })).toBeInTheDocument();
+    expect(screen.getByText(/2026-06-24公開のFigma公式発表とQualcomm公式リリース/)).toBeInTheDocument();
     expect(screen.getByText(/2026-06-10公開のSAST代替可能性研究/)).toBeInTheDocument();
     expect(screen.getAllByText("二次情報").length).toBeGreaterThan(0);
     expect(screen.getAllByText("研究論文").length).toBeGreaterThan(0);
@@ -246,6 +248,8 @@ describe("App", () => {
       "https://productzine.jp/article/detail/4393"
     );
     expect(screen.getByText(/Forrester Blogs/)).toBeInTheDocument();
+    expect(screen.getByText(/Startup%20%2F%20Innovation\?userId=667a89b3185e12081e95a7b5/)).toBeInTheDocument();
+    expect(screen.getByText(/Marketing\?userId=667a89b3185e12081e95a7b5/)).toBeInTheDocument();
     expect(screen.getAllByRole("link", { name: "Figma Config 2026: New materials, new tools and a more expressive canvas" })[0]).toHaveAttribute(
       "href",
       "https://www.figma.com/blog/config-2026-recap/"

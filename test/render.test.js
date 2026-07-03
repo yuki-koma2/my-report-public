@@ -259,7 +259,13 @@ describe("reports", () => {
     expect(report.sources.find((source) => source.title.includes("Axios"))).toMatchObject({
       sourceType: "二次情報"
     });
+    expect(report.dashboardMetrics.find((metric) => metric.label === "高優先度")).toMatchObject({
+      value: "3件"
+    });
     expect(report.sources.map((source) => source.url)).toContain("https://productzine.jp/article/detail/4393");
+    expect(report.sources.find((source) => source.title.includes("Tom's Hardware"))).toMatchObject({
+      publishedAt: "2026-06-29"
+    });
     expect(report.sections.some((section) => section.title === "今週検討すべき対応アクション")).toBe(true);
     expect(report.sections.some((section) => section.title === "注目すべき仮説")).toBe(true);
     expect(report.sections.some((section) => section.title === "解くべき課題")).toBe(true);
@@ -268,5 +274,14 @@ describe("reports", () => {
       "プロダクト責任者: AI機能の権限境界と監査ログを棚卸しする (2026-07-12まで)"
     );
     expect(report.sections.find((section) => section.title === "調査条件").items.join(" ")).toContain("14日以内ではない");
+    expect(report.sections.find((section) => section.title === "調査条件").items.join(" ")).toContain(
+      "2026-06-24公開のFigma公式発表とQualcomm公式リリース"
+    );
+    expect(report.sections.find((section) => section.title === "取得エラー").items.join(" ")).toContain(
+      "https://techfeed.io/feeds/categories/Startup%20%2F%20Innovation?userId=667a89b3185e12081e95a7b5"
+    );
+    expect(report.sections.find((section) => section.title === "取得エラー").items.join(" ")).toContain(
+      "https://techfeed.io/feeds/categories/Marketing?userId=667a89b3185e12081e95a7b5"
+    );
   });
 });
