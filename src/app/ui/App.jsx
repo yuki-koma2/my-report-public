@@ -390,12 +390,12 @@ function ReportPage({ id }) {
       <section className="mt-12 border-t-2 border-[#050505] pt-8">
         <h2 className="mb-4 text-2xl font-black text-[#050505]">引用元・確認した出典</h2>
         <p className="mb-5 max-w-2xl leading-7 text-[#172033]">
-          本文内の判断は、公開日と確認日を追える公開情報を優先して整理しています。リンク先で原文を確認できます。
+          本文内の判断は、公開日と確認日を追える一次情報を優先し、二次情報や研究論文は種別を分けて整理しています。リンク先で原文を確認できます。
         </p>
         <ul className="grid grid-cols-1 gap-3 md:grid-cols-2">
           {report.sources.map((source) => (
             <li className="rounded-md border border-[#050505]/15 bg-white p-4 shadow-sm transition hover:border-[#0718c8] hover:shadow-[6px_6px_0_#0718c8]" key={source.url}>
-              <p className="mb-2 font-mono text-xs font-black uppercase tracking-[0.08em] text-[#0718c8]">{source.type ?? "一次情報"}</p>
+              <p className="mb-2 font-mono text-xs font-black uppercase tracking-[0.08em] text-[#0718c8]">{source.sourceType ?? source.type ?? "一次情報"}</p>
               <a
                 className="font-bold leading-6 text-[#050505] underline decoration-[#0718c8] decoration-2 underline-offset-4"
                 href={source.url}

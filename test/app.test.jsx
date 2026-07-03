@@ -29,10 +29,11 @@ describe("App", () => {
     expect(screen.getByRole("heading", { name: "スタートアップ" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-07-02週" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Academic VC / スタートアップ投資動向週次レポート 2026-07-01週" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-07-01週" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "医療・介護領域の最新動向調査レポート 2026-06-30週" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "日本の医療業界が直面する3つの構造課題" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "日本の介護業界における3つの構造課題" })).toBeInTheDocument();
-    expect(screen.getByText("5件の記事を掲載中")).toBeInTheDocument();
+    expect(screen.getByText("6件の記事を掲載中")).toBeInTheDocument();
     expect(screen.queryByText(/サンプル/)).not.toBeInTheDocument();
   });
 
@@ -215,6 +216,46 @@ describe("App", () => {
     );
   });
 
+  it("テック情勢レポート詳細に判断ポイント、仮説、課題、取得エラーを表示する", () => {
+    window.location.hash = "#/reports/tech-landscape-weekly-2026-07-01";
+
+    render(<App />);
+
+    expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-07-01週", level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "テック情勢" })).toHaveAttribute("href", "#/tags/%E3%83%86%E3%83%83%E3%82%AF%E6%83%85%E5%8B%A2");
+    expect(screen.getByRole("heading", { name: "今週の判断ポイント" })).toBeInTheDocument();
+    expect(screen.getAllByText(/FigmaがAIエージェント/).length).toBeGreaterThan(0);
+    expect(screen.getByText(/関連度 94/)).toBeInTheDocument();
+    expect(screen.getByText("3件")).toBeInTheDocument();
+    expect(screen.getAllByText("重要度 高").length).toBeGreaterThan(0);
+    expect(screen.getByRole("heading", { name: "今週検討すべき対応アクション" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "AI機能の権限境界と監査ログを棚卸しする" })).toBeInTheDocument();
+    expect(screen.getByText("期限 2026-07-12まで")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "今週見直すべき意思決定" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "注目すべき仮説" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "解くべき課題" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "取得エラー" })).toBeInTheDocument();
+    expect(screen.getByText(/2026-06-24公開のFigma公式発表とQualcomm公式リリース/)).toBeInTheDocument();
+    expect(screen.getByText(/2026-06-10公開のSAST代替可能性研究/)).toBeInTheDocument();
+    expect(screen.getAllByText("二次情報").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("研究論文").length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("link", { name: "Qualcomm to Acquire Modular" })[0]).toHaveAttribute(
+      "href",
+      "https://www.qualcomm.com/news/releases/2026/06/qualcomm-to-acquire-modular"
+    );
+    expect(screen.getByRole("link", { name: "Figma年次カンファレンス「Config 2026」で全面刷新を発表" })).toHaveAttribute(
+      "href",
+      "https://productzine.jp/article/detail/4393"
+    );
+    expect(screen.getByText(/Forrester Blogs/)).toBeInTheDocument();
+    expect(screen.getByText(/Startup%20%2F%20Innovation\?userId=667a89b3185e12081e95a7b5/)).toBeInTheDocument();
+    expect(screen.getByText(/Marketing\?userId=667a89b3185e12081e95a7b5/)).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: "Figma Config 2026: New materials, new tools and a more expressive canvas" })[0]).toHaveAttribute(
+      "href",
+      "https://www.figma.com/blog/config-2026-recap/"
+    );
+  });
+
   it("存在しないページでは Not Found を表示する", () => {
     window.location.hash = "#/missing";
 
@@ -230,6 +271,8 @@ describe("App", () => {
     render(<App />);
 
     expect(screen.getByRole("heading", { name: "#エンジニアリング", level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-07-02週" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-07-01週" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "医療・介護領域の最新動向調査レポート 2026-06-30週" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "日本の医療業界が直面する3つの構造課題" })).toBeInTheDocument();
   });
