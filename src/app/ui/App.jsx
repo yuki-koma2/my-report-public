@@ -385,7 +385,7 @@ function ReportPage({ id }) {
 
       <ReportHighlights highlights={report.highlights} />
 
-      {report.sections?.length > 0 && <ReportSections sections={report.sections} topicCards={report.topicCards} actionCards={report.actionCards} />}
+      {report.sections?.length > 0 && <ReportSections reportId={report.id} sections={report.sections} topicCards={report.topicCards} actionCards={report.actionCards} />}
 
       <section className="mt-12 border-t-2 border-[#050505] pt-8">
         <h2 className="mb-4 text-2xl font-black text-[#050505]">引用元・確認した出典</h2>
@@ -508,19 +508,19 @@ function ReportHighlights({ highlights }) {
   );
 }
 
-function ReportSections({ sections, topicCards = [], actionCards = [] }) {
+function ReportSections({ reportId, sections, topicCards = [], actionCards = [] }) {
   return (
     <div className="mt-10 space-y-10">
       {sections.map((section) => (
-        <ReportSection section={section} topicCards={topicCards} actionCards={actionCards} key={section.title} />
+        <ReportSection reportId={reportId} section={section} topicCards={topicCards} actionCards={actionCards} key={section.title} />
       ))}
     </div>
   );
 }
 
-function ReportSection({ section, topicCards, actionCards }) {
+function ReportSection({ reportId, section, topicCards, actionCards }) {
   if (section.title === "テーマ別の調査結果" && topicCards.length > 0) {
-    return <TopicCardSection title={section.title} topicCards={topicCards} />;
+    return <TopicCardSection reportId={reportId} title={section.title} topicCards={topicCards} />;
   }
 
   if (section.title?.endsWith("対応アクション") && actionCards.length > 0) {
@@ -532,14 +532,14 @@ function ReportSection({ section, topicCards, actionCards }) {
       <h2 className="mb-4 text-2xl font-black text-[#050505]">{section.title}</h2>
       <div className="grid grid-cols-1 gap-3">
         {section.items.map((item) => (
-          <RichTextCard item={item} key={item} />
+          <RichTextCard item={item} reportId={reportId} key={item} />
         ))}
       </div>
     </section>
   );
 }
 
-function TopicCardSection({ title, topicCards }) {
+function TopicCardSection({ reportId, title, topicCards }) {
   return (
     <section className="border-t-2 border-[#050505] pt-8">
       <div className="mb-5 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
@@ -548,14 +548,14 @@ function TopicCardSection({ title, topicCards }) {
       </div>
       <div className="grid grid-cols-1 gap-5">
         {topicCards.map((topic, index) => (
-          <TopicCard topic={topic} index={index} key={topic.title} />
+          <TopicCard reportId={reportId} topic={topic} index={index} key={topic.title} />
         ))}
       </div>
     </section>
   );
 }
 
-function TopicCard({ topic, index }) {
+function TopicCard({ reportId, topic, index }) {
   return (
     <motion.article
       className="rounded-md border border-[#050505] bg-white p-5 shadow-[8px_8px_0_#0718c8]"
@@ -595,7 +595,7 @@ function TopicCard({ topic, index }) {
             target="_blank"
             rel="noreferrer"
             onClick={() =>
-              trackSourceClick("topic-card", {
+              trackSourceClick(reportId, {
                 title: topic.sourceTitle,
                 url: topic.sourceUrl
               })
@@ -654,13 +654,13 @@ function ActionCardSection({ title, actionCards }) {
   );
 }
 
-function RichTextCard({ item }) {
+function RichTextCard({ item, reportId }) {
   const [label, body] = splitLabel(item);
 
   return (
     <article className="rounded-md border border-[#050505]/10 bg-white p-4 leading-7 shadow-sm">
       {label && <p className="mb-2 font-mono text-xs font-black uppercase tracking-[0.08em] text-[#0718c8]">{label}</p>}
-      <p className="text-[#172033]">{renderLinkedText(body ?? item)}</p>
+      <p className="text-[#172033]">{renderLinkedText(body ?? item, reportId)}</p>
     </article>
   );
 }
@@ -673,12 +673,24 @@ function splitLabel(item) {
   return [item.slice(0, separatorIndex), item.slice(separatorIndex + 2)];
 }
 
-function renderLinkedText(text) {
+function renderLinkedText(text, reportId) {
   const parts = text.split(/(https?:\/\/[^\s。]+)/g);
   return parts.map((part, index) => {
     if (part.startsWith("http")) {
       return (
-        <a className="font-bold text-[#0718c8] underline decoration-2 underline-offset-4" href={part} target="_blank" rel="noreferrer" key={`${part}-${index}`}>
+        <a
+          className="font-bold text-[#0718c8] underline decoration-2 underline-offset-4"
+          href={part}
+          target="_blank"
+          rel="noreferrer"
+          onClick={() =>
+            trackSourceClick(reportId, {
+              title: part,
+              url: part
+            })
+          }
+          key={`${part}-${index}`}
+        >
           {part}
         </a>
       );
@@ -688,9 +700,13 @@ function renderLinkedText(text) {
 }
 
 function trackSourceClick(reportId, source) {
+  if (!source) {
+    return;
+  }
+
   trackEvent("source_click", {
     report_id: reportId,
-    source_title: source.title,
+    source_title: source.title ?? source.url ?? "unknown",
     source_domain: getSourceDomain(source.url)
   });
 }

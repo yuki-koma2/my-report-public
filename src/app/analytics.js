@@ -7,8 +7,24 @@ function getConfiguredMeasurementId() {
   return import.meta.env.VITE_GA_MEASUREMENT_ID || DEFAULT_GA_MEASUREMENT_ID;
 }
 
+function isLocalhost(hostname) {
+  return hostname === "localhost" || hostname === "127.0.0.1" || hostname === "::1";
+}
+
 function canUseBrowserAnalytics() {
   return typeof window !== "undefined" && typeof document !== "undefined";
+}
+
+function canSendAnalytics(options = {}) {
+  if (!canUseBrowserAnalytics()) {
+    return false;
+  }
+
+  if (options.allowLocalhost) {
+    return true;
+  }
+
+  return !isLocalhost(window.location.hostname);
 }
 
 function ensureGoogleTagScript(measurementId) {
@@ -29,12 +45,12 @@ function ensureGtag() {
   window.gtag =
     window.gtag ||
     function gtag() {
-      window.dataLayer.push(Array.from(arguments));
+      window.dataLayer.push(arguments);
     };
 }
 
-export function initAnalytics(measurementId = getConfiguredMeasurementId()) {
-  if (!measurementId || !canUseBrowserAnalytics()) {
+export function initAnalytics(measurementId = getConfiguredMeasurementId(), options = {}) {
+  if (!measurementId || !canSendAnalytics(options)) {
     return false;
   }
 
@@ -51,7 +67,7 @@ export function initAnalytics(measurementId = getConfiguredMeasurementId()) {
 }
 
 export function trackPageView(route, options = {}) {
-  if (!initAnalytics(options.measurementId)) {
+  if (!route || !initAnalytics(options.measurementId, options)) {
     return false;
   }
 
@@ -68,7 +84,7 @@ export function trackPageView(route, options = {}) {
 }
 
 export function trackEvent(name, params = {}, options = {}) {
-  if (!name || !initAnalytics(options.measurementId)) {
+  if (!name || !initAnalytics(options.measurementId, options)) {
     return false;
   }
 
@@ -81,14 +97,14 @@ export function getPageViewPayload(route, location = window.location) {
     page_title: getPageTitle(route),
     page_location: location.href,
     page_path: `${location.pathname}${location.search}${location.hash}`,
-    route_name: route.name
+    route_name: route?.name ?? "unknown"
   };
 
-  if (route.id) {
+  if (route?.id) {
     payload.report_id = route.id;
   }
 
-  if (route.tag) {
+  if (route?.tag) {
     payload.tag = route.tag;
   }
 
@@ -96,6 +112,10 @@ export function getPageViewPayload(route, location = window.location) {
 }
 
 function getPageTitle(route) {
+  if (!route) {
+    return "ページが見つかりません";
+  }
+
   if (route.name === "home") {
     return "レポート一覧";
   }
