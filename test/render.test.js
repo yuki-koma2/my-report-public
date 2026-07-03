@@ -32,11 +32,12 @@ describe("routing", () => {
 
 describe("reports", () => {
   it("実調査に基づく週次レポートを保持する", () => {
-    expect(reports).toHaveLength(4);
+    expect(reports).toHaveLength(5);
     expect(reports.map((report) => report.id)).toContain("tech-landscape-weekly-2026-07-02");
     expect(reports.map((report) => report.id)).toContain("academic-vc-weekly-2026-07-01");
     expect(reports.map((report) => report.id)).toContain("healthcare-care-weekly-2026-06-30");
     expect(reports.map((report) => report.id)).toContain("japan-healthcare-industry-structural-challenges-2026-07-01");
+    expect(reports.map((report) => report.id)).toContain("japan-care-industry-challenges-2026");
     expect(reports[0].title).toBe("テック情勢週次レポート 2026-07-02週");
     for (const report of reports) {
       expect(report.summary).not.toContain("サンプル");
@@ -45,16 +46,16 @@ describe("reports", () => {
 
   it("週次記事と深掘り記事を分類できる", () => {
     expect(getReportsByType("weekly")).toHaveLength(3);
-    expect(getReportsByType("deep")).toHaveLength(1);
+    expect(getReportsByType("deep")).toHaveLength(2);
   });
 
   it("タグで記事を分類できる", () => {
     expect(getReportsByTag("医療")).toHaveLength(2);
-    expect(getReportsByTag("介護")).toHaveLength(1);
+    expect(getReportsByTag("介護")).toHaveLength(2);
     expect(getReportsByTag("AI")).toHaveLength(3);
     expect(getReportsByTag("エンジニアリング")).toHaveLength(3);
-    expect(getReportsByTag("制度")).toHaveLength(2);
-    expect(getReportsByTag("DX")).toHaveLength(2);
+    expect(getReportsByTag("制度")).toHaveLength(3);
+    expect(getReportsByTag("DX")).toHaveLength(3);
     expect(getReportsByTag("国際比較")).toHaveLength(1);
     expect(getReportsByTag("VC")).toHaveLength(1);
     expect(getReportsByTag("スタートアップ")).toHaveLength(2);
@@ -92,6 +93,57 @@ describe("reports", () => {
     expect(report.sources.some((source) => source.title.includes("令和7年版高齢社会白書"))).toBe(true);
     expect(report.sources.some((source) => source.title.includes("Commonwealth Fund"))).toBe(true);
     expect(report.sources.filter((source) => source.title.includes("Commonwealth Fund")).every((source) => source.type === "二次情報")).toBe(true);
+  });
+
+  it("介護業界課題レポートは3つの課題と一次情報を持つ", () => {
+    const report = reports.find((item) => item.id === "japan-care-industry-challenges-2026");
+
+    expect(report).toMatchObject({
+      title: "日本の介護業界における3つの構造課題",
+      articleType: "deep",
+      checkedAt: "2026-07-01"
+    });
+    expect(report.topicCards.map((topic) => topic.title)).toEqual([
+      "介護人材の不足と処遇改善の遅れ",
+      "介護費用と保険料の増加による制度持続性",
+      "地域差と紙・人手依存の運営による提供体制のひずみ"
+    ]);
+    expect(report.topicCards.find((topic) => topic.sourceTitle === "厚生労働省 介護保険制度の概要")).toMatchObject({
+      dateLabel: "作成月",
+      date: "令和7年7月",
+      checkedAt: "2026-07-01"
+    });
+    expect(report.sources.map((source) => source.title)).toContain("厚生労働省 第9期介護保険事業計画に基づく介護職員の必要数について");
+    expect(report.sections.some((section) => section.items.some((item) => item.includes("2026年度には約240万人")))).toBe(true);
+    expect(report.sections.map((section) => section.title)).toContain("テーマ別の調査結果");
+    expect(report.sections.map((section) => section.title)).toContain("3課題を支える補足根拠");
+    expect(report.sections.find((section) => section.title === "テーマ別の調査結果").items).toHaveLength(0);
+  });
+
+  it("介護業界課題レポートは歴史的背景と国際比較を持つ", () => {
+    const report = reports.find((item) => item.id === "japan-care-industry-challenges-2026");
+
+    expect(report.sections.map((section) => section.title)).toContain("課題が生まれた歴史的背景");
+    expect(report.sections.map((section) => section.title)).toContain("海外比較から見える論点");
+    expect(report.sections.some((section) => section.items.some((item) => item.includes("2000年に介護保険制度が始まった")))).toBe(true);
+    expect(report.sections.some((section) => section.items.some((item) => item.includes("ドイツ")))).toBe(true);
+    expect(report.sections.some((section) => section.items.some((item) => item.includes("韓国")))).toBe(true);
+    expect(report.sources.map((source) => source.title)).toContain("OECD Health at a Glance 2023");
+    expect(report.sources.find((source) => source.title === "OECD Health at a Glance 2023")).toMatchObject({
+      type: "二次情報"
+    });
+  });
+
+  it("公開日が未確認のトピックでは確認日と出典日付を分ける", () => {
+    const report = reports.find((item) => item.id === "japan-care-industry-challenges-2026");
+    const topic = report.topicCards.find((item) => item.sourceTitle === "厚生労働省 介護DXの推進");
+
+    expect(topic).toMatchObject({
+      dateLabel: "公開・更新日",
+      date: "未確認",
+      checkedAt: "2026-07-01"
+    });
+    expect(topic.date).not.toBe(report.checkedAt);
   });
 
   it("各レポートが詳細表示に必要な最低限の情報を持つ", () => {
