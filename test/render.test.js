@@ -91,6 +91,7 @@ describe("reports", () => {
     expect(report.sources.length).toBeGreaterThanOrEqual(8);
     expect(report.sources.some((source) => source.title.includes("令和7年版高齢社会白書"))).toBe(true);
     expect(report.sources.some((source) => source.title.includes("Commonwealth Fund"))).toBe(true);
+    expect(report.sources.filter((source) => source.title.includes("Commonwealth Fund")).every((source) => source.type === "二次情報")).toBe(true);
   });
 
   it("各レポートが詳細表示に必要な最低限の情報を持つ", () => {

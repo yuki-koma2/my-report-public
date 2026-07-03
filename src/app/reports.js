@@ -1038,23 +1038,28 @@ export const reports = [
       },
       {
         title: "Commonwealth Fund International Health Care System Profiles: Japan",
-        url: "https://www.commonwealthfund.org/international-health-policy-center/countries/japan"
+        url: "https://www.commonwealthfund.org/international-health-policy-center/countries/japan",
+        type: "二次情報"
       },
       {
         title: "Commonwealth Fund International Health Care System Profiles: England",
-        url: "https://www.commonwealthfund.org/international-health-policy-center/countries/england"
+        url: "https://www.commonwealthfund.org/international-health-policy-center/countries/england",
+        type: "二次情報"
       },
       {
         title: "Commonwealth Fund International Health Care System Profiles: Germany",
-        url: "https://www.commonwealthfund.org/international-health-policy-center/countries/germany"
+        url: "https://www.commonwealthfund.org/international-health-policy-center/countries/germany",
+        type: "二次情報"
       },
       {
         title: "Commonwealth Fund International Health Care System Profiles: Denmark",
-        url: "https://www.commonwealthfund.org/international-health-policy-center/countries/denmark"
+        url: "https://www.commonwealthfund.org/international-health-policy-center/countries/denmark",
+        type: "二次情報"
       },
       {
         title: "Commonwealth Fund International Health Care System Profiles: United States",
-        url: "https://www.commonwealthfund.org/international-health-policy-center/countries/united-states"
+        url: "https://www.commonwealthfund.org/international-health-policy-center/countries/united-states",
+        type: "二次情報"
       }
     ],
     highlights: [

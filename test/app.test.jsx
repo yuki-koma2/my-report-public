@@ -85,6 +85,8 @@ describe("App", () => {
     expect(screen.getByRole("heading", { name: "医療DXとデータ連携の遅れ" })).toBeInTheDocument();
     expect(screen.getAllByText(/英国はGPを入口に置き/).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/1961年の国民皆保険/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText("二次情報").length).toBe(5);
+    expect(screen.getByRole("link", { name: "Commonwealth Fund International Health Care System Profiles: Japan" })).toBeInTheDocument();
   });
 
   it("セクションタイトルが欠けてもレポート詳細を表示できる", () => {
