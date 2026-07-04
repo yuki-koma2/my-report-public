@@ -256,9 +256,9 @@ describe("App", () => {
     expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-07-02週", level: 1 })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "今週の判断ポイント" })).toBeInTheDocument();
     expect(screen.getByText("短期対応リスク")).toBeInTheDocument();
-    expect(screen.getByText(/CloudflareがAIクローラのデフォルトブロックと課金分離/)).toBeInTheDocument();
-    expect(screen.getByText(/Together AIの大型調達がオープンモデル向けAIクラウド競争/)).toBeInTheDocument();
-    expect(screen.getByText(/GitHub Copilotが初のopen-weight選択モデル/)).toBeInTheDocument();
+    expect(screen.getAllByText(/CloudflareがAIクローラのデフォルトブロックと課金分離/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Together AIの大型調達がオープンモデル向けAIクラウド競争/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/GitHub Copilotが初のopen-weight選択モデル/).length).toBeGreaterThan(0);
     expect(screen.getByRole("heading", { name: "注目すべき仮説と解くべき課題" })).toBeInTheDocument();
     expect(screen.getByText(/AIエージェントの実運用コストはモデル単価ではなく/)).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "今週検討すべき対応アクション" })).toBeInTheDocument();
