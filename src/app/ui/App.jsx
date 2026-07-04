@@ -520,7 +520,7 @@ function ReportSections({ reportId, sections, topicCards = [], actionCards = [] 
 
 function ReportSection({ reportId, section, topicCards, actionCards }) {
   if (section.title === "テーマ別の調査結果" && topicCards.length > 0) {
-    return <TopicCardSection reportId={reportId} title={section.title} topicCards={topicCards} />;
+    return <TopicCardSection reportId={reportId} title={section.title} topicCards={topicCards} items={section.items} />;
   }
 
   if (section.title?.endsWith("対応アクション") && actionCards.length > 0) {
@@ -539,7 +539,7 @@ function ReportSection({ reportId, section, topicCards, actionCards }) {
   );
 }
 
-function TopicCardSection({ reportId, title, topicCards }) {
+function TopicCardSection({ reportId, title, topicCards, items = [] }) {
   return (
     <section className="border-t-2 border-[#050505] pt-8">
       <div className="mb-5 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
@@ -551,6 +551,13 @@ function TopicCardSection({ reportId, title, topicCards }) {
           <TopicCard reportId={reportId} topic={topic} index={index} key={topic.title} />
         ))}
       </div>
+      {items.length > 0 && (
+        <div className="mt-7 grid grid-cols-1 gap-3" aria-label="テーマ別の詳細本文">
+          {items.map((item) => (
+            <RichTextCard item={item} reportId={reportId} key={item} />
+          ))}
+        </div>
+      )}
     </section>
   );
 }

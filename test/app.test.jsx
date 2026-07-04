@@ -33,6 +33,7 @@ describe("App", () => {
     expect(screen.getByRole("heading", { name: "プロダクト・テック週次レポート 2026-07-01週" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Academic VC / スタートアップ投資動向週次レポート 2026-07-01週" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-07-01週" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "医療・介護領域の最新動向調査レポート 2026-07-01週" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "医療・介護領域の最新動向調査レポート 2026-06-30週" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "日本の医療業界が直面する3つの構造課題" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "日本の介護業界における3つの構造課題" })).toBeInTheDocument();
@@ -71,10 +72,35 @@ describe("App", () => {
     expect(screen.getAllByText("重要度 高").length).toBeGreaterThan(0);
     expect(screen.getByRole("heading", { name: "調査条件" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "テーマ別の調査結果" })).toBeInTheDocument();
-    expect(screen.getByText(/標準型電子カルテ導入版/)).toBeInTheDocument();
+    expect(screen.getAllByText(/標準型電子カルテ導入版/).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/今週確認できた重要な新規情報なし/).length).toBeGreaterThan(0);
     expect(screen.getByRole("heading", { name: "引用元・確認した出典" })).toBeInTheDocument();
     expect(screen.getAllByRole("link", { name: "厚生労働省 新着情報RSS" })[0]).toHaveAttribute("href", "https://www.mhlw.go.jp/stf/news.rdf");
+  });
+
+  it("最新の医療介護週次レポートに判断ポイント、出典日付、空情報を表示する", () => {
+    window.location.hash = "#/reports/healthcare-care-weekly-2026-07-01";
+
+    render(<App />);
+
+    expect(screen.getByRole("heading", { name: "医療・介護領域の最新動向調査レポート 2026-07-01週", level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "今週の判断ポイント" })).toBeInTheDocument();
+    expect(screen.getByText("7/31")).toBeInTheDocument();
+    expect(screen.getAllByText(/抗菌薬等医薬品備蓄体制整備事業の2次公募/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/今週確認できた重要な新規情報なし/).length).toBeGreaterThan(0);
+    expect(screen.getByText(/10. 海外の医療・介護DX動向/)).toBeInTheDocument();
+    expect(screen.getByText(/介護給付費等実態統計は2026-06-24/)).toBeInTheDocument();
+    expect(screen.getAllByText(/2026-06-26に地域介護・福祉空間整備等施設整備交付金/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText("確認日 2026-07-01").length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("link", { name: "厚生労働省 抗菌薬等医薬品備蓄体制整備事業 公募" })[0]).toHaveAttribute(
+      "href",
+      "https://www.mhlw.go.jp/stf/newpage_74146.html"
+    );
+    expect(screen.getAllByText("公開日 2026-06-29 / 確認日 2026-07-01").length).toBeGreaterThan(0);
+    expect(screen.getByRole("link", { name: "厚生労働省 医療提供体制施設整備交付金の内示" })).toHaveAttribute(
+      "href",
+      "https://www.mhlw.go.jp/stf/newpage_74150.html"
+    );
   });
 
   it("日本の医療業界課題レポートに3課題、歴史背景、国際比較を表示する", () => {
@@ -201,9 +227,9 @@ describe("App", () => {
     expect(screen.getByRole("heading", { name: "今週の投資判断ポイント" })).toBeInTheDocument();
     expect(screen.getByText("対象期間内候補")).toBeInTheDocument();
     expect(screen.getAllByText("重要度 高").length).toBeGreaterThan(0);
-    expect(screen.getByText(/欧州でリピート創業者・deeptech向けの新ファンド形成/)).toBeInTheDocument();
-    expect(screen.getByText(/AIインフラとエージェント周辺で大型資金調達/)).toBeInTheDocument();
-    expect(screen.getByText(/Academic VC \/ 大学発スタートアップは今週採用すべき新規情報なし/)).toBeInTheDocument();
+    expect(screen.getAllByText(/欧州でリピート創業者・deeptech向けの新ファンド形成/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/AIインフラとエージェント周辺で大型資金調達/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Academic VC \/ 大学発スタートアップは今週採用すべき新規情報なし/).length).toBeGreaterThan(0);
     expect(screen.getByRole("heading", { name: "取得エラー" })).toBeInTheDocument();
     expect(screen.getByText("VC Adventure")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "https://www.sethlevine.com/feed" })).toHaveAttribute("href", "https://www.sethlevine.com/feed");
@@ -232,9 +258,9 @@ describe("App", () => {
     expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-07-02週", level: 1 })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "今週の判断ポイント" })).toBeInTheDocument();
     expect(screen.getByText("短期対応リスク")).toBeInTheDocument();
-    expect(screen.getByText(/CloudflareがAIクローラのデフォルトブロックと課金分離/)).toBeInTheDocument();
-    expect(screen.getByText(/Together AIの大型調達がオープンモデル向けAIクラウド競争/)).toBeInTheDocument();
-    expect(screen.getByText(/GitHub Copilotが初のopen-weight選択モデル/)).toBeInTheDocument();
+    expect(screen.getAllByText(/CloudflareがAIクローラのデフォルトブロックと課金分離/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Together AIの大型調達がオープンモデル向けAIクラウド競争/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/GitHub Copilotが初のopen-weight選択モデル/).length).toBeGreaterThan(0);
     expect(screen.getByRole("heading", { name: "注目すべき仮説と解くべき課題" })).toBeInTheDocument();
     expect(screen.getByText(/AIエージェントの実運用コストはモデル単価ではなく/)).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "今週検討すべき対応アクション" })).toBeInTheDocument();
@@ -310,6 +336,7 @@ describe("App", () => {
     expect(screen.getByRole("heading", { name: "#エンジニアリング", level: 1 })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-07-02週" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-07-01週" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "医療・介護領域の最新動向調査レポート 2026-07-01週" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "医療・介護領域の最新動向調査レポート 2026-06-30週" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "日本の医療業界が直面する3つの構造課題" })).toBeInTheDocument();
   });
