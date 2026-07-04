@@ -29,7 +29,7 @@ export const report = {
         title: "Forrester Stripe's New Stablecoin Bet: The Open USD",
         url: "https://www.forrester.com/blogs/stripes-new-stablecoin-bet-the-open-usd/",
         type: "配信元リンク",
-        publishedAt: "2026-07-01",
+        publishedAt: "2026-06-30",
         checkedAt: "2026-07-01"
       },
       {
@@ -43,24 +43,27 @@ export const report = {
         title: "ProductZine Figma年次カンファレンス Config 2026",
         url: "https://productzine.jp/article/detail/4393",
         type: "配信元リンク",
+        publishedAt: "2026-06-25",
         checkedAt: "2026-07-01"
       },
       {
         title: "ProductZine Tayori API公開",
         url: "https://productzine.jp/article/detail/4402",
         type: "配信元リンク",
+        publishedAt: "2026-06-30",
         checkedAt: "2026-07-01"
       },
       {
         title: "ProductZine Lupe コンテキスト機能",
         url: "https://productzine.jp/article/detail/4398",
         type: "配信元リンク",
+        publishedAt: "2026-06-29",
         checkedAt: "2026-07-01"
       },
       {
         title: "Publickey QualcommがModular買収を発表",
         url: "https://www.publickey1.jp/blog/26/pythonmojomodularai.html",
-        type: "配信元リンク",
+        type: "二次情報",
         publishedAt: "2026-07-01",
         checkedAt: "2026-07-01"
       },
@@ -231,9 +234,9 @@ export const report = {
         summary:
           "TechFeedの日次ランキングでは、QualcommがPythonライクなMojoの開発元Modularを買収するとのPublickey記事が複数日で上位に入った。",
         date: "2026-07-01",
-        sourceTitle: "TechFeed Startup / Innovation RSS",
-        sourceUrl: "https://techfeed.io/feeds/categories/Startup%20%2F%20Innovation?userId=667a89b3185e12081e95a7b5",
-        sourceType: "配信元リンク",
+        sourceTitle: "Publickey QualcommがModular買収を発表",
+        sourceUrl: "https://www.publickey1.jp/blog/26/pythonmojomodularai.html",
+        sourceType: "二次情報",
         priority: "中",
         timing: "継続ウォッチ",
         relevance: 80,
@@ -320,7 +323,7 @@ export const report = {
           "3. マーケティング/市場・顧客理解 / 見出し: ForresterがCustomer ZeroとGTM変化を提示。情報の概要: 6月30日から7月1日の記事で、Customer Zero、B2B GTM、CIO責任、Open USDが扱われた。情報源リンク: https://www.forrester.com/blogs/feed/。一次情報か二次情報か: 配信元リンク。示唆: AIプロダクトの営業資料では、機能一覧よりも実運用で人の行動がどう変わったかを示す必要がある。",
           "4. 技術・開発者動向 / 見出し: Claude Sonnet 5とTabFMが開発者のAI利用範囲を広げる。情報の概要: Claude Sonnet 5はエージェント実行と導入価格、TabFMは表形式データのゼロショット予測とBigQuery統合予定を示した。情報源リンク: https://www.anthropic.com/news/claude-sonnet-5 および https://research.google/blog/introducing-tabfm-a-zero-shot-foundation-model-for-tabular-data/。一次情報か二次情報か: 一次情報。示唆: 開発・分析プロダクトは、AIの出力だけでなく、検証、監査、SQL/BI接続を含めるべき。",
           "5. 日本語記事・国内向け示唆 / 見出し: 顧客文脈と開発をつなぐ国内記事が多い。情報の概要: Tayori API、Lupeのコンテキスト機能、Figma Config 2026。情報源リンク: https://productzine.jp/article/detail/4402、https://productzine.jp/article/detail/4398、https://productzine.jp/article/detail/4393。一次情報か二次情報か: 配信元リンク。示唆: 国内SaaSでは、CS、FAQ、リサーチ、デザイン資産、開発を接続するデータ基盤がAI活用の前提になる。",
-          "6. 見逃し注意 / 見出し: Qualcomm/Modular買収はAIインフラの開発者体験競争。情報の概要: TechFeedの日次ランキングでPublickey記事が複数日上位に入った。情報源リンク: https://techfeed.io/feeds/categories/Startup%20%2F%20Innovation?userId=667a89b3185e12081e95a7b5。一次情報か二次情報か: 配信元リンク。示唆: AI基盤の競争はチップ性能だけでなく、Python互換、コンパイラ、推論運用、既存コード移行の総合戦になっている。",
+          "6. 見逃し注意 / 見出し: Qualcomm/Modular買収はAIインフラの開発者体験競争。情報の概要: TechFeedの日次ランキングでPublickey記事が複数日上位に入った。情報源リンク: https://www.publickey1.jp/blog/26/pythonmojomodularai.html。一次情報か二次情報か: 二次情報。示唆: AI基盤の競争はチップ性能だけでなく、Python互換、コンパイラ、推論運用、既存コード移行の総合戦になっている。",
           "7. 取得エラー / 見出し: TechCrunch指定URLはCrunch Hypeへ解決。情報の概要: http://feeds.feedburner.com/TechCrunch/ はタイトルがCrunch Hype、リンクが techncruncher.blogspot.com のBloggerフィードとして取得された。failure type: wrong-feed。対応: 今回はTechCrunch配信元として採用しない。"
         ]
       },

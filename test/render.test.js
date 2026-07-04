@@ -118,14 +118,19 @@ describe("reports", () => {
     expect(report.checkedAt).toBe("2026-07-01");
     expect(report.sources.some((source) => source.title.includes("Anthropic"))).toBe(true);
     expect(report.sources.some((source) => source.title.includes("Google Research"))).toBe(true);
-    expect(report.sources.find((source) => source.title.includes("Publickey"))?.url).toBe(
-      "https://www.publickey1.jp/blog/26/pythonmojomodularai.html"
-    );
+    const publickeySource = report.sources.find((source) => source.title.includes("Publickey"));
+    expect(publickeySource).toBeDefined();
+    expect(publickeySource?.url).toBe("https://www.publickey1.jp/blog/26/pythonmojomodularai.html");
+    expect(publickeySource?.type).toBe("二次情報");
     expect(report.sources.find((source) => source.title === "Product Hunt feed")?.type).toBe("配信元フィード");
     expect(report.sources.find((source) => source.title.includes("Anthropic"))?.type).toBe("一次情報");
     expect(report.sources.every((source) => source.checkedAt === "2026-07-01")).toBe(true);
     expect(report.sources.find((source) => source.title.includes("Anthropic"))?.publishedAt).toBe("2026-06-30");
     expect(report.sources.find((source) => source.title.includes("Google Research"))?.publishedAt).toBe("2026-06-30");
+    expect(report.sources.find((source) => source.title.includes("Open USD"))?.publishedAt).toBe("2026-06-30");
+    expect(report.sources.find((source) => source.title.includes("Figma"))?.publishedAt).toBe("2026-06-25");
+    expect(report.sources.find((source) => source.title.includes("Tayori"))?.publishedAt).toBe("2026-06-30");
+    expect(report.sources.find((source) => source.title.includes("Lupe"))?.publishedAt).toBe("2026-06-29");
     expect(report.dashboardMetrics.find((metric) => metric.label === "高優先度")?.value).toBe("3件");
     expect(report.topicCards.filter((topic) => topic.priority === "高")).toHaveLength(3);
     expect(report.topicCards.map((topic) => topic.theme)).toEqual(
@@ -133,6 +138,9 @@ describe("reports", () => {
     );
     expect(report.topicCards.find((topic) => topic.theme === "日本語記事・国内向け示唆")?.sourceUrl).toBe(
       "https://productzine.jp/article/detail/4402"
+    );
+    expect(report.topicCards.find((topic) => topic.theme === "見逃し注意")?.sourceUrl).toBe(
+      "https://www.publickey1.jp/blog/26/pythonmojomodularai.html"
     );
     expect(JSON.stringify(report.topicCards.find((topic) => topic.theme === "日本語記事・国内向け示唆"))).not.toContain("CTC");
     expect(JSON.stringify(report.topicCards.find((topic) => topic.theme === "日本語記事・国内向け示唆"))).not.toContain("Relic");
