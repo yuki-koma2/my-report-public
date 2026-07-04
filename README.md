@@ -21,6 +21,14 @@
 - レポート本文、出典情報、更新日が追いやすい情報設計にする
 - 公開情報のみを扱い、非公開情報や機密情報を含めない
 
+## Google Analytics
+
+Google Analytics 4 を利用して、公開サイトの閲覧状況を確認します。詳細な設計、実装ルール、確認項目は [docs/google-analytics.md](docs/google-analytics.md) にまとめています。
+
+測定 ID が未設定の環境では Analytics のスクリプトを読み込まず、ローカル開発や pull request の確認で不要な計測が発生しないようにします。SPA のページビュー計測を追加する場合は、初回表示だけでなくクライアントサイドのルート変更も記録対象にします。
+
+イベント計測では、個人情報、検索語句、問い合わせ内容など、個人や機密に結びつく可能性がある値を送らない方針です。Cookie バナーや同意管理が必要になる設定を使う場合は、対象地域、計測目的、無効化時の挙動をあわせて記録します。
+
 ## ディレクトリ構成
 
 ```text
@@ -30,6 +38,7 @@
 │   │   └── reportData/ # 1ファイル1レポートの本文データ
 │   ├── assets/       # Tailwind CSS エントリーポイント
 │   └── index.html    # SPA のエントリーポイント
+├── docs/             # 設計、運用ルール、調査方針などのドキュメント
 ├── dist/             # ビルド後の公開対象。GitHub Actions で生成し、Git管理しない
 ├── .github/          # GitHub Actions workflow
 ├── vite.config.js    # Vite / React / Tailwind 設定

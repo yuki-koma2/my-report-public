@@ -22,12 +22,21 @@
 - 公開情報、出典、確認日を読者が追える UI を重視する。
 - 既存の構成や規約が追加された後は、それに合わせて変更する。
 
+## Google Analytics 方針
+
+- Google Analytics を入れる場合は GA4 を前提にし、詳細な設計・運用ルールは `docs/google-analytics.md` に従う。
+- 測定 ID は `VITE_GA_MEASUREMENT_ID` などの Vite 公開環境変数で渡し、コード内に固定値として埋め込まない。
+- 未設定の場合は Analytics のスクリプトを読み込まず、ローカル開発や pull request で不要な計測を発生させない。
+- イベント計測を追加する場合は、読者の個人情報、検索語句、問い合わせ内容など、個人や機密に結びつく可能性がある値を送らない。
+- Google Analytics の設定や計測対象を変更した場合は、変更理由と確認方法を PR またはコミット本文に残す。
+
 ## ディレクトリ方針
 
 - `src/` はビルド前の編集対象。
 - `src/app/reportData/` は1ファイル1レポートの本文データ置き場。
 - `src/app/tagDefinitions.js` はタグ定義の編集対象。
 - `dist/` はビルド後の公開対象。GitHub Actions で生成し、Git管理しない。
+- `docs/` は設計、運用ルール、調査方針など、実装に紐づく長めのドキュメントを置く場所。
 - `vite.config.js` は Vite / React / Tailwind CSS の設定。
 - `test/` は自動テスト。
 - 手作業で `dist/` だけを編集せず、原則として `src/` を変更して `npm run build` で生成結果を確認する。
