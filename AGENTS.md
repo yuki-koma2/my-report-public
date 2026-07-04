@@ -25,10 +25,12 @@
 ## ディレクトリ方針
 
 - `src/` はビルド前の編集対象。
-- `dist/` はビルド後の公開対象。GitHub Pages で配信する想定。
+- `src/app/reportData/` は1ファイル1レポートの本文データ置き場。
+- `src/app/tagDefinitions.js` はタグ定義の編集対象。
+- `dist/` はビルド後の公開対象。GitHub Actions で生成し、Git管理しない。
 - `vite.config.js` は Vite / React / Tailwind CSS の設定。
 - `test/` は自動テスト。
-- 手作業で `dist/` だけを編集せず、原則として `src/` を変更して `npm run build` で再生成する。
+- 手作業で `dist/` だけを編集せず、原則として `src/` を変更して `npm run build` で生成結果を確認する。
 
 ## TDD 方針
 
@@ -72,6 +74,7 @@ t-wada 式 TDD を基本に進める。
 - GitHub Pages は GitHub Actions 経由で公開する。
 - `main` への push で test/build/deploy/tag を実行する。
 - pull request では test/build まで実行し、デプロイとタグ作成は行わない。
+- `dist/` はPR差分に含めず、Actions の build artifact として扱う。
 - デプロイ成功後のタグは `deploy/pages/YYYYMMDD-HHMMSS-<run-number>-<short-sha>` 形式にする。
 
 ## スキル方針
