@@ -90,6 +90,8 @@ describe("App", () => {
     expect(screen.getAllByText(/今週確認できた重要な新規情報なし/).length).toBeGreaterThan(0);
     expect(screen.getByText(/10. 海外の医療・介護DX動向/)).toBeInTheDocument();
     expect(screen.getByText(/介護給付費等実態統計は2026-06-24/)).toBeInTheDocument();
+    expect(screen.getAllByText(/2026-06-26に地域介護・福祉空間整備等施設整備交付金/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText("確認日 2026-07-01").length).toBeGreaterThan(0);
     expect(screen.getAllByRole("link", { name: "厚生労働省 抗菌薬等医薬品備蓄体制整備事業 公募" })[0]).toHaveAttribute(
       "href",
       "https://www.mhlw.go.jp/stf/newpage_74146.html"

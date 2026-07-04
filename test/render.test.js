@@ -276,6 +276,14 @@ describe("reports", () => {
       date: "2026-06-24",
       timing: "遡及参照"
     });
+    expect(report.topicCards.find((topic) => topic.sourceTitle === "厚生労働省 第135回社会保障審議会介護保険部会")).toMatchObject({
+      date: "2026-06-29",
+      summary: expect.stringContaining("2026-06-26に地域介護・福祉空間整備等施設整備交付金")
+    });
+    expect(report.topicCards.find((topic) => topic.sourceTitle === "PMDA 医療機器プログラム（SaMD）の審査ポイント")).toMatchObject({
+      date: "2026-07-01",
+      dateLabel: "確認日"
+    });
     expect(themeText).toContain("公募締切: 2026-07-31必着");
     expect(themeText).toContain("補助率・補助上限額: 公募要領で確認が必要");
     expect(report.sources.map((source) => source.title)).toContain("厚生労働省 抗菌薬等医薬品備蓄体制整備事業 公募");
