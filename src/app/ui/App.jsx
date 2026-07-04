@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useMemo, useState } from "react";
+import { trackEvent, trackPageView } from "../analytics.js";
 import { findReportById, getReportsByTag, getReportsByType, getTagSummaries, reports, tagDefinitions } from "../reports.js";
 import { getRoute } from "../routes.js";
 
@@ -17,6 +18,10 @@ function useHashRoute() {
 
 export default function App() {
   const route = useHashRoute();
+
+  useEffect(() => {
+    trackPageView(route);
+  }, [route]);
 
   return (
     <div className="min-h-screen overflow-hidden bg-white text-[#050505]">
@@ -324,7 +329,8 @@ function PolicyPage() {
   const policies = [
     ["出典を明示する", "レポート本文には、参照した公開資料の URL と確認日を記録します。"],
     ["事実と判断を分ける", "資料から直接確認できる内容と、そこから読み取れる判断を分けて記述します。"],
-    ["古くなりやすい情報を明示する", "制度、組織、予算、数値など変わりうる情報には確認日を併記します。"]
+    ["古くなりやすい情報を明示する", "制度、組織、予算、数値など変わりうる情報には確認日を併記します。"],
+    ["アクセス解析について", "サイト改善のため Google Analytics を利用します。個人を直接識別する情報を独自に送信せず、閲覧ページと出典リンククリックなどの利用状況を確認します。"]
   ];
 
   return (
@@ -334,7 +340,7 @@ function PolicyPage() {
         title="レポート作成方針"
         description="公開情報から確認できる内容だけを扱い、未確認情報を事実として扱わない方針です。"
       />
-      <section className="grid grid-cols-1 gap-5 md:grid-cols-3" aria-label="作成方針">
+      <section className="grid grid-cols-1 gap-5 md:grid-cols-2" aria-label="作成方針">
         {policies.map(([title, description]) => (
           <motion.article
             className="rounded-md border border-[#050505]/20 bg-white p-6 shadow-sm"
@@ -379,18 +385,24 @@ function ReportPage({ id }) {
 
       <ReportHighlights highlights={report.highlights} />
 
-      {report.sections?.length > 0 && <ReportSections sections={report.sections} topicCards={report.topicCards} actionCards={report.actionCards} />}
+      {report.sections?.length > 0 && <ReportSections reportId={report.id} sections={report.sections} topicCards={report.topicCards} actionCards={report.actionCards} />}
 
       <section className="mt-12 border-t-2 border-[#050505] pt-8">
         <h2 className="mb-4 text-2xl font-black text-[#050505]">引用元・確認した出典</h2>
         <p className="mb-5 max-w-2xl leading-7 text-[#172033]">
-          本文内の判断は、公開日と確認日を追える一次情報を優先しつつ、配信元リンクやフィードも種別が分かる形で整理しています。リンク先で原文を確認できます。
+          本文内の判断は、公開日と確認日を追える一次情報を優先し、二次情報、研究論文、配信元リンク、フィードも種別を分けて整理しています。リンク先で原文を確認できます。
         </p>
         <ul className="grid grid-cols-1 gap-3 md:grid-cols-2">
           {report.sources.map((source) => (
             <li className="rounded-md border border-[#050505]/15 bg-white p-4 shadow-sm transition hover:border-[#0718c8] hover:shadow-[6px_6px_0_#0718c8]" key={source.url}>
-              <p className="mb-2 font-mono text-xs font-black uppercase tracking-[0.08em] text-[#0718c8]">{source.type ?? "一次情報"}</p>
-              <a className="font-bold leading-6 text-[#050505] underline decoration-[#0718c8] decoration-2 underline-offset-4" href={source.url} target="_blank" rel="noreferrer">
+              <p className="mb-2 font-mono text-xs font-black uppercase tracking-[0.08em] text-[#0718c8]">{source.sourceType ?? source.type ?? "一次情報"}</p>
+              <a
+                className="font-bold leading-6 text-[#050505] underline decoration-[#0718c8] decoration-2 underline-offset-4"
+                href={source.url}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => trackSourceClick(report.id, source)}
+              >
                 {source.title}
               </a>
               {(source.publishedAt || source.checkedAt) && (
@@ -496,22 +508,22 @@ function ReportHighlights({ highlights }) {
   );
 }
 
-function ReportSections({ sections, topicCards = [], actionCards = [] }) {
+function ReportSections({ reportId, sections, topicCards = [], actionCards = [] }) {
   return (
     <div className="mt-10 space-y-10">
       {sections.map((section) => (
-        <ReportSection section={section} topicCards={topicCards} actionCards={actionCards} key={section.title} />
+        <ReportSection reportId={reportId} section={section} topicCards={topicCards} actionCards={actionCards} key={section.title} />
       ))}
     </div>
   );
 }
 
-function ReportSection({ section, topicCards, actionCards }) {
+function ReportSection({ reportId, section, topicCards, actionCards }) {
   if (section.title === "テーマ別の調査結果" && topicCards.length > 0) {
-    return <TopicCardSection title={section.title} topicCards={topicCards} />;
+    return <TopicCardSection reportId={reportId} title={section.title} topicCards={topicCards} />;
   }
 
-  if (section.title === "今週検討すべき対応アクション" && actionCards.length > 0) {
+  if (section.title?.endsWith("対応アクション") && actionCards.length > 0) {
     return <ActionCardSection title={section.title} actionCards={actionCards} />;
   }
 
@@ -520,14 +532,14 @@ function ReportSection({ section, topicCards, actionCards }) {
       <h2 className="mb-4 text-2xl font-black text-[#050505]">{section.title}</h2>
       <div className="grid grid-cols-1 gap-3">
         {section.items.map((item) => (
-          <RichTextCard item={item} key={item} />
+          <RichTextCard item={item} reportId={reportId} key={item} />
         ))}
       </div>
     </section>
   );
 }
 
-function TopicCardSection({ title, topicCards }) {
+function TopicCardSection({ reportId, title, topicCards }) {
   return (
     <section className="border-t-2 border-[#050505] pt-8">
       <div className="mb-5 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
@@ -536,14 +548,14 @@ function TopicCardSection({ title, topicCards }) {
       </div>
       <div className="grid grid-cols-1 gap-5">
         {topicCards.map((topic, index) => (
-          <TopicCard topic={topic} index={index} key={topic.title} />
+          <TopicCard reportId={reportId} topic={topic} index={index} key={topic.title} />
         ))}
       </div>
     </section>
   );
 }
 
-function TopicCard({ topic, index }) {
+function TopicCard({ reportId, topic, index }) {
   return (
     <motion.article
       className="rounded-md border border-[#050505] bg-white p-5 shadow-[8px_8px_0_#0718c8]"
@@ -572,11 +584,23 @@ function TopicCard({ topic, index }) {
         </div>
         <div className="rounded-md border border-[#050505]/15 bg-[#f8fafc] p-4">
           <dl className="space-y-3">
-            <TopicFact label="公開日" value={topic.date} />
+            <TopicFact label={topic.dateLabel ?? "公開日"} value={topic.date} />
+            {topic.checkedAt && <TopicFact label="確認日" value={topic.checkedAt} />}
             <TopicFact label="引用種別" value={topic.sourceType} />
             <TopicFact label="影響主体" value={topic.affected.join(" / ")} />
           </dl>
-          <a className="mt-4 inline-block font-bold text-[#0718c8] underline decoration-2 underline-offset-4" href={topic.sourceUrl} target="_blank" rel="noreferrer">
+          <a
+            className="mt-4 inline-block font-bold text-[#0718c8] underline decoration-2 underline-offset-4"
+            href={topic.sourceUrl}
+            target="_blank"
+            rel="noreferrer"
+            onClick={() =>
+              trackSourceClick(reportId, {
+                title: topic.sourceTitle,
+                url: topic.sourceUrl
+              })
+            }
+          >
             {topic.sourceTitle}
           </a>
         </div>
@@ -630,13 +654,13 @@ function ActionCardSection({ title, actionCards }) {
   );
 }
 
-function RichTextCard({ item }) {
+function RichTextCard({ item, reportId }) {
   const [label, body] = splitLabel(item);
 
   return (
     <article className="rounded-md border border-[#050505]/10 bg-white p-4 leading-7 shadow-sm">
       {label && <p className="mb-2 font-mono text-xs font-black uppercase tracking-[0.08em] text-[#0718c8]">{label}</p>}
-      <p className="text-[#172033]">{renderLinkedText(body ?? item)}</p>
+      <p className="text-[#172033]">{renderLinkedText(body ?? item, reportId)}</p>
     </article>
   );
 }
@@ -649,18 +673,50 @@ function splitLabel(item) {
   return [item.slice(0, separatorIndex), item.slice(separatorIndex + 2)];
 }
 
-function renderLinkedText(text) {
+function renderLinkedText(text, reportId) {
   const parts = text.split(/(https?:\/\/[^\s。]+)/g);
   return parts.map((part, index) => {
     if (part.startsWith("http")) {
       return (
-        <a className="font-bold text-[#0718c8] underline decoration-2 underline-offset-4" href={part} target="_blank" rel="noreferrer" key={`${part}-${index}`}>
+        <a
+          className="font-bold text-[#0718c8] underline decoration-2 underline-offset-4"
+          href={part}
+          target="_blank"
+          rel="noreferrer"
+          onClick={() =>
+            trackSourceClick(reportId, {
+              title: part,
+              url: part
+            })
+          }
+          key={`${part}-${index}`}
+        >
           {part}
         </a>
       );
     }
     return part;
   });
+}
+
+function trackSourceClick(reportId, source) {
+  if (!source) {
+    return;
+  }
+
+  trackEvent("source_click", {
+    report_id: reportId,
+    source_title: source.title ?? source.url ?? "unknown",
+    source_domain: getSourceDomain(source.url)
+  });
+}
+
+function getSourceDomain(url) {
+  try {
+    return new URL(url).hostname;
+  } catch {
+    return "unknown";
+  }
 }
 
 function TagPage({ tag }) {
