@@ -35,7 +35,8 @@ describe("routing", () => {
 
 describe("reports", () => {
   it("実調査に基づく週次レポートを保持する", () => {
-    expect(reports.length).toBeGreaterThanOrEqual(6);
+    expect(reports.length).toBeGreaterThanOrEqual(7);
+    expect(reports.map((report) => report.id)).toContain("product-tech-weekly-2026-07-01");
     expect(reports.map((report) => report.id)).toContain("tech-landscape-weekly-2026-07-02");
     expect(reports.map((report) => report.id)).toContain("academic-vc-weekly-2026-07-01");
     expect(reports.map((report) => report.id)).toContain("tech-landscape-weekly-2026-07-01");
@@ -59,6 +60,7 @@ describe("reports", () => {
   it("週次記事と深掘り記事を分類できる", () => {
     expect(getReportsByType("weekly").map((report) => report.id)).toEqual(
       expect.arrayContaining([
+        "product-tech-weekly-2026-07-01",
         "tech-landscape-weekly-2026-07-02",
         "academic-vc-weekly-2026-07-01",
         "tech-landscape-weekly-2026-07-01",
@@ -74,6 +76,8 @@ describe("reports", () => {
     expect(getReportsByTag("医療").map((report) => report.id)).toEqual(
       expect.arrayContaining(["healthcare-care-weekly-2026-06-30", "japan-healthcare-industry-structural-challenges-2026-07-01"])
     );
+    expect(getReportsByTag("プロダクト").map((report) => report.id)).toContain("product-tech-weekly-2026-07-01");
+    expect(getReportsByTag("マーケティング").map((report) => report.id)).toContain("product-tech-weekly-2026-07-01");
     expect(getReportsByTag("VC").map((report) => report.id)).toContain("academic-vc-weekly-2026-07-01");
     expect(getReportsByTag("市場インテリジェンス").map((report) => report.id)).toContain("tech-landscape-weekly-2026-07-02");
     expect(getReportsByTag("テック情勢").map((report) => report.id)).toContain("tech-landscape-weekly-2026-07-01");
@@ -86,6 +90,8 @@ describe("reports", () => {
       "エンジニアリング",
       "制度",
       "DX",
+      "プロダクト",
+      "マーケティング",
       "国際比較",
       "VC",
       "スタートアップ",
@@ -102,6 +108,44 @@ describe("reports", () => {
       description: "医療制度、医療DX、医療機関、医療データに関する情報"
     });
     expect(medicalTag.count).toBe(getReportsByTag("医療").length);
+  });
+
+  it("プロダクト・テック週次レポートの重要項目と取得エラーを保持する", () => {
+    const report = reports.find((item) => item.id === "product-tech-weekly-2026-07-01");
+
+    expect(report).toBeTruthy();
+    expect(report.articleType).toBe("weekly");
+    expect(report.checkedAt).toBe("2026-07-01");
+    expect(report.sources.some((source) => source.title.includes("Anthropic"))).toBe(true);
+    expect(report.sources.some((source) => source.title.includes("Google Research"))).toBe(true);
+    const publickeySource = report.sources.find((source) => source.title.includes("Publickey"));
+    expect(publickeySource).toBeDefined();
+    expect(publickeySource?.url).toBe("https://www.publickey1.jp/blog/26/pythonmojomodularai.html");
+    expect(publickeySource?.type).toBe("二次情報");
+    expect(report.sources.find((source) => source.title === "Product Hunt feed")?.type).toBe("配信元フィード");
+    expect(report.sources.find((source) => source.title.includes("Anthropic"))?.type).toBe("一次情報");
+    expect(report.sources.every((source) => source.checkedAt === "2026-07-01")).toBe(true);
+    expect(report.sources.find((source) => source.title.includes("Anthropic"))?.publishedAt).toBe("2026-06-30");
+    expect(report.sources.find((source) => source.title.includes("Google Research"))?.publishedAt).toBe("2026-06-30");
+    expect(report.sources.find((source) => source.title.includes("Open USD"))?.publishedAt).toBe("2026-06-30");
+    expect(report.sources.find((source) => source.title.includes("Figma"))?.publishedAt).toBe("2026-06-25");
+    expect(report.sources.find((source) => source.title.includes("Tayori"))?.publishedAt).toBe("2026-06-30");
+    expect(report.sources.find((source) => source.title.includes("Lupe"))?.publishedAt).toBe("2026-06-29");
+    expect(report.dashboardMetrics.find((metric) => metric.label === "高優先度")?.value).toBe("3件");
+    expect(report.topicCards.filter((topic) => topic.priority === "高")).toHaveLength(3);
+    expect(report.topicCards.map((topic) => topic.theme)).toEqual(
+      expect.arrayContaining(["技術・開発者動向", "マーケティング・市場", "日本語記事・国内向け示唆", "取得エラー"])
+    );
+    expect(report.topicCards.find((topic) => topic.theme === "日本語記事・国内向け示唆")?.sourceUrl).toBe(
+      "https://productzine.jp/article/detail/4402"
+    );
+    expect(report.topicCards.find((topic) => topic.theme === "見逃し注意")?.sourceUrl).toBe(
+      "https://www.publickey1.jp/blog/26/pythonmojomodularai.html"
+    );
+    expect(JSON.stringify(report.topicCards.find((topic) => topic.theme === "日本語記事・国内向け示唆"))).not.toContain("CTC");
+    expect(JSON.stringify(report.topicCards.find((topic) => topic.theme === "日本語記事・国内向け示唆"))).not.toContain("Relic");
+    expect(JSON.stringify(report.topicCards.find((topic) => topic.theme === "日本語記事・国内向け示唆"))).not.toContain("PMM");
+    expect(report.sections.some((section) => section.items.some((item) => item.includes("Crunch Hype")))).toBe(true);
   });
 
   it("日本の医療業界課題を3つに絞った深掘りレポートを保持する", () => {

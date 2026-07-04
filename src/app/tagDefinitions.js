@@ -24,6 +24,14 @@ export const tagDefinitions = [
     "description": "医療DX、介護DX、行政DX、業務デジタル化に関する情報"
   },
   {
+    "name": "プロダクト",
+    "description": "プロダクト開発、PMM、顧客理解、UX、機能改善に関する情報"
+  },
+  {
+    "name": "マーケティング",
+    "description": "B2Bマーケティング、GTM、顧客獲得、市場理解に関する情報"
+  },
+  {
     "name": "国際比較",
     "description": "海外制度との比較、国別プロファイル、制度設計の違いに関する情報"
   },

@@ -390,7 +390,7 @@ function ReportPage({ id }) {
       <section className="mt-12 border-t-2 border-[#050505] pt-8">
         <h2 className="mb-4 text-2xl font-black text-[#050505]">引用元・確認した出典</h2>
         <p className="mb-5 max-w-2xl leading-7 text-[#172033]">
-          本文内の判断は、公開日と確認日を追える一次情報を優先し、二次情報や研究論文は種別を分けて整理しています。リンク先で原文を確認できます。
+          本文内の判断は、公開日と確認日を追える一次情報を優先し、二次情報、研究論文、配信元リンク、フィードも種別を分けて整理しています。リンク先で原文を確認できます。
         </p>
         <ul className="grid grid-cols-1 gap-3 md:grid-cols-2">
           {report.sources.map((source) => (
