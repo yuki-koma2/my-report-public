@@ -90,9 +90,20 @@ describe("reports", () => {
     );
     expect(report.sources.find((source) => source.title === "Product Hunt feed")?.type).toBe("配信元フィード");
     expect(report.sources.find((source) => source.title.includes("Anthropic"))?.type).toBe("一次情報");
+    expect(report.sources.every((source) => source.checkedAt === "2026-07-01")).toBe(true);
+    expect(report.sources.find((source) => source.title.includes("Anthropic"))?.publishedAt).toBe("2026-06-30");
+    expect(report.sources.find((source) => source.title.includes("Google Research"))?.publishedAt).toBe("2026-06-30");
+    expect(report.dashboardMetrics.find((metric) => metric.label === "高優先度")?.value).toBe("3件");
+    expect(report.topicCards.filter((topic) => topic.priority === "高")).toHaveLength(3);
     expect(report.topicCards.map((topic) => topic.theme)).toEqual(
       expect.arrayContaining(["技術・開発者動向", "マーケティング・市場", "日本語記事・国内向け示唆", "取得エラー"])
     );
+    expect(report.topicCards.find((topic) => topic.theme === "日本語記事・国内向け示唆")?.sourceUrl).toBe(
+      "https://productzine.jp/article/detail/4402"
+    );
+    expect(JSON.stringify(report.topicCards.find((topic) => topic.theme === "日本語記事・国内向け示唆"))).not.toContain("CTC");
+    expect(JSON.stringify(report.topicCards.find((topic) => topic.theme === "日本語記事・国内向け示唆"))).not.toContain("Relic");
+    expect(JSON.stringify(report.topicCards.find((topic) => topic.theme === "日本語記事・国内向け示唆"))).not.toContain("PMM");
     expect(report.sections.some((section) => section.items.some((item) => item.includes("Crunch Hype")))).toBe(true);
   });
 

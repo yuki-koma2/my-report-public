@@ -15,69 +15,86 @@ export const reports = [
       {
         title: "Anthropic Introducing Claude Sonnet 5",
         url: "https://www.anthropic.com/news/claude-sonnet-5",
-        type: "一次情報"
+        type: "一次情報",
+        publishedAt: "2026-06-30",
+        checkedAt: "2026-07-01"
       },
       {
         title: "Google Research Introducing TabFM",
         url: "https://research.google/blog/introducing-tabfm-a-zero-shot-foundation-model-for-tabular-data/",
-        type: "一次情報"
+        type: "一次情報",
+        publishedAt: "2026-06-30",
+        checkedAt: "2026-07-01"
       },
       {
         title: "Forrester Stripe's New Stablecoin Bet: The Open USD",
         url: "https://www.forrester.com/blogs/stripes-new-stablecoin-bet-the-open-usd/",
-        type: "配信元リンク"
+        type: "配信元リンク",
+        publishedAt: "2026-07-01",
+        checkedAt: "2026-07-01"
       },
       {
         title: "Forrester Customer Zero Programs Prove That AI Works When Humans Change",
         url: "https://www.forrester.com/blogs/customer-zero-programs-prove-that-ai-works-when-humans-change/",
-        type: "配信元リンク"
+        type: "配信元リンク",
+        publishedAt: "2026-06-30",
+        checkedAt: "2026-07-01"
       },
       {
         title: "ProductZine Figma年次カンファレンス Config 2026",
         url: "https://productzine.jp/article/detail/4393",
-        type: "配信元リンク"
+        type: "配信元リンク",
+        checkedAt: "2026-07-01"
       },
       {
         title: "ProductZine Tayori API公開",
         url: "https://productzine.jp/article/detail/4402",
-        type: "配信元リンク"
+        type: "配信元リンク",
+        checkedAt: "2026-07-01"
       },
       {
         title: "ProductZine Lupe コンテキスト機能",
         url: "https://productzine.jp/article/detail/4398",
-        type: "配信元リンク"
+        type: "配信元リンク",
+        checkedAt: "2026-07-01"
       },
       {
         title: "Publickey QualcommがModular買収を発表",
         url: "https://www.publickey1.jp/blog/26/pythonmojomodularai.html",
-        type: "配信元リンク"
+        type: "配信元リンク",
+        publishedAt: "2026-07-01",
+        checkedAt: "2026-07-01"
       },
       {
         title: "Hacker News RSS",
         url: "https://news.ycombinator.com/rss",
-        type: "配信元フィード"
+        type: "配信元フィード",
+        checkedAt: "2026-07-01"
       },
       {
         title: "Product Hunt feed",
         url: "https://www.producthunt.com/feed",
-        type: "配信元フィード"
+        type: "配信元フィード",
+        checkedAt: "2026-07-01"
       },
       {
         title: "TechFeed Startup / Innovation RSS",
         url: "https://techfeed.io/feeds/categories/Startup%20%2F%20Innovation?userId=667a89b3185e12081e95a7b5",
-        type: "配信元フィード"
+        type: "配信元フィード",
+        checkedAt: "2026-07-01"
       },
       {
         title: "TechFeed Marketing RSS",
         url: "https://techfeed.io/feeds/categories/Marketing?userId=667a89b3185e12081e95a7b5",
-        type: "配信元フィード"
+        type: "配信元フィード",
+        checkedAt: "2026-07-01"
       }
     ],
     highlights: [
       "Claude Sonnet 5、Product Hunt上のCursor for iOSやv0 Design Systems 2.0、ProductZineのFigma/AI関連記事が並び、AIエージェントは開発・デザイン・業務実行の通常ワークフローへ入り始めている。",
       "Google ResearchのTabFMは、表形式データの分類・回帰をゼロショット化し、BigQueryのAI.PREDICTへ統合予定とされ、業務データ分析の入口がSQL寄りに広がる。",
       "ForresterはOpen USD、Customer Zero、CIOのAI変革責任、B2B GTMの変化を連続して扱い、AI導入はモデル選定より運用実証・組織設計・市場投入プロセスの問題になっている。",
-      "国内ではProductZineとTechFeedで、Tayori API、Lupeのリサーチ文脈機能、PMM人材育成、Qualcomm/Modular買収など、顧客理解と開発基盤のニュースが目立った。",
+      "国内ではProductZineとTechFeedで、Tayori API、Lupeのリサーチ文脈機能、Figma Config 2026、Qualcomm/Modular買収など、顧客理解と開発基盤のニュースが目立った。",
       "TechCrunch指定URLはCrunch HypeというBloggerサイトへ解決され、対象期間のTechCrunch配信元としては扱えなかったため取得エラーとして明記する。"
     ],
     lead: {
@@ -90,14 +107,14 @@ export const reports = [
     dashboardMetrics: [
       {
         label: "高優先度",
-        value: "4件",
-        caption: "AIエージェント、表形式AI、GTM、国内プロダクト基盤",
+        value: "3件",
+        caption: "AIエージェント、表形式AI、GTM",
         tone: "high"
       },
       {
         label: "一次情報",
-        value: "6本",
-        caption: "企業公式、研究ブログ、配信元RSSを中心に確認",
+        value: "2本",
+        caption: "企業公式と研究ブログを確認",
         tone: "primary"
       },
       {
@@ -194,19 +211,19 @@ export const reports = [
         theme: "日本語記事・国内向け示唆",
         title: "国内ではTayori API、Lupeのリサーチ文脈機能、Figma Config 2026が注目材料",
         summary:
-          "ProductZineは、TayoriのAPI公開、Lupeのコンテキスト機能、Figma Config 2026、CTCとRelicの新規事業伴走サービスなどを配信した。",
+          "ProductZineの個別記事では、TayoriのAPI公開、Lupeのコンテキスト機能、Figma Config 2026が確認できた。顧客接点データ、リサーチ文脈、デザイン資産を開発へつなぐ動きとして扱う。",
         date: "2026-06-30",
-        sourceTitle: "ProductZine:新着一覧",
-        sourceUrl: "https://productzine.jp/rss/new/20/index.xml",
+        sourceTitle: "ProductZine Tayori API公開",
+        sourceUrl: "https://productzine.jp/article/detail/4402",
         sourceType: "配信元リンク",
         priority: "中",
         timing: "3か月以内",
         relevance: 85,
         relatedTags: ["プロダクト", "マーケティング", "DX"],
-        affected: ["国内SaaS", "PMM", "リサーチ担当", "CS", "新規事業開発"],
-        change: "国内プロダクト開発では、顧客接点データ、問い合わせ、リサーチ文脈、デザイン資産を開発・PMMへつなぐ動きが強い。",
+        affected: ["国内SaaS", "リサーチ担当", "CS", "新規事業開発"],
+        change: "国内プロダクト開発では、顧客接点データ、問い合わせ、リサーチ文脈、デザイン資産を開発へつなぐ動きが強い。",
         importance: "AI導入が進むほど、入力される顧客文脈や運用データの質がプロダクト改善速度を左右する。",
-        implication: "CS、リサーチ、PMM、開発のデータ連携を先に整えると、AI要約やAI設問生成の精度を上げやすい。",
+        implication: "CS、リサーチ、開発のデータ連携を先に整えると、AI要約やAI設問生成の精度を上げやすい。",
         uncertainty: "個別機能の利用条件、API仕様、料金、導入事例の成果指標は各社公式情報の確認が必要。"
       },
       {
@@ -269,7 +286,7 @@ export const reports = [
       },
       {
         owner: "リサーチ/CS",
-        action: "問い合わせ、FAQ、顧客インタビュー、PMM資料の連携先を整理する",
+        action: "問い合わせ、FAQ、顧客インタビュー、開発タスクの連携先を整理する",
         due: "3か月以内",
         reason: "Tayori APIやLupeのように、顧客文脈をAI活用へ渡す製品価値が高まっているため。"
       }
@@ -292,7 +309,7 @@ export const reports = [
           "プロダクト/スタートアップ注目: Product Huntでは、ブラウザエージェント、Cursor for iOS、v0 Design Systems 2.0など、AIを既存作業場へ持ち込む製品が目立った。",
           "マーケティング/市場・顧客理解: Forresterは、GTM、Customer Zero、CIO責任、Open USDを通じて、AI時代の販売・運用・決済基盤の変化を示した。",
           "技術・開発者動向: Claude Sonnet 5とTabFMは、開発者がAIを試す対象をチャットからエージェント実行、表形式予測、SQL連携へ広げる材料になる。",
-          "日本語記事・国内向け示唆: ProductZineでは、Tayori API、Lupeのリサーチ文脈機能、Figma Config 2026、PMM人材育成など、顧客文脈と開発の接続が多かった。",
+          "日本語記事・国内向け示唆: ProductZineでは、Tayori API、Lupeのリサーチ文脈機能、Figma Config 2026など、顧客文脈、問い合わせ、デザイン資産と開発の接続が多かった。",
           "見逃し注意: Qualcomm/Modular買収は、半導体ニュースではなく、AIインフラにおける開発者体験とソフトウェアスタック獲得の文脈で見る必要がある。"
         ]
       },
@@ -303,7 +320,7 @@ export const reports = [
           "2. プロダクト/スタートアップ注目 / 見出し: Product HuntでAIエージェントと開発/デザイン支援が目立つ。情報の概要: Pluno、Cursor for iOS、v0 Design Systems 2.0、Clade、Folio AIなどが対象期間に配信された。公開日または更新日: 2026-06-25から2026-06-30。情報源リンク: https://www.producthunt.com/feed。一次情報か二次情報か: 配信元リンク。示唆: AI機能の差別化は、モデル名よりも利用場所、既存ツール連携、初回価値までの短さに移っている。",
           "3. マーケティング/市場・顧客理解 / 見出し: ForresterがCustomer ZeroとGTM変化を提示。情報の概要: 6月30日から7月1日の記事で、Customer Zero、B2B GTM、CIO責任、Open USDが扱われた。情報源リンク: https://www.forrester.com/blogs/feed/。一次情報か二次情報か: 配信元リンク。示唆: AIプロダクトの営業資料では、機能一覧よりも実運用で人の行動がどう変わったかを示す必要がある。",
           "4. 技術・開発者動向 / 見出し: Claude Sonnet 5とTabFMが開発者のAI利用範囲を広げる。情報の概要: Claude Sonnet 5はエージェント実行と導入価格、TabFMは表形式データのゼロショット予測とBigQuery統合予定を示した。情報源リンク: https://www.anthropic.com/news/claude-sonnet-5 および https://research.google/blog/introducing-tabfm-a-zero-shot-foundation-model-for-tabular-data/。一次情報か二次情報か: 一次情報。示唆: 開発・分析プロダクトは、AIの出力だけでなく、検証、監査、SQL/BI接続を含めるべき。",
-          "5. 日本語記事・国内向け示唆 / 見出し: 顧客文脈と開発をつなぐ国内記事が多い。情報の概要: Tayori API、Lupeのコンテキスト機能、Figma Config 2026、CTCとRelicの新規事業伴走サービスなど。情報源リンク: https://productzine.jp/rss/new/20/index.xml。一次情報か二次情報か: 配信元リンク。示唆: 国内SaaSでは、CS、FAQ、リサーチ、PMM、開発を接続するデータ基盤がAI活用の前提になる。",
+          "5. 日本語記事・国内向け示唆 / 見出し: 顧客文脈と開発をつなぐ国内記事が多い。情報の概要: Tayori API、Lupeのコンテキスト機能、Figma Config 2026。情報源リンク: https://productzine.jp/article/detail/4402、https://productzine.jp/article/detail/4398、https://productzine.jp/article/detail/4393。一次情報か二次情報か: 配信元リンク。示唆: 国内SaaSでは、CS、FAQ、リサーチ、デザイン資産、開発を接続するデータ基盤がAI活用の前提になる。",
           "6. 見逃し注意 / 見出し: Qualcomm/Modular買収はAIインフラの開発者体験競争。情報の概要: TechFeedの日次ランキングでPublickey記事が複数日上位に入った。情報源リンク: https://techfeed.io/feeds/categories/Startup%20%2F%20Innovation?userId=667a89b3185e12081e95a7b5。一次情報か二次情報か: 配信元リンク。示唆: AI基盤の競争はチップ性能だけでなく、Python互換、コンパイラ、推論運用、既存コード移行の総合戦になっている。",
           "7. 取得エラー / 見出し: TechCrunch指定URLはCrunch Hypeへ解決。情報の概要: http://feeds.feedburner.com/TechCrunch/ はタイトルがCrunch Hype、リンクが techncruncher.blogspot.com のBloggerフィードとして取得された。failure type: wrong-feed。対応: 今回はTechCrunch配信元として採用しない。"
         ]
@@ -314,7 +331,7 @@ export const reports = [
           "プロダクト責任者: AIエージェント機能の評価軸を、計画、ツール使用、検証、監査ログに分ける。",
           "データ/分析担当: TabFMとBigQuery AI.PREDICTの適用候補テーブルを棚卸しする。",
           "B2Bマーケティング: Customer Zero型の導入実証ストーリーを1件作る。",
-          "リサーチ/CS: 問い合わせ、FAQ、顧客インタビュー、PMM資料の連携先を整理する。",
+          "リサーチ/CS: 問い合わせ、FAQ、顧客インタビュー、開発タスクの連携先を整理する。",
           "レポート運用担当: TechCrunch指定フィードを公式RSSへ差し替えるか、次回までに対象フィードから除外する。"
         ]
       },
