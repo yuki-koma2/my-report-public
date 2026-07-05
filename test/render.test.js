@@ -36,6 +36,7 @@ describe("routing", () => {
 describe("reports", () => {
   it("実調査に基づく週次レポートを保持する", () => {
     expect(reports.length).toBeGreaterThanOrEqual(7);
+    expect(reports.map((report) => report.id)).toContain("healthcare-care-weekly-2026-07-06");
     expect(reports.map((report) => report.id)).toContain("product-tech-weekly-2026-07-01");
     expect(reports.map((report) => report.id)).toContain("tech-landscape-weekly-2026-07-02");
     expect(reports.map((report) => report.id)).toContain("academic-vc-weekly-2026-07-01");
@@ -44,7 +45,7 @@ describe("reports", () => {
     expect(reports.map((report) => report.id)).toContain("healthcare-care-weekly-2026-06-30");
     expect(reports.map((report) => report.id)).toContain("japan-healthcare-industry-structural-challenges-2026-07-01");
     expect(reports.map((report) => report.id)).toContain("japan-care-industry-challenges-2026");
-    expect(reports[0].title).toBe("テック情勢週次レポート 2026-07-02週");
+    expect(reports[0].title).toBe("医療・介護領域の最新動向調査レポート 2026-07-06週");
     for (const report of reports) {
       expect(report.summary).not.toContain("サンプル");
     }
@@ -63,6 +64,7 @@ describe("reports", () => {
       expect.arrayContaining([
         "product-tech-weekly-2026-07-01",
         "tech-landscape-weekly-2026-07-02",
+        "healthcare-care-weekly-2026-07-06",
         "academic-vc-weekly-2026-07-01",
         "tech-landscape-weekly-2026-07-01",
         "healthcare-care-weekly-2026-07-01",
@@ -77,6 +79,7 @@ describe("reports", () => {
   it("タグで記事を分類できる", () => {
     expect(getReportsByTag("医療").map((report) => report.id)).toEqual(
       expect.arrayContaining([
+        "healthcare-care-weekly-2026-07-06",
         "healthcare-care-weekly-2026-07-01",
         "healthcare-care-weekly-2026-06-30",
         "japan-healthcare-industry-structural-challenges-2026-07-01"
@@ -293,6 +296,44 @@ describe("reports", () => {
       publishedAt: "2026-06-29",
       checkedAt: "2026-07-01"
     });
+  });
+
+  it("2026-07-06週の医療介護レポートはPMH、施設整備内示、空情報、二次情報を保持する", () => {
+    const report = reports.find((item) => item.id === "healthcare-care-weekly-2026-07-06");
+
+    expect(report).toBeDefined();
+
+    const themeSection = report?.sections.find((section) => section.title === "テーマ別の調査結果");
+    const themeText = themeSection?.items.join("\n") ?? "";
+    const pmhTopic = report?.topicCards.find((topic) => topic.sourceTitle === "デジタル庁 Public Medical Hub");
+    const facilityTopic = report?.topicCards.find((topic) =>
+      topic.sourceTitle.includes("社会福祉施設等施設整備費補助金")
+    );
+    const guardianSource = report?.sources.find((source) => source.title.includes("AI scribes"));
+
+    expect(report?.checkedAt).toBe("2026-07-06");
+    expect(report?.dashboardMetrics.find((metric) => metric.label === "最短期限")?.value).toBe("7/31");
+    expect(report?.highlights.join("\n")).toContain("今週確認できた重要な新規情報なし");
+    expect(themeText).toContain("1. 医療・介護制度改正");
+    expect(themeText).toContain("10. 海外の医療・介護DX動向");
+    expect(themeText).toContain("今週確認できた重要な新規情報なし");
+    expect(themeText).toContain("公募締切: 2026-07-31必着");
+    expect(themeText).toContain("補助率・補助上限額: 公表ページ本文では確認できず");
+    expect(pmhTopic).toMatchObject({
+      date: "2026-07-03",
+      priority: "高",
+      sourceType: "一次情報"
+    });
+    expect(facilityTopic).toMatchObject({
+      date: "2026-07-02",
+      timing: "すぐ"
+    });
+    expect(guardianSource).toMatchObject({
+      type: "二次情報",
+      publishedAt: "2026-07-05",
+      checkedAt: "2026-07-06"
+    });
+    expect(report?.sources.every((source) => source.checkedAt === "2026-07-06")).toBe(true);
   });
 
   it("Academic VC週次レポートが投資判断向けの主要トピックと取得エラーを持つ", () => {
