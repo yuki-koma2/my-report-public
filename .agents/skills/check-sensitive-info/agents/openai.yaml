@@ -1,0 +1,4 @@
+interface:
+  display_name: "Sensitive Info Check"
+  short_description: "PRマージ前に個人情報や業務情報の混入を点検します"
+  default_prompt: "Use $check-sensitive-info to inspect committed changes before PR merge for personal, identifying, company, or business-sensitive information."
