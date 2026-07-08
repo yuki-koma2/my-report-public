@@ -124,8 +124,10 @@ describe("App", () => {
     expect(
       screen.getAllByRole("link", { name: "厚生労働省 令和8年度社会福祉施設等施設整備費補助金の内示" })[0]
     ).toHaveAttribute("href", "https://www.mhlw.go.jp/stf/newpage_74201.html");
-    expect(screen.getAllByText("公開日 2026-07-03 / 確認日 2026-07-06").length).toBeGreaterThan(0);
-    expect(screen.getAllByText("公開日 2026-07-05 / 確認日 2026-07-06").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("更新日").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("確認日 2026-07-09").length).toBeGreaterThan(0);
+    expect(screen.queryByText("公開日 2026-07-03 / 確認日 2026-07-09")).not.toBeInTheDocument();
+    expect(screen.getAllByText("公開日 2026-07-05 / 確認日 2026-07-09").length).toBeGreaterThan(0);
   });
 
   it("日本の医療業界課題レポートに3課題、歴史背景、国際比較を表示する", () => {

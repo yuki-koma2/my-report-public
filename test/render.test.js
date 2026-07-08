@@ -311,8 +311,10 @@ describe("reports", () => {
     );
     const guardianSource = report?.sources.find((source) => source.title.includes("AI scribes"));
 
-    expect(report?.checkedAt).toBe("2026-07-06");
+    expect(report?.publishedAt).toBe("2026-07-09");
+    expect(report?.checkedAt).toBe("2026-07-09");
     expect(report?.dashboardMetrics.find((metric) => metric.label === "最短期限")?.value).toBe("7/31");
+    expect(report?.dashboardMetrics.find((metric) => metric.label === "一次情報")?.value).toBe("5本");
     expect(report?.highlights.join("\n")).toContain("今週確認できた重要な新規情報なし");
     expect(themeText).toContain("1. 医療・介護制度改正");
     expect(themeText).toContain("10. 海外の医療・介護DX動向");
@@ -321,9 +323,11 @@ describe("reports", () => {
     expect(themeText).toContain("補助率・補助上限額: 公表ページ本文では確認できず");
     expect(pmhTopic).toMatchObject({
       date: "2026-07-03",
+      dateLabel: "更新日",
       priority: "高",
       sourceType: "一次情報"
     });
+    expect(report?.sources.find((source) => source.title === "デジタル庁 Public Medical Hub")?.publishedAt).toBeUndefined();
     expect(facilityTopic).toMatchObject({
       date: "2026-07-02",
       timing: "すぐ"
@@ -331,9 +335,11 @@ describe("reports", () => {
     expect(guardianSource).toMatchObject({
       type: "二次情報",
       publishedAt: "2026-07-05",
-      checkedAt: "2026-07-06"
+      checkedAt: "2026-07-09"
     });
-    expect(report?.sources.every((source) => source.checkedAt === "2026-07-06")).toBe(true);
+    expect(JSON.stringify(report)).not.toContain("導入済み施設の増加");
+    expect(JSON.stringify(report)).not.toContain("導入先が増える");
+    expect(report?.sources.every((source) => source.checkedAt === "2026-07-09")).toBe(true);
   });
 
   it("Academic VC週次レポートが投資判断向けの主要トピックと取得エラーを持つ", () => {
