@@ -1,0 +1,4 @@
+interface:
+  display_name: "Report Review Self Check"
+  short_description: "レポート公開前にレビュー再発を防ぐ品質確認チェック"
+  default_prompt: "Use $report-review-self-check to review a completed report implementation before committing."
