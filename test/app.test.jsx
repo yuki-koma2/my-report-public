@@ -29,6 +29,7 @@ describe("App", () => {
     expect(screen.getByRole("heading", { name: "マーケティング" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "VC" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "スタートアップ" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "医療・介護領域の最新動向調査レポート 2026-07-06週" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-07-02週" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "プロダクト・テック週次レポート 2026-07-01週" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Academic VC / スタートアップ投資動向週次レポート 2026-07-01週" })).toBeInTheDocument();
@@ -101,6 +102,32 @@ describe("App", () => {
       "href",
       "https://www.mhlw.go.jp/stf/newpage_74150.html"
     );
+  });
+
+  it("2026-07-06週の医療介護週次レポートにPMH、施設整備内示、二次情報を表示する", () => {
+    window.location.hash = "#/reports/healthcare-care-weekly-2026-07-06";
+
+    render(<App />);
+
+    expect(screen.getByRole("heading", { name: "医療・介護領域の最新動向調査レポート 2026-07-06週", level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "今週の判断ポイント" })).toBeInTheDocument();
+    expect(screen.getByText("7/31")).toBeInTheDocument();
+    expect(screen.getAllByText(/PMHの医療費助成オンライン資格確認導入済み医療機関・薬局リスト/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/社会福祉施設等施設整備費補助金/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/今週確認できた重要な新規情報なし/).length).toBeGreaterThan(0);
+    expect(screen.getByText(/10. 海外の医療・介護DX動向/)).toBeInTheDocument();
+    expect(screen.getAllByText("二次情報").length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("link", { name: "デジタル庁 Public Medical Hub" })[0]).toHaveAttribute(
+      "href",
+      "https://www.digital.go.jp/policies/health/public-medical-hub"
+    );
+    expect(
+      screen.getAllByRole("link", { name: "厚生労働省 令和8年度社会福祉施設等施設整備費補助金の内示" })[0]
+    ).toHaveAttribute("href", "https://www.mhlw.go.jp/stf/newpage_74201.html");
+    expect(screen.getAllByText("更新日").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("確認日 2026-07-09").length).toBeGreaterThan(0);
+    expect(screen.queryByText("公開日 2026-07-03 / 確認日 2026-07-09")).not.toBeInTheDocument();
+    expect(screen.getAllByText("公開日 2026-07-05 / 確認日 2026-07-09").length).toBeGreaterThan(0);
   });
 
   it("日本の医療業界課題レポートに3課題、歴史背景、国際比較を表示する", () => {
