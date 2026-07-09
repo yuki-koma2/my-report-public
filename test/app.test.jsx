@@ -29,6 +29,7 @@ describe("App", () => {
     expect(screen.getByRole("heading", { name: "マーケティング" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "VC" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "スタートアップ" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Academic VC / スタートアップ投資動向週次レポート 2026-07-09週" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "医療・介護領域の最新動向調査レポート 2026-07-06週" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-07-02週" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "プロダクト・テック週次レポート 2026-07-01週" })).toBeInTheDocument();
@@ -275,6 +276,32 @@ describe("App", () => {
     );
     expect(screen.queryByText(/Omen AI/)).not.toBeInTheDocument();
     expect(screen.getAllByText("メディア記事").length).toBeGreaterThan(0);
+  });
+
+  it("最新のAcademic VC週次レポートの詳細にAI資金調達、deeptech、取得エラーを表示する", () => {
+    window.location.hash = "#/reports/academic-vc-weekly-2026-07-09";
+
+    render(<App />);
+
+    expect(screen.getByRole("heading", { name: "Academic VC / スタートアップ投資動向週次レポート 2026-07-09週", level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "今週の投資判断ポイント" })).toBeInTheDocument();
+    expect(screen.getByText("対象期間内候補")).toBeInTheDocument();
+    expect(screen.getByText("投資関連候補")).toBeInTheDocument();
+    expect(screen.getAllByText(/AIインフラとエージェント基盤で大型ラウンドが続く/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/QuantumDiamondsとProxima Fusionが欧州deeptech資金を集める/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Academic VC \/ 大学発スタートアップは今週採用すべき新規情報なし/).length).toBeGreaterThan(0);
+    expect(screen.getByRole("heading", { name: "取得エラー" })).toBeInTheDocument();
+    expect(screen.getByText("VC Adventure")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "https://www.sethlevine.com/feed" })).toHaveAttribute("href", "https://www.sethlevine.com/feed");
+    expect(screen.getAllByRole("link", { name: "TechCrunch: Prime Intellect raises $130M Series A to help enterprises build their own AI agents" })[0]).toHaveAttribute(
+      "href",
+      "https://techcrunch.com/2026/07/08/prime-intellect-raises-130m-series-a-to-help-enterprises-build-their-own-ai-agents/"
+    );
+    expect(screen.getAllByRole("link", { name: "VC News Daily: Baseten Closes $1.5 Billion Series F Financing" })[0]).toHaveAttribute(
+      "href",
+      "https://vcnewsdaily.com/baseten/venture-capital-funding/cqswnysjpc"
+    );
+    expect(screen.getAllByText("資金調達記事").length).toBeGreaterThan(0);
   });
 
   it("テック情勢週次レポートの詳細に主要トピック、出典、仮説課題を表示する", () => {

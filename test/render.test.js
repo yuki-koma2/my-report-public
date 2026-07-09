@@ -37,6 +37,7 @@ describe("reports", () => {
   it("実調査に基づく週次レポートを保持する", () => {
     expect(reports.length).toBeGreaterThanOrEqual(7);
     expect(reports.map((report) => report.id)).toContain("healthcare-care-weekly-2026-07-06");
+    expect(reports.map((report) => report.id)).toContain("academic-vc-weekly-2026-07-09");
     expect(reports.map((report) => report.id)).toContain("product-tech-weekly-2026-07-01");
     expect(reports.map((report) => report.id)).toContain("tech-landscape-weekly-2026-07-02");
     expect(reports.map((report) => report.id)).toContain("academic-vc-weekly-2026-07-01");
@@ -65,6 +66,7 @@ describe("reports", () => {
         "product-tech-weekly-2026-07-01",
         "tech-landscape-weekly-2026-07-02",
         "healthcare-care-weekly-2026-07-06",
+        "academic-vc-weekly-2026-07-09",
         "academic-vc-weekly-2026-07-01",
         "tech-landscape-weekly-2026-07-01",
         "healthcare-care-weekly-2026-07-01",
@@ -87,6 +89,7 @@ describe("reports", () => {
     );
     expect(getReportsByTag("プロダクト").map((report) => report.id)).toContain("product-tech-weekly-2026-07-01");
     expect(getReportsByTag("マーケティング").map((report) => report.id)).toContain("product-tech-weekly-2026-07-01");
+    expect(getReportsByTag("VC").map((report) => report.id)).toContain("academic-vc-weekly-2026-07-09");
     expect(getReportsByTag("VC").map((report) => report.id)).toContain("academic-vc-weekly-2026-07-01");
     expect(getReportsByTag("市場インテリジェンス").map((report) => report.id)).toContain("tech-landscape-weekly-2026-07-02");
     expect(getReportsByTag("テック情勢").map((report) => report.id)).toContain("tech-landscape-weekly-2026-07-01");
@@ -356,6 +359,28 @@ describe("reports", () => {
     expect(report.sources.map((source) => source.title)).toContain("VC News Daily: Caplight Closes $16M Series A Round");
     expect(JSON.stringify(report.topicCards.find((topic) => topic.theme === "ヘルスケア・ライフサイエンス"))).not.toContain("Omen AI");
     expect(report.sections.some((section) => section.title === "取得エラー")).toBe(true);
+  });
+
+  it("最新のAcademic VC週次レポートがAI資金調達、deeptech、取得エラーを持つ", () => {
+    const report = reports.find((item) => item.id === "academic-vc-weekly-2026-07-09");
+
+    expect(report).toBeDefined();
+    expect(report?.category).toBe("Academic VC / スタートアップ投資");
+    expect(report?.checkedAt).toBe("2026-07-09");
+    expect(report?.lead.title).toBe("今週の投資判断ポイント");
+    expect(report?.dashboardMetrics.find((metric) => metric.label === "対象期間内候補")?.value).toBe("148件");
+    expect(report?.dashboardMetrics.find((metric) => metric.label === "投資関連候補")?.value).toBe("111件");
+    expect(report?.topicCards.map((topic) => topic.title)).toContain("AIインフラとエージェント基盤で大型ラウンドが続く");
+    expect(report?.topicCards.map((topic) => topic.title)).toContain("QuantumDiamondsとProxima Fusionが欧州deeptech資金を集める");
+    expect(report?.topicCards.map((topic) => topic.title)).toContain("Academic VC / 大学発スタートアップは今週採用すべき新規情報なし");
+    expect(report?.sources.map((source) => source.title)).toContain("TechCrunch: Prime Intellect raises $130M Series A to help enterprises build their own AI agents");
+    expect(report?.sources.map((source) => source.title)).toContain("VC News Daily: Baseten Closes $1.5 Billion Series F Financing");
+    expect(report?.sources.map((source) => source.title)).toContain("Sifted: World Fund, IQ Capital among backers of €91m QuantumDiamonds round");
+    expect(report?.sources.every((source) => source.checkedAt === "2026-07-09")).toBe(true);
+    expect(report?.sections.find((section) => section.title === "取得エラー")?.items).toContain(
+      "VC Adventure: https://www.sethlevine.com/feed / failure type: 404 Not Found"
+    );
+    expect(JSON.stringify(report)).not.toContain("過去14日への遡りを行った");
   });
 
   it("テック情勢週次レポートがAIクローラ、AI基盤、開発者ツール、仮説課題を持つ", () => {
