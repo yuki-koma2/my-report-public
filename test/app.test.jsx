@@ -306,6 +306,38 @@ describe("App", () => {
     );
   });
 
+  it("2026-07-09週のテック情勢レポート詳細にAI評価、セキュリティ、vibe coding市場を表示する", () => {
+    window.location.hash = "#/reports/tech-landscape-weekly-2026-07-09";
+
+    render(<App />);
+
+    expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-07-09週", level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "今週の判断ポイント" })).toBeInTheDocument();
+    expect(screen.getByText("高優先度")).toBeInTheDocument();
+    expect(screen.getAllByText(/OpenAIがSWE-Bench Proの約30%に破損タスク/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Databricksが自社コードベースでcoding agentの価格対効果/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/JadePuffer報道がagentic ransomware/).length).toBeGreaterThan(0);
+    expect(screen.getByRole("heading", { name: "注目すべき仮説と解くべき課題" })).toBeInTheDocument();
+    expect(screen.getByText(/agentic securityは入口検知よりも権限分離/)).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "今週検討すべき対応アクション" })).toBeInTheDocument();
+    expect(screen.getByText("エンジニアリング責任者")).toBeInTheDocument();
+    expect(screen.getByText("期限 2026-07-18まで")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "取得エラー" })).toBeInTheDocument();
+    expect(screen.getByText("主要確認入口7件はすべて取得可能。取得エラーなし。")).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: "OpenAI: Separating signal from noise in coding evaluations" })[0]).toHaveAttribute(
+      "href",
+      "https://openai.com/index/separating-signal-from-noise-coding-evaluations/"
+    );
+    expect(screen.getAllByRole("link", { name: "Databricks: Benchmarking Coding Agents on Databricks’ Multi-Million Line Codebase" })[0]).toHaveAttribute(
+      "href",
+      "https://www.databricks.com/blog/benchmarking-coding-agents-databricks-multi-million-line-codebase"
+    );
+    expect(screen.getAllByRole("link", { name: "Business Insider: Cybersecurity firm says it found the first documented case of AI agentic ransomware" })[0]).toHaveAttribute(
+      "href",
+      "https://www.businessinsider.com/ai-ransomware-attack-sysdig-jade-puffer-2026-7"
+    );
+  });
+
   it("テック情勢レポート詳細に判断ポイント、仮説、課題、取得エラーを表示する", () => {
     window.location.hash = "#/reports/tech-landscape-weekly-2026-07-01";
 

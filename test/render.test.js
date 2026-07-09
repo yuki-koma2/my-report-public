@@ -36,6 +36,7 @@ describe("routing", () => {
 describe("reports", () => {
   it("実調査に基づく週次レポートを保持する", () => {
     expect(reports.length).toBeGreaterThanOrEqual(7);
+    expect(reports.map((report) => report.id)).toContain("tech-landscape-weekly-2026-07-09");
     expect(reports.map((report) => report.id)).toContain("healthcare-care-weekly-2026-07-06");
     expect(reports.map((report) => report.id)).toContain("product-tech-weekly-2026-07-01");
     expect(reports.map((report) => report.id)).toContain("tech-landscape-weekly-2026-07-02");
@@ -45,7 +46,10 @@ describe("reports", () => {
     expect(reports.map((report) => report.id)).toContain("healthcare-care-weekly-2026-06-30");
     expect(reports.map((report) => report.id)).toContain("japan-healthcare-industry-structural-challenges-2026-07-01");
     expect(reports.map((report) => report.id)).toContain("japan-care-industry-challenges-2026");
-    expect(reports[0].title).toBe("医療・介護領域の最新動向調査レポート 2026-07-06週");
+    expect(reports[0].title).toBe("テック情勢週次レポート 2026-07-09週");
+    expect(reports.find((report) => report.id === "healthcare-care-weekly-2026-07-06")?.title).toBe(
+      "医療・介護領域の最新動向調査レポート 2026-07-06週"
+    );
     for (const report of reports) {
       expect(report.summary).not.toContain("サンプル");
     }
@@ -63,6 +67,7 @@ describe("reports", () => {
     expect(getReportsByType("weekly").map((report) => report.id)).toEqual(
       expect.arrayContaining([
         "product-tech-weekly-2026-07-01",
+        "tech-landscape-weekly-2026-07-09",
         "tech-landscape-weekly-2026-07-02",
         "healthcare-care-weekly-2026-07-06",
         "academic-vc-weekly-2026-07-01",
@@ -89,6 +94,7 @@ describe("reports", () => {
     expect(getReportsByTag("マーケティング").map((report) => report.id)).toContain("product-tech-weekly-2026-07-01");
     expect(getReportsByTag("VC").map((report) => report.id)).toContain("academic-vc-weekly-2026-07-01");
     expect(getReportsByTag("市場インテリジェンス").map((report) => report.id)).toContain("tech-landscape-weekly-2026-07-02");
+    expect(getReportsByTag("セキュリティ").map((report) => report.id)).toContain("tech-landscape-weekly-2026-07-09");
     expect(getReportsByTag("テック情勢").map((report) => report.id)).toContain("tech-landscape-weekly-2026-07-01");
     const medicalTag = getTagSummaries().find((tag) => tag.name === "医療");
 
@@ -393,6 +399,44 @@ describe("reports", () => {
     expect(report.sections.some((section) => section.title === "今週検討すべき対応アクション")).toBe(true);
     expect(report.sections.some((section) => section.title === "取得エラー")).toBe(true);
     expect(report.sections.find((section) => section.title === "取得エラー").items).toContain("主要確認入口7件はすべて取得可能。取得エラーなし。");
+  });
+
+  it("2026-07-09週のテック情勢週次レポートがAI評価、エージェントリスク、vibe coding市場を保持する", () => {
+    const report = reports.find((item) => item.id === "tech-landscape-weekly-2026-07-09");
+
+    expect(report).toBeDefined();
+    expect(report?.category).toBe("テック情勢");
+    expect(report?.publishedAt).toBe("2026-07-09");
+    expect(report?.checkedAt).toBe("2026-07-09");
+    expect(report?.dashboardMetrics.find((metric) => metric.label === "対象期間")?.caption).toContain("2026-07-02 00:00 JST");
+    expect(report?.dashboardMetrics.find((metric) => metric.label === "高優先度")?.value).toBe("3テーマ");
+    expect(report?.topicCards.filter((topic) => topic.priority === "高")).toHaveLength(3);
+    expect(report?.topicCards.map((topic) => topic.title)).toEqual(
+      expect.arrayContaining([
+        "OpenAIがSWE-Bench Proの約30%に破損タスクがあると公表",
+        "Databricksが自社コードベースでcoding agentの価格対効果を検証",
+        "JadePuffer報道がagentic ransomwareの防御時間を秒単位に縮める",
+        "Lovableの評価額倍増報道がvibe coding市場の過熱を示す"
+      ])
+    );
+    expect(report?.sources.find((source) => source.title === "OpenAI: Separating signal from noise in coding evaluations")).toMatchObject({
+      type: "一次情報",
+      publishedAt: "2026-07-08"
+    });
+    expect(report?.sources.find((source) => source.title === "Business Insider: Cybersecurity firm says it found the first documented case of AI agentic ransomware")).toMatchObject({
+      type: "二次情報",
+      publishedAt: "2026-07-06"
+    });
+    expect(report?.sources.find((source) => source.title === "arXiv: Adoption and Impact of Command-Line AI Coding Agents")).toMatchObject({
+      type: "研究論文",
+      publishedAt: "2026-07-01"
+    });
+    expect(report?.sections.find((section) => section.title === "注目すべき仮説と解くべき課題")?.items.join("\n")).toContain(
+      "agentic securityは入口検知よりも権限分離、実行前承認、ネットワーク制御"
+    );
+    expect(report?.sections.find((section) => section.title === "取得エラー")?.items).toContain(
+      "主要確認入口7件はすべて取得可能。取得エラーなし。"
+    );
   });
 
   it("テック情勢週次レポートが仮説、課題、取得エラーを構造化して持つ", () => {
