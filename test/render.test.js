@@ -36,6 +36,7 @@ describe("routing", () => {
 describe("reports", () => {
   it("実調査に基づく週次レポートを保持する", () => {
     expect(reports.length).toBeGreaterThanOrEqual(7);
+    expect(reports.map((report) => report.id)).toContain("healthcare-care-weekly-2026-07-13");
     expect(reports.map((report) => report.id)).toContain("healthcare-care-weekly-2026-07-06");
     expect(reports.map((report) => report.id)).toContain("product-tech-weekly-2026-07-01");
     expect(reports.map((report) => report.id)).toContain("tech-landscape-weekly-2026-07-02");
@@ -45,7 +46,7 @@ describe("reports", () => {
     expect(reports.map((report) => report.id)).toContain("healthcare-care-weekly-2026-06-30");
     expect(reports.map((report) => report.id)).toContain("japan-healthcare-industry-structural-challenges-2026-07-01");
     expect(reports.map((report) => report.id)).toContain("japan-care-industry-challenges-2026");
-    expect(reports[0].title).toBe("医療・介護領域の最新動向調査レポート 2026-07-06週");
+    expect(reports[0].title).toBe("医療・介護領域の最新動向調査レポート 2026-07-13週");
     for (const report of reports) {
       expect(report.summary).not.toContain("サンプル");
     }
@@ -64,6 +65,7 @@ describe("reports", () => {
       expect.arrayContaining([
         "product-tech-weekly-2026-07-01",
         "tech-landscape-weekly-2026-07-02",
+        "healthcare-care-weekly-2026-07-13",
         "healthcare-care-weekly-2026-07-06",
         "academic-vc-weekly-2026-07-01",
         "tech-landscape-weekly-2026-07-01",
@@ -80,6 +82,7 @@ describe("reports", () => {
     expect(getReportsByTag("医療").map((report) => report.id)).toEqual(
       expect.arrayContaining([
         "healthcare-care-weekly-2026-07-06",
+        "healthcare-care-weekly-2026-07-13",
         "healthcare-care-weekly-2026-07-01",
         "healthcare-care-weekly-2026-06-30",
         "japan-healthcare-industry-structural-challenges-2026-07-01"
@@ -340,6 +343,49 @@ describe("reports", () => {
     expect(JSON.stringify(report)).not.toContain("導入済み施設の増加");
     expect(JSON.stringify(report)).not.toContain("導入先が増える");
     expect(report?.sources.every((source) => source.checkedAt === "2026-07-09")).toBe(true);
+  });
+
+  it("2026-07-13週の医療介護レポートは医療DXダッシュボード、重点支援区域、空情報を保持する", () => {
+    const report = reports.find((item) => item.id === "healthcare-care-weekly-2026-07-13");
+
+    expect(report).toBeDefined();
+
+    const themeSection = report?.sections.find((section) => section.title === "テーマ別の調査結果");
+    const themeText = themeSection?.items.join("\n") ?? "";
+    const dashboardTopic = report?.topicCards.find((topic) => topic.sourceTitle === "デジタル庁 医療DXに関するダッシュボード");
+    const regionalTopic = report?.topicCards.find((topic) => topic.sourceTitle.includes("地域医療構想"));
+    const oxygenTopic = report?.topicCards.find((topic) => topic.sourceTitle.includes("在宅酸素療法"));
+
+    expect(report?.publishedAt).toBe("2026-07-13");
+    expect(report?.checkedAt).toBe("2026-07-13");
+    expect(report?.dashboardMetrics.find((metric) => metric.label === "直近期限")?.value).toBe("7/14");
+    expect(report?.dashboardMetrics.find((metric) => metric.label === "一次情報")?.value).toBe("10本");
+    expect(report?.highlights.join("\n")).toContain("今週確認できた重要な新規情報なし");
+    expect(themeText).toContain("1. 医療・介護制度改正");
+    expect(themeText).toContain("4. 医療DX、介護DX、電子カルテ、地域医療連携、標準化");
+    expect(themeText).toContain("10. 海外の医療・介護DX動向");
+    expect(themeText).toContain("公募締切: 随時募集のため今回ページでは固定締切を確認できず");
+    expect(themeText).toContain("補助率・補助上限額: 今回ページ本文では確認できず");
+    expect(dashboardTopic).toMatchObject({
+      date: "2026-07-10",
+      dateLabel: "更新日",
+      priority: "高",
+      sourceType: "一次情報"
+    });
+    expect(regionalTopic).toMatchObject({
+      date: "2026-07-09",
+      timing: "すぐ"
+    });
+    expect(oxygenTopic).toMatchObject({
+      date: "2026-07-07",
+      dateLabel: "更新日",
+      priority: "中"
+    });
+    expect(report?.sources.find((source) => source.title === "デジタル庁 医療DXに関するダッシュボード")).toMatchObject({
+      publishedAt: "2026-07-10",
+      checkedAt: "2026-07-13"
+    });
+    expect(report?.sources.every((source) => source.checkedAt === "2026-07-13")).toBe(true);
   });
 
   it("Academic VC週次レポートが投資判断向けの主要トピックと取得エラーを持つ", () => {
