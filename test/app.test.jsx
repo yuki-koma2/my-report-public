@@ -306,6 +306,19 @@ describe("App", () => {
     );
   });
 
+  it("2026-07-16週のテック情勢レポート詳細に期限、仮説、一次情報を表示する", () => {
+    window.location.hash = "#/reports/tech-landscape-weekly-2026-07-16";
+
+    render(<App />);
+
+    expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-07-16週", level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "GPT-5.6がマルチエージェント実行をAPIの標準機能へ近づける" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "GitHubがコードスキャン修正をエージェントへ委任できる公開プレビューを開始" })).toBeInTheDocument();
+    expect(screen.getByText("期限 2026-07-22まで")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "注目すべき仮説と解くべき課題" })).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: "OpenAI: GPT-5.6: Frontier intelligence that scales with your ambition" })[0]).toHaveAttribute("href", "https://openai.com/index/gpt-5-6/");
+  });
+
   it("テック情勢レポート詳細に判断ポイント、仮説、課題、取得エラーを表示する", () => {
     window.location.hash = "#/reports/tech-landscape-weekly-2026-07-01";
 

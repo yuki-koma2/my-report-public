@@ -45,7 +45,7 @@ describe("reports", () => {
     expect(reports.map((report) => report.id)).toContain("healthcare-care-weekly-2026-06-30");
     expect(reports.map((report) => report.id)).toContain("japan-healthcare-industry-structural-challenges-2026-07-01");
     expect(reports.map((report) => report.id)).toContain("japan-care-industry-challenges-2026");
-    expect(reports[0].title).toBe("医療・介護領域の最新動向調査レポート 2026-07-06週");
+    expect(reports.find((report) => report.id === "healthcare-care-weekly-2026-07-06")?.title).toBe("医療・介護領域の最新動向調査レポート 2026-07-06週");
     for (const report of reports) {
       expect(report.summary).not.toContain("サンプル");
     }
@@ -393,6 +393,18 @@ describe("reports", () => {
     expect(report.sections.some((section) => section.title === "今週検討すべき対応アクション")).toBe(true);
     expect(report.sections.some((section) => section.title === "取得エラー")).toBe(true);
     expect(report.sections.find((section) => section.title === "取得エラー").items).toContain("主要確認入口7件はすべて取得可能。取得エラーなし。");
+  });
+
+  it("2026-07-16週のテック情勢レポートがモデル、開発セキュリティ、規制期限を構造化して持つ", () => {
+    const report = reports.find((item) => item.id === "tech-landscape-weekly-2026-07-16");
+
+    expect(report).toBeTruthy();
+    expect(report?.topicCards.map((topic) => topic.title)).toContain("GPT-5.6がマルチエージェント実行をAPIの標準機能へ近づける");
+    expect(report?.topicCards.map((topic) => topic.title)).toContain("GitHubがコードスキャン修正をエージェントへ委任できる公開プレビューを開始");
+    expect(report?.topicCards.map((topic) => topic.title)).toContain("EUのAI生成物透明性コードは初期署名期限が7月22日に迫る");
+    expect(report?.sources.find((source) => source.title.startsWith("OpenAI: GPT-5.6"))).toMatchObject({ type: "一次情報", publishedAt: "2026-07-09", checkedAt: "2026-07-16" });
+    expect(report?.dashboardMetrics.find((metric) => metric.label === "高優先度")?.value).toBe("3テーマ");
+    expect(report?.sections.find((section) => section.title === "取得エラー")?.items).toContain("主要確認入口7件はすべて取得可能。取得エラーなし。");
   });
 
   it("テック情勢週次レポートが仮説、課題、取得エラーを構造化して持つ", () => {
