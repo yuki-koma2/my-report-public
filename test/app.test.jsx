@@ -315,6 +315,11 @@ describe("App", () => {
     expect(screen.getByRole("heading", { name: "GPT-5.6がマルチエージェント実行をAPIの標準機能へ近づける" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "GitHubがコードスキャン修正をエージェントへ委任できる公開プレビューを開始" })).toBeInTheDocument();
     expect(screen.getByText("期限 2026-07-22まで")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "AI半導体企業を導入顧客、稼働率、供給能力、粗利、ソフトウェア互換性で比較する" })).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: "Hacker News RSS" })[0]).toHaveAttribute("href", "https://news.ycombinator.com/rss");
+    expect(screen.getByRole("link", { name: "TechCrunch RSS" })).toHaveAttribute("href", "https://techcrunch.com/feed/");
+    expect(screen.getAllByText("対象期間外の規制当局資料").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("対象期間外のメディア記事").length).toBeGreaterThan(0);
     expect(screen.getByRole("heading", { name: "注目すべき仮説と解くべき課題" })).toBeInTheDocument();
     expect(screen.getAllByRole("link", { name: "OpenAI: GPT-5.6: Frontier intelligence that scales with your ambition" })[0]).toHaveAttribute("href", "https://openai.com/index/gpt-5-6/");
   });

@@ -13,15 +13,17 @@ export const report = {
     { title: "OpenAI: GPT-5.6: Frontier intelligence that scales with your ambition", url: "https://openai.com/index/gpt-5-6/", type: "一次情報", publishedAt: "2026-07-09", checkedAt: "2026-07-16" },
     { title: "GitHub Changelog: Agentic autofix for code scanning alerts in public preview", url: "https://github.blog/changelog/2026-07-10-agentic-autofix-for-code-scanning-alerts-in-public-preview/", type: "一次情報", publishedAt: "2026-07-10", checkedAt: "2026-07-16" },
     { title: "GitHub Changelog: CodeQL 2.26.0 adds Kotlin 2.4.0 support and AI prompt injection detection", url: "https://github.blog/changelog/2026-07-10-codeql-2-26-0-adds-kotlin-2-4-0-support-and-ai-prompt-injection-detection/", type: "一次情報", publishedAt: "2026-07-10", checkedAt: "2026-07-16" },
-    { title: "European Commission: Signing the Code of Practice on transparency of AI-generated content", url: "https://digital-strategy.ec.europa.eu/en/faqs/signing-code-practice-transparency-ai-generated-content", type: "規制当局資料", publishedAt: "2026-07-08", checkedAt: "2026-07-16" },
-    { title: "TechCrunch: AI chip maker SambaNova raises $1B at $11B valuation", url: "https://techcrunch.com/2026/07/08/sambanova-draws-1b-at-11b-valuation-in-series-f-first-close/", type: "メディア記事", publishedAt: "2026-07-08", checkedAt: "2026-07-16" },
-    { title: "GitHub Changelog: Code scanning shows AI security detections on pull requests", url: "https://github.blog/changelog/2026-07-14-code-scanning-shows-ai-security-detections-on-pull-requests/", type: "一次情報", publishedAt: "2026-07-14", checkedAt: "2026-07-16" }
+    { title: "European Commission: Signing the Code of Practice on transparency of AI-generated content", url: "https://digital-strategy.ec.europa.eu/en/faqs/signing-code-practice-transparency-ai-generated-content", type: "対象期間外の規制当局資料", publishedAt: "2026-07-08", checkedAt: "2026-07-16" },
+    { title: "TechCrunch: AI chip maker SambaNova raises $1B at $11B valuation", url: "https://techcrunch.com/2026/07/08/sambanova-draws-1b-at-11b-valuation-in-series-f-first-close/", type: "対象期間外のメディア記事", publishedAt: "2026-07-08", checkedAt: "2026-07-16" },
+    { title: "GitHub Changelog: Code scanning shows AI security detections on pull requests", url: "https://github.blog/changelog/2026-07-14-code-scanning-shows-ai-security-detections-on-pull-requests/", type: "一次情報", publishedAt: "2026-07-14", checkedAt: "2026-07-16" },
+    { title: "Hacker News RSS", url: "https://news.ycombinator.com/rss", type: "RSS", checkedAt: "2026-07-16" },
+    { title: "TechCrunch RSS", url: "https://techcrunch.com/feed/", type: "RSS", checkedAt: "2026-07-16" }
   ],
   highlights: [
     "OpenAIはGPT-5.6をChatGPT、Codex、APIで提供し、Responses APIでは並列サブエージェントを統合するmulti-agent betaを公開した。",
     "GitHubはコードスキャン警告をCopilotへ割り当て、修正、CodeQL再検証、draft PR作成まで進めるagentic autofixを公開プレビューにした。",
     "CodeQL 2.26.0は、信頼できない入力がAIモデルのsystem promptへ流入する経路を検出するJavaScript/TypeScript queryを追加した。",
-    "EU AI Officeの透明性コード初期署名期限は2026年7月22日18:00 CESTで、関連するAI Actの義務は8月2日から適用される。",
+    "対象期間開始前日のEU規制資料では、透明性コード初期署名期限が2026年7月22日18:00 CEST、関連するAI Actの義務適用が8月2日と示されており、直近期限の判断材料として持ち越した。",
     "SambaNovaの調達は対象期間開始前日の二次情報であり、今週の資本市場文脈を理解するための持ち越し参考情報として扱う。"
   ],
   lead: {
@@ -72,8 +74,8 @@ export const report = {
     {
       theme: "セキュリティ/規制/標準化",
       title: "EUのAI生成物透明性コードは初期署名期限が7月22日に迫る",
-      summary: "EU AI OfficeはAI生成物透明性コードの初期署名フォームを2026年7月22日18:00 CESTまで受け付ける。Article 50の関連義務は8月2日から適用され、未署名組織は別の方法で遵守を示す必要がある。",
-      date: "2026-07-08", sourceTitle: "European Commission: Signing the Code of Practice on transparency of AI-generated content", sourceUrl: "https://digital-strategy.ec.europa.eu/en/faqs/signing-code-practice-transparency-ai-generated-content", sourceType: "規制当局資料", priority: "高", timing: "2026-07-22まで", relevance: 97,
+      summary: "対象期間開始前日のEU規制資料を、7月22日の直近期限を判断するための持ち越し情報として採用した。EU AI OfficeはAI生成物透明性コードの初期署名フォームを2026年7月22日18:00 CESTまで受け付け、Article 50の関連義務は8月2日から適用される。",
+      date: "2026-07-08", sourceTitle: "European Commission: Signing the Code of Practice on transparency of AI-generated content", sourceUrl: "https://digital-strategy.ec.europa.eu/en/faqs/signing-code-practice-transparency-ai-generated-content", sourceType: "対象期間外の規制当局資料", priority: "高", timing: "2026-07-22まで", relevance: 97,
       relatedTags: ["AI", "規制"], affected: ["生成AI提供者", "生成AI導入企業", "法務・コンプライアンス", "プロダクト責任者"],
       change: "生成・操作されたコンテンツの識別と表示が、方針検討から直近の申請・実装期限を伴う運用課題になった。",
       importance: "EU域外企業でもEU市場へ生成AIを提供・導入する場合に対象となりうるため、提供者と導入者の役割整理が必要。",
@@ -95,21 +97,25 @@ export const report = {
       theme: "重要な新規情報なし",
       title: "ブラウザ/OS/モバイルは今週採用すべき大規模な一次情報なし",
       summary: "主要フィードと公式入口を確認したが、今回の事業・技術判断を直ちに変える大規模なブラウザ、OS、モバイルの一次情報は採用しなかった。",
-      date: "2026-07-16", sourceTitle: "Hacker News RSS / TechCrunch RSS", sourceUrl: "https://news.ycombinator.com/rss", sourceType: "RSS", priority: "低", timing: "継続ウォッチ", relevance: 60,
+      date: "2026-07-16", sourceTitle: "Hacker News RSS", sourceUrl: "https://news.ycombinator.com/rss", sourceType: "RSS", priority: "低", timing: "継続ウォッチ", relevance: 60,
       relatedTags: ["エンジニアリング", "市場インテリジェンス"], affected: ["Web開発者", "モバイル開発者", "プロダクト責任者"],
-      change: "今週確認できた重要な新規情報なし。", importance: "話題量ではなく、公式な仕様・配信・規約変更の有無で判断する。", implication: "主要ベンダー公式発表を来週も継続確認する。", uncertainty: "個別の小規模更新や脆弱性は今回の大きな変化の選定外。"
+      change: "今週確認できた重要な新規情報なし。",
+      importance: "話題量ではなく、公式な仕様・配信・規約変更の有無で判断する。",
+      implication: "主要ベンダー公式発表を来週も継続確認する。",
+      uncertainty: "個別の小規模更新や脆弱性は今回の大きな変化の選定外。"
     }
   ],
   actionCards: [
     { owner: "法務・AIガバナンス責任者", action: "EU透明性コードの対象サービスと署名方針を決定する", due: "2026-07-22まで", reason: "初期署名期限が迫り、関連するAI Act透明性義務が8月2日から適用されるため。" },
     { owner: "AI基盤責任者", action: "マルチエージェント評価に総費用、同時権限、失敗時挙動、監査ログを追加する", due: "2週間以内", reason: "並列エージェントがAPI機能になり、単一モデル評価だけでは運用リスクを測れないため。" },
-    { owner: "AppSec責任者", action: "agentic autofixとCodeQLのprompt injection queryを限定リポジトリで検証する", due: "1か月以内", reason: "AIによる修正とAI固有リスク検知を既存のレビュー・CIへ統合できるか確かめるため。" }
+    { owner: "AppSec責任者", action: "agentic autofixとCodeQLのprompt injection queryを限定リポジトリで検証する", due: "1か月以内", reason: "AIによる修正とAI固有リスク検知を既存のレビュー・CIへ統合できるか確かめるため。" },
+    { owner: "市場調査・投資担当", action: "AI半導体企業を導入顧客、稼働率、供給能力、粗利、ソフトウェア互換性で比較する", due: "次回投資判断まで", reason: "大型資金調達や評価額だけでは需要、供給能力、収益性を判断できないため。" }
   ],
   sections: [
     { title: "調査条件", items: [
       "主対象期間: 2026-07-09 00:00 JSTから2026-07-16 17:00 JSTまで。直近7日で十分な重要情報があったため、過去14日への遡りは行っていない。",
       "主要確認入口: TechCrunch、Hacker News、Product Hunt、ProductZine、Forrester Blogs、TechFeed Startup / Innovation、TechFeed Marketing。",
-      "確認方針: フィードで候補を抽出し、OpenAI、GitHub、European Commissionの一次情報・規制当局資料を優先した。SambaNovaは対象期間開始前日の二次情報であり、持ち越し参考情報と明記した。"
+      "確認方針: フィードで候補を抽出し、OpenAI、GitHubの一次情報を優先した。European Commissionの規制資料とSambaNova報道は対象期間開始前日の2026-07-08公開だが、それぞれ7月22日の直近期限とAI推論基盤の資本市場文脈を理解するために限定的な持ち越し参考情報として採用し、対象期間外と明記した。"
     ] },
     { title: "エグゼクティブサマリー", items: [
       "AI基盤: GPT-5.6は並列サブエージェントとツール処理をAPI機能として提供し、評価軸を単一回答品質からワークフロー全体へ広げた。",
@@ -127,12 +133,7 @@ export const report = {
       "解くべき課題: EU透明性義務について、提供者・導入者の役割、対象コンテンツ、表示、機械可読マーキング、証跡保存を製品横断で揃える。",
       "大きな問題: モデル・エージェント・セキュリティ修正の自動化が速くなる一方、利用量課金とActions等の周辺費用を機能単位で把握しにくい。"
     ] },
-    { title: "今週検討すべき対応アクション", items: [
-      "事業/プロダクト: EUで提供・利用する生成AI機能を棚卸しし、7月22日までの署名判断と8月2日までの表示実装を分けて管理する。",
-      "エンジニアリング: マルチエージェントの検証環境に同時実行数、ツールallowlist、予算上限、監査ログ、停止手段を設ける。",
-      "セキュリティ: agentic autofixはdraft PRと必須レビューを維持し、CodeQL再実行に加えて既存のテストと業務回帰確認を必須にする。",
-      "市場/投資: AI半導体企業は資金調達額ではなく、導入顧客、稼働率、供給能力、粗利、ソフトウェア互換性で比較する。"
-    ] },
+    { title: "今週検討すべき対応アクション", items: [] },
     { title: "継続ウォッチすべきテーマ", items: [
       "GPT-5.6 multi-agent betaの一般提供、価格、同時実行上限、実運用評価。",
       "agentic autofixの修正成功率、誤修正率、AI CreditsとActions minutesの費用。",

@@ -403,6 +403,18 @@ describe("reports", () => {
     expect(report?.topicCards.map((topic) => topic.title)).toContain("GitHubがコードスキャン修正をエージェントへ委任できる公開プレビューを開始");
     expect(report?.topicCards.map((topic) => topic.title)).toContain("EUのAI生成物透明性コードは初期署名期限が7月22日に迫る");
     expect(report?.sources.find((source) => source.title.startsWith("OpenAI: GPT-5.6"))).toMatchObject({ type: "一次情報", publishedAt: "2026-07-09", checkedAt: "2026-07-16" });
+    expect(report?.sources.find((source) => source.title === "European Commission: Signing the Code of Practice on transparency of AI-generated content")?.type).toBe("対象期間外の規制当局資料");
+    expect(report?.sources.find((source) => source.title === "TechCrunch: AI chip maker SambaNova raises $1B at $11B valuation")?.type).toBe("対象期間外のメディア記事");
+    expect(report?.sources).toEqual(expect.arrayContaining([
+      expect.objectContaining({ title: "Hacker News RSS", url: "https://news.ycombinator.com/rss", type: "RSS" }),
+      expect.objectContaining({ title: "TechCrunch RSS", url: "https://techcrunch.com/feed/", type: "RSS" })
+    ]));
+    expect(report?.topicCards.find((topic) => topic.theme === "重要な新規情報なし")).toMatchObject({
+      sourceTitle: "Hacker News RSS",
+      sourceUrl: "https://news.ycombinator.com/rss"
+    });
+    expect(report?.actionCards.map((card) => card.action)).toContain("AI半導体企業を導入顧客、稼働率、供給能力、粗利、ソフトウェア互換性で比較する");
+    expect(report?.sections.find((section) => section.title === "今週検討すべき対応アクション")?.items).toEqual([]);
     expect(report?.dashboardMetrics.find((metric) => metric.label === "高優先度")?.value).toBe("3テーマ");
     expect(report?.sections.find((section) => section.title === "取得エラー")?.items).toContain("主要確認入口7件はすべて取得可能。取得エラーなし。");
   });
