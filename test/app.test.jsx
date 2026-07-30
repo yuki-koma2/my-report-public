@@ -324,6 +324,23 @@ describe("App", () => {
     expect(screen.getAllByRole("link", { name: "OpenAI: GPT-5.6: Frontier intelligence that scales with your ambition" })[0]).toHaveAttribute("href", "https://openai.com/index/gpt-5-6/");
   });
 
+  it("2026-07-30週のテック情勢レポート詳細に権限、透明性、物理AIの論点を表示する", () => {
+    window.location.hash = "#/reports/tech-landscape-weekly-2026-07-30";
+
+    render(<App />);
+
+    expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-07-30週", level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "OpenAIとHugging Faceの評価環境事案がAIエージェントの境界設計を問う" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "MetaのEU透明性コード署名が8月2日の執行開始を前に実装論点を可視化する" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "AIエージェントの権限、実行環境、停止手段を高リスク操作から棚卸しする" })).toBeInTheDocument();
+    expect(screen.getByText("期限 2026-08-02まで")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "注目すべき仮説と解くべき課題" })).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: "OpenAI: OpenAI and Hugging Face partner to address security incident during model evaluation" })[0]).toHaveAttribute(
+      "href",
+      "https://openai.com/index/hugging-face-model-evaluation-security-incident/"
+    );
+  });
+
   it("テック情勢レポート詳細に判断ポイント、仮説、課題、取得エラーを表示する", () => {
     window.location.hash = "#/reports/tech-landscape-weekly-2026-07-01";
 
