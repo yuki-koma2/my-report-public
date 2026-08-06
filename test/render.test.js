@@ -460,4 +460,26 @@ describe("reports", () => {
       "https://techfeed.io/feeds/categories/Marketing?userId=667a89b3185e12081e95a7b5"
     );
   });
+
+  it("2026-08-06週のテック情勢週次レポートが供給網防御とAI透明性義務を構造化して持つ", () => {
+    const report = reports.find((item) => item.id === "tech-landscape-weekly-2026-08-06");
+
+    expect(report).toBeTruthy();
+    expect(report?.title).toBe("テック情勢週次レポート 2026-08-06週");
+    expect(report?.topicCards.map((topic) => topic.title)).toEqual(
+      expect.arrayContaining([
+        "GitHub Actionsが疑わしいワークフローを実行前に承認待ちへ移す",
+        "DependabotがOpenSSFの悪性パッケージ情報を取り込み対象エコシステムを拡大",
+        "EU AI Actの生成AI透明性義務が8月2日に適用開始"
+      ])
+    );
+    expect(report?.sources.find((source) => source.title.startsWith("GitHub Changelog: GitHub Actions holds"))).toMatchObject({
+      type: "一次情報",
+      publishedAt: "2026-07-28",
+      checkedAt: "2026-08-06"
+    });
+    expect(report?.dashboardMetrics.find((metric) => metric.label === "高優先度")?.value).toBe("3テーマ");
+    expect(report?.sections.find((section) => section.title === "取得エラー")?.items.join(" ")).toContain("ProductZine");
+    expect(report?.actionCards.map((card) => card.action)).toContain("公開リポジトリのActions承認待ちを担当者が判断できる運用へ更新する");
+  });
 });
