@@ -298,6 +298,27 @@ describe("reports", () => {
     });
   });
 
+  it("2026-08-10週の医療・介護レポートは10テーマの空情報と調査範囲を明示する", () => {
+    const report = reports.find((item) => item.id === "healthcare-care-weekly-2026-08-10");
+
+    expect(report).toBeDefined();
+    expect(report?.publishedAt).toBe("2026-08-10");
+    expect(report?.checkedAt).toBe("2026-08-10");
+    expect(report?.lead.title).toBe("今週の判断ポイント");
+    expect(report?.dashboardMetrics.find((metric) => metric.label === "確認テーマ")?.value).toBe("10テーマ");
+    expect(report?.dashboardMetrics.find((metric) => metric.label === "対象期間")?.value).toBe("8/4-8/10");
+    expect(report?.highlights.join("\n")).toContain("今週確認できた重要な新規情報なし");
+    expect(report?.topicCards.find((topic) => topic.theme === "重要な新規情報なし")?.sourceType).toBe("一次情報");
+    expect(report?.sources.every((source) => source.checkedAt === "2026-08-10")).toBe(true);
+
+    const themeText = report?.sections.find((section) => section.title === "テーマ別の調査結果")?.items.join("\n") ?? "";
+    expect(themeText).toContain("1. 医療・介護制度改正");
+    expect(themeText).toContain("5. 補助金・助成金・公募情報");
+    expect(themeText).toContain("10. 海外の医療・介護DX動向");
+    expect((themeText.match(/今週確認できた重要な新規情報なし/g) ?? []).length).toBeGreaterThanOrEqual(10);
+    expect(report?.sections.find((section) => section.title === "調査メモ")?.items.join("\n")).toContain("一次情報未確認");
+  });
+
   it("2026-07-06週の医療介護レポートはPMH、施設整備内示、空情報、二次情報を保持する", () => {
     const report = reports.find((item) => item.id === "healthcare-care-weekly-2026-07-06");
 
