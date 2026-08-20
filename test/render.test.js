@@ -460,4 +460,23 @@ describe("reports", () => {
       "https://techfeed.io/feeds/categories/Marketing?userId=667a89b3185e12081e95a7b5"
     );
   });
+
+  it("2026-08-20週のテック情勢レポートがエージェント導入、AIサイバー評価、規制執行を構造化して持つ", () => {
+    const report = reports.find((item) => item.id === "tech-landscape-weekly-2026-08-20");
+
+    expect(report).toBeTruthy();
+    expect(report?.checkedAt).toBe("2026-08-20");
+    expect(report?.topicCards.map((topic) => topic.title)).toContain("Amazon QuickがMicrosoft 365内へ接続データとエージェント編集を持ち込む");
+    expect(report?.topicCards.map((topic) => topic.title)).toContain("AIサイバー評価で検証環境の封じ込めが独立した安全要件になった");
+    expect(report?.sources.find((source) => source.title.startsWith("AWS: Amazon Quick for Microsoft 365"))).toMatchObject({
+      type: "一次情報",
+      publishedAt: "2026-08-13",
+      checkedAt: "2026-08-20"
+    });
+    expect(report?.sources.find((source) => source.title.startsWith("OpenAI: Third-party cyber evaluations"))?.type).toBe("対象期間外の一次情報");
+    expect(report?.dashboardMetrics.find((metric) => metric.label === "高優先度")?.value).toBe("3テーマ");
+    expect(report?.topicCards.filter((topic) => topic.priority === "高")).toHaveLength(3);
+    expect(report?.sections.find((section) => section.title === "取得エラー")?.items.join(" ")).toContain("ProductZine");
+    expect(report?.sections.find((section) => section.title === "調査条件")?.items.join(" ")).toContain("過去14日");
+  });
 });
