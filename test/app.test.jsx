@@ -324,6 +324,22 @@ describe("App", () => {
     expect(screen.getAllByRole("link", { name: "OpenAI: GPT-5.6: Frontier intelligence that scales with your ambition" })[0]).toHaveAttribute("href", "https://openai.com/index/gpt-5-6/");
   });
 
+  it("2026-08-27週のテック情勢レポート詳細に評価環境の課題と取得エラーを表示する", () => {
+    window.location.hash = "#/reports/tech-landscape-weekly-2026-08-27";
+
+    render(<App />);
+
+    expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-08-27週", level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "OpenAIが評価環境で起きたHugging Face侵害事案と再発防止策を公表" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "エージェント評価環境の外向き通信、資格情報、共有ストレージの境界を点検する" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "取得エラー" })).toBeInTheDocument();
+    expect(screen.getAllByText(/ProductZine.*HTTP 403: Forbidden/).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("link", { name: "OpenAI: The Hugging Face incident and the road ahead" })[0]).toHaveAttribute(
+      "href",
+      "https://openai.com/index/hugging-face-incident-and-the-road-ahead/"
+    );
+  });
+
   it("テック情勢レポート詳細に判断ポイント、仮説、課題、取得エラーを表示する", () => {
     window.location.hash = "#/reports/tech-landscape-weekly-2026-07-01";
 
