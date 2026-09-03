@@ -419,6 +419,18 @@ describe("reports", () => {
     expect(report?.sections.find((section) => section.title === "取得エラー")?.items).toContain("主要確認入口7件はすべて取得可能。取得エラーなし。");
   });
 
+  it("2026-09-03週のテック情勢レポートがAstra、Copilot統制、EU移行期限を構造化して持つ", () => {
+    const report = reports.find((item) => item.id === "tech-landscape-weekly-2026-09-03");
+
+    expect(report).toBeTruthy();
+    expect(report?.topicCards.map((topic) => topic.title)).toContain("OpenAIはAstraがCriticalサイバー能力の閾値に達したと評価");
+    expect(report?.topicCards.map((topic) => topic.title)).toContain("GitHub Copilotで文脈除外とPR承認を管理者統制へ組み込む選択肢が拡大");
+    expect(report?.topicCards.find((topic) => topic.theme === "セキュリティ/規制/標準化")?.timing).toBe("2026-12-02まで");
+    expect(report?.sources.find((source) => source.title.startsWith("OpenAI: Path to Astra"))).toMatchObject({ type: "一次情報", publishedAt: "2026-09-01", checkedAt: "2026-09-03" });
+    expect(report?.sources.find((source) => source.title.startsWith("GitHub Changelog: Content exclusions"))?.type).toBe("一次情報");
+    expect(report?.sections.find((section) => section.title === "取得エラー")?.items.join(" ")).toContain("ProductZine RSS");
+  });
+
   it("テック情勢週次レポートが仮説、課題、取得エラーを構造化して持つ", () => {
     const report = reports.find((item) => item.id === "tech-landscape-weekly-2026-07-01");
 
