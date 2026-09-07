@@ -51,6 +51,27 @@ describe("reports", () => {
     }
   });
 
+  it("2026-09-07週の医療・介護レポートは期限と空情報を区別して保持する", () => {
+    const report = reports.find((item) => item.id === "healthcare-care-weekly-2026-09-07");
+
+    expect(report).toBeTruthy();
+    expect(report?.publishedAt).toBe("2026-09-07");
+    expect(report?.sources.every((source) => source.checkedAt === "2026-09-07")).toBe(true);
+    expect(report?.sources.find((source) => source.title.includes("リアルワールドデータ活用促進事業"))).toMatchObject({
+      type: "一次情報",
+      publishedAt: "2026-09-01"
+    });
+    expect(report?.topicCards.map((topic) => topic.title)).toEqual(expect.arrayContaining([
+      "令和9年度介護報酬改定に向け、認知症・LIFE・医療介護連携を議論",
+      "リアルワールドデータ活用促進事業の公募は10月2日必着",
+      "地域医療介護総合確保基金（医療分）の第1回内示を各都道府県へ通知"
+    ]));
+    expect(report?.topicCards.find((topic) => topic.theme === "今週確認できた重要な新規情報なし")?.summary).toContain("主要企業");
+    expect(report?.sections.find((section) => section.title === "テーマ別の調査結果")?.items).toHaveLength(10);
+    expect(report?.sections.find((section) => section.title === "テーマ別の調査結果")?.items.join(" ")).toContain("公募締切: 2026-10-02");
+    expect(report?.dashboardMetrics.find((metric) => metric.label === "最短期限")?.value).toBe("9/24");
+  });
+
   it("レポート本文を個別データファイルから集約する", () => {
     const reportData = Object.values(reportDataModules);
 
