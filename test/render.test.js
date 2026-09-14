@@ -247,6 +247,23 @@ describe("reports", () => {
     }
   });
 
+  it("2026-09-14週の医療介護レポートは全テーマ、改定議論、DX方針案と空情報を保持する", () => {
+    const report = reports.find((item) => item.id === "healthcare-care-weekly-2026-09-14");
+    const themeSection = report?.sections.find((section) => section.title === "テーマ別の調査結果");
+    const themeText = themeSection?.items.join("\n") ?? "";
+
+    expect(report).toBeDefined();
+    expect(report?.publishedAt).toBe("2026-09-14");
+    expect(report?.dashboardMetrics.find((metric) => metric.label === "最短期限")?.value).toBe("9/14");
+    expect(report?.topicCards.find((topic) => topic.theme === "医療DX・ヘルスケアAX")?.sourceType).toBe("一次情報");
+    expect(report?.topicCards.find((topic) => topic.theme === "介護報酬改定")?.date).toBe("2026-09-10");
+    expect(report?.highlights.join("\n")).toContain("今週確認できた重要な新規情報なし");
+    expect(themeText).toContain("1. 医療・介護制度改正");
+    expect(themeText).toContain("10. 海外の医療・介護DX動向");
+    expect(themeText).toContain("公募締切: 今週確認できた対象公募なし");
+    expect(report?.sources.every((source) => source.checkedAt === "2026-09-14")).toBe(true);
+  });
+
   it("記事ページをリッチに表示するための構造化データを持つ", () => {
     const report = reports.find((item) => item.id === "healthcare-care-weekly-2026-06-30");
 
