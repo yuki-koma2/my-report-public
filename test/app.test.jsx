@@ -324,6 +324,26 @@ describe("App", () => {
     expect(screen.getAllByRole("link", { name: "OpenAI: GPT-5.6: Frontier intelligence that scales with your ambition" })[0]).toHaveAttribute("href", "https://openai.com/index/gpt-5-6/");
   });
 
+  it("2026-09-17週のテック情勢レポート詳細に主要トピック、仮説、取得エラーを表示する", () => {
+    window.location.hash = "#/reports/tech-landscape-weekly-2026-09-17";
+
+    render(<App />);
+
+    expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-09-17週", level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "対話型広告がエージェント商取引の新しい接点になる" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "モデルの逸脱行動を継続開示する枠組みが安全運用の比較軸になる" })).toBeInTheDocument();
+    expect(screen.getByText("高優先度")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "注目すべき仮説と解くべき課題" })).toBeInTheDocument();
+    expect(screen.getByText(/検証可能な広告表示、同意、計測/)).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "取得エラー" })).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: "ProductZine RSS" })[0]).toHaveAttribute(
+      "href", "https://productzine.jp/rss/new/20/index.xml"
+    );
+    expect(screen.getAllByRole("link", { name: "OpenAI: Our framework for reporting model misalignment" })[0]).toHaveAttribute(
+      "href", "https://openai.com/index/model-misalignment-reporting-framework/"
+    );
+  });
+
   it("テック情勢レポート詳細に判断ポイント、仮説、課題、取得エラーを表示する", () => {
     window.location.hash = "#/reports/tech-landscape-weekly-2026-07-01";
 
