@@ -342,6 +342,27 @@ describe("reports", () => {
     expect(report?.sources.every((source) => source.checkedAt === "2026-07-09")).toBe(true);
   });
 
+  it("2026-09-21週の医療介護レポートは全テーマ、期限、一次情報を保持する", () => {
+    const report = reports.find((item) => item.id === "healthcare-care-weekly-2026-09-21");
+    const themeText = report?.sections.find((section) => section.title === "テーマ別の調査結果")?.items.join("\n") ?? "";
+
+    expect(report).toBeDefined();
+    expect(report?.publishedAt).toBe("2026-09-21");
+    expect(report?.checkedAt).toBe("2026-09-21");
+    expect(report?.dashboardMetrics.find((metric) => metric.label === "最短期限")?.value).toBe("9/30");
+    expect(report?.highlights.join("\n")).toContain("今週確認できた重要な新規情報なし");
+    expect(themeText).toContain("1. 医療・介護制度改正");
+    expect(themeText).toContain("10. 海外の医療・介護DX動向");
+    expect(themeText).toContain("意見募集期間: 2026-09-18から2027-03-17まで");
+    expect(themeText).toContain("規約施行日: 2026-10-01");
+    expect(report?.topicCards.find((topic) => topic.sourceTitle.includes("SaMD"))).toMatchObject({
+      date: "2026-09-18",
+      priority: "高",
+      timing: "すぐ"
+    });
+    expect(report?.sources.every((source) => source.checkedAt === "2026-09-21")).toBe(true);
+  });
+
   it("Academic VC週次レポートが投資判断向けの主要トピックと取得エラーを持つ", () => {
     const report = reports.find((item) => item.id === "academic-vc-weekly-2026-07-01");
 
