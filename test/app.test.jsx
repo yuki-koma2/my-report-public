@@ -306,6 +306,27 @@ describe("App", () => {
     );
   });
 
+  it("2026-09-24週のテック情勢レポートにモデル、研究検証、MCP連携の論点を表示する", () => {
+    window.location.hash = "#/reports/tech-landscape-weekly-2026-09-24";
+
+    render(<App />);
+
+    expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-09-24週", level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "今週の判断ポイント" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "モデル選定は性能比較から安全評価と運用コストの比較へ広がる" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "AIによる科学的発見は独立検証と再現性の設計を先に要求する" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "MCPでデータエージェントをつなぐ際は認証と権限境界を明示する" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "注目すべき仮説と解くべき課題" })).toBeInTheDocument();
+    expect(screen.getByText(/ベンダーが公表する性能・コスト・安全評価/)).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "今週検討すべき対応アクション" })).toBeInTheDocument();
+    expect(screen.getByText("AI基盤・調達責任者")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "取得エラー" })).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: "OpenAI: Introducing GPT-6 Sol and Luna" })[0]).toHaveAttribute(
+      "href",
+      "https://openai.com/index/introducing-gpt-6-sol-and-luna/"
+    );
+  });
+
   it("2026-07-16週のテック情勢レポート詳細に期限、仮説、一次情報を表示する", () => {
     window.location.hash = "#/reports/tech-landscape-weekly-2026-07-16";
 
