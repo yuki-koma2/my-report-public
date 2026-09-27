@@ -564,3 +564,26 @@ describe("reports", () => {
     expect(dhtTopic).toMatchObject({ date: "2026-07-20", timing: "すぐ" });
     expect(report?.sources.every((source) => source.checkedAt === (/newpage_(74599|74842)/.test(source.url) ? "2026-09-27" : "2026-07-27"))).toBe(true);
   });
+
+  it("2026-08-03週の医療介護レポートは統計、無医地区、賃金目安、空情報を保持する", () => {
+    const report = reports.find((item) => item.id === "healthcare-care-weekly-2026-08-03");
+    const themeText = report?.sections.find((section) => section.title === "テーマ別の調査結果")?.items.join("\n") ?? "";
+
+    expect(report).toBeDefined();
+    expect(report?.publishedAt).toBe("2026-08-03");
+    expect(report?.checkedAt).toBe("2026-08-03");
+    expect(report?.dashboardMetrics.find((metric) => metric.label === "主要一次情報")?.value).toBe("3本");
+    expect(report?.topicCards.find((topic) => topic.sourceTitle.includes("介護給付費等実態統計月報"))).toMatchObject({
+      date: "2026-07-29",
+      sourceType: "一次情報",
+      priority: "高"
+    });
+    expect(report?.topicCards.find((topic) => topic.sourceTitle.includes("無医地区"))).toMatchObject({
+      date: "2026-07-30",
+      sourceType: "一次情報"
+    });
+    expect(themeText).toContain("1. 医療・介護制度改正");
+    expect(themeText).toContain("10. 海外の医療・介護DX動向");
+    expect(themeText).toContain("今週確認できた重要な新規情報なし");
+    expect(report?.sources.every((source) => source.checkedAt === "2026-08-03")).toBe(true);
+  });
