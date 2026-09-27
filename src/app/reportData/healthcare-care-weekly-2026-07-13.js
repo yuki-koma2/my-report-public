@@ -40,7 +40,6 @@ export const report = {
       title: "厚生労働省 在宅酸素療法における火気の取扱い",
       url: "https://www.mhlw.go.jp/stf/houdou/2r98520000003m15_1.html",
       type: "一次情報",
-      publishedAt: "2026-07-07",
       checkedAt: "2026-07-13"
     },
     {

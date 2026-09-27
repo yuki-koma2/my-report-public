@@ -489,7 +489,7 @@ describe("App", () => {
     render(<App />);
 
     expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-08-13週", level: 1 })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Atlasの終了でブラウザ型エージェントの移行とデータ保全が運用課題になる" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Atlasの終了予定発表を受け、ブラウザ型エージェントの移行とデータ保全を確認" })).toBeInTheDocument();
     expect(screen.getByText("期限 2026-12-02まで")).toBeInTheDocument();
     expect(screen.getAllByText(/人の最終確認を伴わない公益事項のAI生成テキスト/).length).toBeGreaterThan(0);
     expect(screen.getByRole("heading", { name: "Atlas利用の有無と保存対象を棚卸しし、移行後のブラウザ運用を検証する" })).toBeInTheDocument();
