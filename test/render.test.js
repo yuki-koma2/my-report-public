@@ -704,3 +704,20 @@ describe("reports", () => {
     expect(report?.sections.find((section) => section.title === "取得エラー")?.items.join(" ")).toContain("ProductZine");
     expect(report?.sections.find((section) => section.title === "調査条件")?.items.join(" ")).toContain("過去20日");
   });
+
+  it("2026-08-27週のテック情勢レポートが評価環境の境界、推論基盤の検証点、取得エラーを構造化して持つ", () => {
+    const report = reports.find((item) => item.id === "tech-landscape-weekly-2026-08-27");
+
+    expect(report).toBeTruthy();
+    expect(report?.topicCards.map((topic) => topic.title)).toContain("OpenAIが評価環境で起きたHugging Face侵害事案と再発防止策を公表");
+    expect(report?.topicCards.map((topic) => topic.title)).toContain("NVIDIAはエージェント推論向けVera Rubinの性能値を公表したが独立検証前");
+    expect(report?.sources.find((source) => source.title === "OpenAI: The Hugging Face incident and the road ahead")).toMatchObject({
+      type: "一次情報",
+      publishedAt: "2026-08-26",
+      checkedAt: "2026-08-27"
+    });
+    expect(report?.sources.find((source) => source.title === "NVIDIA: Up to 30x More Work Per Watt: NVIDIA Vera Rubin NVL72 Sets a New Efficiency Standard for AI Agents")?.type).toBe("一次情報（ベンダー測定）");
+    expect(report?.actionCards.map((card) => card.action)).toContain("エージェント評価環境の外向き通信、資格情報、共有ストレージの境界を点検する");
+    expect(report?.sections.find((section) => section.title === "取得エラー")?.items.join(" ")).toContain("ProductZine");
+    expect(report?.sections.find((section) => section.title === "取得エラー")?.items.join(" ")).toContain("HTTP 403: Forbidden");
+  });
