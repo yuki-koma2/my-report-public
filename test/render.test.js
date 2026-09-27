@@ -847,3 +847,24 @@ describe("reports", () => {
     });
     expect(report?.sources.every((source) => source.checkedAt === "2026-09-21")).toBe(true);
   });
+
+  it("2026-09-24週のテック情勢レポートが一次情報、仮説、取得エラーを構造化して持つ", () => {
+    const report = reports.find((item) => item.id === "tech-landscape-weekly-2026-09-24");
+
+    expect(report).toBeTruthy();
+    expect(report?.title).toBe("テック情勢週次レポート 2026-09-24週");
+    expect(report?.topicCards.map((topic) => topic.title)).toEqual(expect.arrayContaining([
+      "モデル選定は性能比較から安全評価と運用コストの比較へ広がる",
+      "AIによる科学的発見は独立検証と再現性の設計を先に要求する",
+      "BigQuery data agentをGemini Enterpriseへ登録する公開プレビュー"
+    ]));
+    expect(report?.sources.find((source) => source.title === "OpenAI: Introducing GPT-6 Sol and Luna")).toMatchObject({
+      type: "一次情報", publishedAt: "2026-09-22", checkedAt: "2026-09-24"
+    });
+    expect(report?.sources.find((source) => source.title === "ProductZine RSS")?.type).toBe("RSS");
+    expect(report?.dashboardMetrics.find((metric) => metric.label === "高優先度")?.value).toBe("3テーマ");
+    expect(report?.actionCards.map((card) => card.owner)).toContain("AI基盤・調達責任者");
+    expect(report?.sections.find((section) => section.title === "注目すべき仮説と解くべき課題")?.items.join(" ")).toContain(
+      "ベンダーが公表する性能・コスト・安全評価"
+    );
+  });
