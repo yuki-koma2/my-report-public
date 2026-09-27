@@ -103,6 +103,13 @@ t-wada 式 TDD を基本に進める。
 - `dist/` はPR差分に含めず、Actions の build artifact として扱う。
 - デプロイ成功後のタグは `deploy/pages/YYYYMMDD-HHMMSS-<run-number>-<short-sha>` 形式にする。
 
+## レポートの自動公開
+
+- 通常の週次レポートは、PR作成、自動レビュー1周、必要な修正最大1回、マージ、Pages公開確認まで自動で完了する。都度の人手承認は不要。
+- 対象差分、排他、修正回数の記録、CIと公開確認、既存PRの回収は [docs/report-auto-publish.md](docs/report-auto-publish.md) に従う。
+- レポート本文・必要なタグ追加・対応テストのみを対象とし、GA、UI、依存関係、CI、運用指示の変更は個別の作業として扱う。
+- 作成処理と回収処理は同じ排他とPR状態記録を使い、重複作成・二重修正・二重マージを防ぐ。
+
 ## スキル方針
 
 - 医療・介護領域の週次調査レポートを作成する場合は `.agents/skills/healthcare-care-weekly-report/` を参照する。

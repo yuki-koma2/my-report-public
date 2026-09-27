@@ -342,29 +342,22 @@ describe("reports", () => {
     expect(report?.sources.every((source) => source.checkedAt === "2026-07-09")).toBe(true);
   });
 
-  it("2026-07-27週の医療介護レポートは介護報酬改定論点、医療介護連携、期限を保持する", () => {
-    const report = reports.find((item) => item.id === "healthcare-care-weekly-2026-07-27");
+  it("2026-07-20週の医療介護レポートは二次内示、介護会議、全10テーマと空情報を表示する", () => {
+    const report = reports.find((item) => item.id === "healthcare-care-weekly-2026-07-20");
+    const themeText = report?.sections.find((section) => section.title === "テーマ別の調査結果")?.items.join("\n") ?? "";
 
-    expect(report).toBeDefined();
-
-    const themeSection = report?.sections.find((section) => section.title === "テーマ別の調査結果");
-    const themeText = themeSection?.items.join("\n") ?? "";
-    const feeTopic = report?.topicCards.find((topic) => topic.sourceTitle.includes("第261回社会保障審議会"));
-    const linkageTopic = report?.topicCards.find((topic) => topic.sourceTitle.includes("第11回介護情報利活用"));
-    const dhtTopic = report?.topicCards.find((topic) => topic.sourceTitle.includes("Digital Health Technologies"));
-
-    expect(report?.publishedAt).toBe("2026-07-27");
-    expect(report?.checkedAt).toBe("2026-07-27");
-    expect(report?.dashboardMetrics.find((metric) => metric.label === "最短期限")?.value).toBe("8/20");
-    expect(report?.highlights.join("\n")).toContain("今週確認できた重要な新規情報なし");
+    expect(report?.publishedAt).toBe("2026-07-20");
+    expect(report?.dashboardMetrics.find((metric) => metric.label === "最短期限")?.value).toBe("7/31");
+    expect(report?.topicCards.find((topic) => topic.sourceTitle.includes("二次内示"))).toMatchObject({
+      date: "2026-07-17",
+      priority: "高",
+      sourceType: "一次情報"
+    });
     expect(themeText).toContain("1. 医療・介護制度改正");
     expect(themeText).toContain("10. 海外の医療・介護DX動向");
-    expect(themeText).toContain("公募締切: 2026-08-20");
-    expect(themeText).toContain("補助率・補助上限額: 公表ページ上は確認できず");
-    expect(feeTopic).toMatchObject({ date: "2026-07-23", priority: "高", sourceType: "一次情報" });
-    expect(linkageTopic).toMatchObject({ date: "2026-07-23", timing: "すぐ" });
-    expect(dhtTopic).toMatchObject({ date: "2026-07-20", timing: "すぐ" });
-    expect(report?.sources.every((source) => source.checkedAt === "2026-07-27")).toBe(true);
+    expect(themeText).toContain("今週確認できた重要な新規情報なし");
+    expect(themeText).toContain("公募締切: 2026-07-31必着");
+    expect(report?.sources.every((source) => source.checkedAt === "2026-07-20")).toBe(true);
   });
 
   it("Academic VC週次レポートが投資判断向けの主要トピックと取得エラーを持つ", () => {
@@ -486,3 +479,70 @@ describe("reports", () => {
     );
   });
 });
+
+  it("2026-07-13週の医療介護レポートは医療DXダッシュボード、重点支援区域、空情報を保持する", () => {
+    const report = reports.find((item) => item.id === "healthcare-care-weekly-2026-07-13");
+
+    expect(report).toBeDefined();
+
+    const themeSection = report?.sections.find((section) => section.title === "テーマ別の調査結果");
+    const themeText = themeSection?.items.join("\n") ?? "";
+    const dashboardTopic = report?.topicCards.find((topic) => topic.sourceTitle === "デジタル庁 医療DXに関するダッシュボード");
+    const regionalTopic = report?.topicCards.find((topic) => topic.sourceTitle.includes("地域医療構想"));
+    const oxygenTopic = report?.topicCards.find((topic) => topic.sourceTitle.includes("在宅酸素療法"));
+
+    expect(report?.publishedAt).toBe("2026-07-13");
+    expect(report?.checkedAt).toBe("2026-07-13");
+    expect(report?.dashboardMetrics.find((metric) => metric.label === "直近期限")?.value).toBe("7/14");
+    expect(report?.dashboardMetrics.find((metric) => metric.label === "一次情報")?.value).toBe("9本");
+    expect(report?.highlights.join("\n")).toContain("今週確認できた重要な新規情報なし");
+    expect(themeText).toContain("1. 医療・介護制度改正");
+    expect(themeText).toContain("4. 医療DX、介護DX、電子カルテ、地域医療連携、標準化");
+    expect(themeText).toContain("10. 海外の医療・介護DX動向");
+    expect(themeText).toContain("公募締切: 随時募集のため今回ページでは固定締切を確認できず");
+    expect(themeText).toContain("補助率・補助上限額: 今回ページ本文では確認できず");
+    expect(dashboardTopic).toMatchObject({
+      date: "2026-07-10",
+      dateLabel: "更新日",
+      priority: "高",
+      sourceType: "一次情報"
+    });
+    expect(regionalTopic).toMatchObject({
+      date: "2026-07-09",
+      timing: "すぐ"
+    });
+    expect(oxygenTopic).toMatchObject({
+      date: "2026-07-07",
+      dateLabel: "更新日",
+      priority: "中"
+    });
+    expect(report?.sources.find((source) => source.title === "デジタル庁 医療DXに関するダッシュボード")).toMatchObject({
+      checkedAt: "2026-07-13"
+    });
+    expect(report?.sources.every((source) => source.checkedAt === "2026-07-13")).toBe(true);
+  });
+
+  it("2026-07-27週の医療介護レポートは介護報酬改定論点、医療介護連携、期限を保持する", () => {
+    const report = reports.find((item) => item.id === "healthcare-care-weekly-2026-07-27");
+
+    expect(report).toBeDefined();
+
+    const themeSection = report?.sections.find((section) => section.title === "テーマ別の調査結果");
+    const themeText = themeSection?.items.join("\n") ?? "";
+    const feeTopic = report?.topicCards.find((topic) => topic.sourceTitle.includes("第261回社会保障審議会"));
+    const linkageTopic = report?.topicCards.find((topic) => topic.sourceTitle.includes("第11回介護情報利活用"));
+    const dhtTopic = report?.topicCards.find((topic) => topic.sourceTitle.includes("Digital Health Technologies"));
+
+    expect(report?.publishedAt).toBe("2026-07-27");
+    expect(report?.checkedAt).toBe("2026-07-27");
+    expect(report?.dashboardMetrics.find((metric) => metric.label === "最短期限")?.value).toBe("8/20");
+    expect(report?.highlights.join("\n")).toContain("今週確認できた重要な新規情報なし");
+    expect(themeText).toContain("1. 医療・介護制度改正");
+    expect(themeText).toContain("10. 海外の医療・介護DX動向");
+    expect(themeText).toContain("公募締切: 2026-08-20");
+    expect(themeText).toContain("補助率・補助上限額: 公表ページ上は確認できず");
+    expect(feeTopic).toMatchObject({ date: "2026-07-23", priority: "高", sourceType: "一次情報" });
+    expect(linkageTopic).toMatchObject({ date: "2026-07-23", timing: "すぐ" });
+    expect(dhtTopic).toMatchObject({ date: "2026-07-20", timing: "すぐ" });
+    expect(report?.sources.every((source) => source.checkedAt === (/newpage_(74599|74842)/.test(source.url) ? "2026-09-27" : "2026-07-27"))).toBe(true);
+  });
