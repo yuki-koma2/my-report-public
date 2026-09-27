@@ -409,6 +409,23 @@ describe("App", () => {
     );
   });
 
+  it("2026-08-06週のテック情勢レポート詳細に供給網防御、透明性、取得エラーを表示する", () => {
+    window.location.hash = "#/reports/tech-landscape-weekly-2026-08-06";
+
+    render(<App />);
+
+    expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-08-06週", level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "GitHub Actionsが疑わしいワークフローを実行前に承認待ちへ移す" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "EU AI Actの生成AI透明性義務が8月2日に適用開始" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "注目すべき仮説と解くべき課題" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "取得エラー" })).toBeInTheDocument();
+    expect(screen.getAllByText(/ProductZine.*HTTP 403/).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("link", { name: "GitHub Changelog: GitHub Actions holds potentially malicious workflows for approval" })[0]).toHaveAttribute(
+      "href",
+      "https://github.blog/changelog/2026-07-28-github-actions-holds-potentially-malicious-workflows-for-approval/"
+    );
+  });
+
   it("存在しないページでは Not Found を表示する", () => {
     window.location.hash = "#/missing";
 
