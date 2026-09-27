@@ -342,6 +342,24 @@ describe("reports", () => {
     expect(report?.sources.every((source) => source.checkedAt === "2026-07-09")).toBe(true);
   });
 
+  it("2026-07-20週の医療介護レポートは二次内示、介護会議、全10テーマと空情報を表示する", () => {
+    const report = reports.find((item) => item.id === "healthcare-care-weekly-2026-07-20");
+    const themeText = report?.sections.find((section) => section.title === "テーマ別の調査結果")?.items.join("\n") ?? "";
+
+    expect(report?.publishedAt).toBe("2026-07-20");
+    expect(report?.dashboardMetrics.find((metric) => metric.label === "最短期限")?.value).toBe("7/31");
+    expect(report?.topicCards.find((topic) => topic.sourceTitle.includes("二次内示"))).toMatchObject({
+      date: "2026-07-17",
+      priority: "高",
+      sourceType: "一次情報"
+    });
+    expect(themeText).toContain("1. 医療・介護制度改正");
+    expect(themeText).toContain("10. 海外の医療・介護DX動向");
+    expect(themeText).toContain("今週確認できた重要な新規情報なし");
+    expect(themeText).toContain("公募締切: 2026-07-31必着");
+    expect(report?.sources.every((source) => source.checkedAt === "2026-07-20")).toBe(true);
+  });
+
   it("Academic VC週次レポートが投資判断向けの主要トピックと取得エラーを持つ", () => {
     const report = reports.find((item) => item.id === "academic-vc-weekly-2026-07-01");
 
@@ -419,6 +437,24 @@ describe("reports", () => {
     expect(report?.sections.find((section) => section.title === "取得エラー")?.items).toContain("主要確認入口7件はすべて取得可能。取得エラーなし。");
   });
 
+  it("2026-07-30週のテック情勢レポートがエージェント権限、評価環境の安全性、透明性対応を構造化して持つ", () => {
+    const report = reports.find((item) => item.id === "tech-landscape-weekly-2026-07-30");
+
+    expect(report).toBeTruthy();
+    expect(report?.topicCards.map((topic) => topic.title)).toContain("OpenAIとHugging Faceの評価環境事案がAIエージェントの境界設計を問う");
+    expect(report?.topicCards.map((topic) => topic.title)).toContain("Meta AIが外部アプリ連携と継続タスクを選択市場で展開する");
+    expect(report?.topicCards.map((topic) => topic.title)).toContain("MetaがAI生成コンテンツの透明性コードへの署名を表明");
+    expect(report?.sources.find((source) => source.title.startsWith("OpenAI: OpenAI and Hugging Face"))).toMatchObject({
+      type: "対象期間外の一次情報", publishedAt: "2026-07-21", checkedAt: "2026-07-30"
+    });
+    expect(report?.sources.find((source) => source.title.startsWith("Meta: Meta is Signing"))).toMatchObject({
+      type: "一次情報", publishedAt: "2026-07-28", checkedAt: "2026-07-30"
+    });
+    expect(report?.dashboardMetrics.find((metric) => metric.label === "高優先度")?.value).toBe("3テーマ");
+    expect(report?.actionCards.map((card) => card.action)).toContain("AIエージェントの権限、実行環境、停止手段を高リスク操作から棚卸しする");
+    expect(report?.sections.find((section) => section.title === "取得エラー")?.items).toContain("主要確認入口7件はすべて取得可能。取得エラーなし。");
+  });
+
   it("テック情勢週次レポートが仮説、課題、取得エラーを構造化して持つ", () => {
     const report = reports.find((item) => item.id === "tech-landscape-weekly-2026-07-01");
 
@@ -483,3 +519,93 @@ describe("reports", () => {
     expect(report?.actionCards.map((card) => card.action)).toContain("公開リポジトリのActions承認待ちを担当者が判断できる運用へ更新する");
   });
 });
+
+  it("2026-07-13週の医療介護レポートは医療DXダッシュボード、重点支援区域、空情報を保持する", () => {
+    const report = reports.find((item) => item.id === "healthcare-care-weekly-2026-07-13");
+
+    expect(report).toBeDefined();
+
+    const themeSection = report?.sections.find((section) => section.title === "テーマ別の調査結果");
+    const themeText = themeSection?.items.join("\n") ?? "";
+    const dashboardTopic = report?.topicCards.find((topic) => topic.sourceTitle === "デジタル庁 医療DXに関するダッシュボード");
+    const regionalTopic = report?.topicCards.find((topic) => topic.sourceTitle.includes("地域医療構想"));
+    const oxygenTopic = report?.topicCards.find((topic) => topic.sourceTitle.includes("在宅酸素療法"));
+
+    expect(report?.publishedAt).toBe("2026-07-13");
+    expect(report?.checkedAt).toBe("2026-07-13");
+    expect(report?.dashboardMetrics.find((metric) => metric.label === "直近期限")?.value).toBe("7/14");
+    expect(report?.dashboardMetrics.find((metric) => metric.label === "一次情報")?.value).toBe("9本");
+    expect(report?.highlights.join("\n")).toContain("今週確認できた重要な新規情報なし");
+    expect(themeText).toContain("1. 医療・介護制度改正");
+    expect(themeText).toContain("4. 医療DX、介護DX、電子カルテ、地域医療連携、標準化");
+    expect(themeText).toContain("10. 海外の医療・介護DX動向");
+    expect(themeText).toContain("公募締切: 随時募集のため今回ページでは固定締切を確認できず");
+    expect(themeText).toContain("補助率・補助上限額: 今回ページ本文では確認できず");
+    expect(dashboardTopic).toMatchObject({
+      date: "2026-07-10",
+      dateLabel: "更新日",
+      priority: "高",
+      sourceType: "一次情報"
+    });
+    expect(regionalTopic).toMatchObject({
+      date: "2026-07-09",
+      timing: "すぐ"
+    });
+    expect(oxygenTopic).toMatchObject({
+      date: "2026-07-07",
+      dateLabel: "更新日",
+      priority: "中"
+    });
+    expect(report?.sources.find((source) => source.title === "デジタル庁 医療DXに関するダッシュボード")).toMatchObject({
+      checkedAt: "2026-07-13"
+    });
+    expect(report?.sources.every((source) => source.checkedAt === "2026-07-13")).toBe(true);
+  });
+
+  it("2026-07-27週の医療介護レポートは介護報酬改定論点、医療介護連携、期限を保持する", () => {
+    const report = reports.find((item) => item.id === "healthcare-care-weekly-2026-07-27");
+
+    expect(report).toBeDefined();
+
+    const themeSection = report?.sections.find((section) => section.title === "テーマ別の調査結果");
+    const themeText = themeSection?.items.join("\n") ?? "";
+    const feeTopic = report?.topicCards.find((topic) => topic.sourceTitle.includes("第261回社会保障審議会"));
+    const linkageTopic = report?.topicCards.find((topic) => topic.sourceTitle.includes("第11回介護情報利活用"));
+    const dhtTopic = report?.topicCards.find((topic) => topic.sourceTitle.includes("Digital Health Technologies"));
+
+    expect(report?.publishedAt).toBe("2026-07-27");
+    expect(report?.checkedAt).toBe("2026-07-27");
+    expect(report?.dashboardMetrics.find((metric) => metric.label === "最短期限")?.value).toBe("8/20");
+    expect(report?.highlights.join("\n")).toContain("今週確認できた重要な新規情報なし");
+    expect(themeText).toContain("1. 医療・介護制度改正");
+    expect(themeText).toContain("10. 海外の医療・介護DX動向");
+    expect(themeText).toContain("公募締切: 2026-08-20");
+    expect(themeText).toContain("補助率・補助上限額: 公表ページ上は確認できず");
+    expect(feeTopic).toMatchObject({ date: "2026-07-23", priority: "高", sourceType: "一次情報" });
+    expect(linkageTopic).toMatchObject({ date: "2026-07-23", timing: "すぐ" });
+    expect(dhtTopic).toMatchObject({ date: "2026-07-20", timing: "すぐ" });
+    expect(report?.sources.every((source) => source.checkedAt === (/newpage_(74599|74842)/.test(source.url) ? "2026-09-27" : "2026-07-27"))).toBe(true);
+  });
+
+  it("2026-08-03週の医療介護レポートは統計、無医地区、賃金目安、空情報を保持する", () => {
+    const report = reports.find((item) => item.id === "healthcare-care-weekly-2026-08-03");
+    const themeText = report?.sections.find((section) => section.title === "テーマ別の調査結果")?.items.join("\n") ?? "";
+
+    expect(report).toBeDefined();
+    expect(report?.publishedAt).toBe("2026-08-03");
+    expect(report?.checkedAt).toBe("2026-08-03");
+    expect(report?.dashboardMetrics.find((metric) => metric.label === "主要一次情報")?.value).toBe("3本");
+    expect(report?.topicCards.find((topic) => topic.sourceTitle.includes("介護給付費等実態統計月報"))).toMatchObject({
+      date: "2026-07-29",
+      sourceType: "一次情報",
+      priority: "高"
+    });
+    expect(report?.topicCards.find((topic) => topic.sourceTitle.includes("無医地区"))).toMatchObject({
+      date: "2026-07-30",
+      sourceType: "一次情報"
+    });
+    expect(themeText).toContain("1. 医療・介護制度改正");
+    expect(themeText).toContain("10. 海外の医療・介護DX動向");
+    expect(themeText).toContain("今週確認できた重要な新規情報なし");
+    expect(report?.sources.every((source) => source.checkedAt === "2026-08-03")).toBe(true);
+  });
