@@ -513,3 +513,19 @@ describe("App", () => {
       "https://openai.com/index/hugging-face-incident-and-the-road-ahead/"
     );
   });
+
+  it("2026-09-03週のテック情勢レポート詳細にCritical能力、統制、規制期限を表示する", () => {
+    window.location.hash = "#/reports/tech-landscape-weekly-2026-09-03";
+
+    render(<App />);
+
+    expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-09-03週", level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "OpenAIはAstraがCriticalサイバー能力の閾値に達したと評価" })).toBeInTheDocument();
+    expect(screen.getByText("対応 2026-12-02まで")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "高権限AIの評価・実行環境で通信、資格情報、ツール権限、停止手順を棚卸しする" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "取得エラー" })).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: "GitHub Changelog: Content exclusions generally available in Copilot app and CLI" })[0]).toHaveAttribute(
+      "href",
+      "https://github.blog/changelog/2026-09-02-content-exclusions-generally-available-in-copilot-app-and-cli/"
+    );
+  });
