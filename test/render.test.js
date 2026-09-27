@@ -437,6 +437,24 @@ describe("reports", () => {
     expect(report?.sections.find((section) => section.title === "取得エラー")?.items).toContain("主要確認入口7件はすべて取得可能。取得エラーなし。");
   });
 
+  it("2026-07-30週のテック情勢レポートがエージェント権限、評価環境の安全性、透明性対応を構造化して持つ", () => {
+    const report = reports.find((item) => item.id === "tech-landscape-weekly-2026-07-30");
+
+    expect(report).toBeTruthy();
+    expect(report?.topicCards.map((topic) => topic.title)).toContain("OpenAIとHugging Faceの評価環境事案がAIエージェントの境界設計を問う");
+    expect(report?.topicCards.map((topic) => topic.title)).toContain("Meta AIが外部アプリ連携と継続タスクを選択市場で展開する");
+    expect(report?.topicCards.map((topic) => topic.title)).toContain("MetaがAI生成コンテンツの透明性コードへの署名を表明");
+    expect(report?.sources.find((source) => source.title.startsWith("OpenAI: OpenAI and Hugging Face"))).toMatchObject({
+      type: "対象期間外の一次情報", publishedAt: "2026-07-21", checkedAt: "2026-07-30"
+    });
+    expect(report?.sources.find((source) => source.title.startsWith("Meta: Meta is Signing"))).toMatchObject({
+      type: "一次情報", publishedAt: "2026-07-28", checkedAt: "2026-07-30"
+    });
+    expect(report?.dashboardMetrics.find((metric) => metric.label === "高優先度")?.value).toBe("3テーマ");
+    expect(report?.actionCards.map((card) => card.action)).toContain("AIエージェントの権限、実行環境、停止手段を高リスク操作から棚卸しする");
+    expect(report?.sections.find((section) => section.title === "取得エラー")?.items).toContain("主要確認入口7件はすべて取得可能。取得エラーなし。");
+  });
+
   it("テック情勢週次レポートが仮説、課題、取得エラーを構造化して持つ", () => {
     const report = reports.find((item) => item.id === "tech-landscape-weekly-2026-07-01");
 
