@@ -845,7 +845,7 @@ describe("reports", () => {
       priority: "高",
       timing: "すぐ"
     });
-    expect(report?.sources.every((source) => source.checkedAt === "2026-09-21")).toBe(true);
+    expect(report?.sources.every((source) => source.checkedAt === (source.url.includes("newpage_76071") ? "2026-09-27" : "2026-09-21"))).toBe(true);
   });
 
   it("2026-09-24週のテック情勢レポートが一次情報、仮説、取得エラーを構造化して持つ", () => {

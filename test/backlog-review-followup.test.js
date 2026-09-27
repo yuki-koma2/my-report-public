@@ -54,3 +54,10 @@ it('担当者と期限を取り違えず、後から追える出典を保持す�
  expect(hc('09-14').sources.find(s=>s.title.includes('第130回'))?.url).toContain('0000212218_00092');
  expect(hc('09-14').sources.find(s=>s.url.includes('001747202'))?.publishedAt).toBe('2026-09-10');
 });
+it('9月後半も企業の未調査、個別会議出典、推奨期限を整合させる',()=>{
+ const r=hc('09-21');
+ expect(r.sources.find(s=>s.title.includes('第267回'))?.url).toContain('newpage_76071');
+ expect(r.sections.find(s=>s.title==='調査メモ')?.items.join('\n')).not.toContain('企業公式発表を確認した');
+ expect(tech('09-24').actionCards.find(c=>c.owner==='研究開発・品質責任者')?.due).toBe('2週間以内');
+ expect(r.highlights.join('\n')).toContain('医療情報基盤・診療報酬審査支払機構');
+});
