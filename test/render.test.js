@@ -776,3 +776,18 @@ describe("reports", () => {
     expect(report?.sources.find((source) => source.title.startsWith("GitHub Changelog: Content exclusions"))?.type).toBe("一次情報");
     expect(report?.sections.find((section) => section.title === "取得エラー")?.items.join(" ")).toContain("ProductZine RSS");
   });
+
+  it("2026-09-10週のテック情勢レポートがAI能力、安全運用、データ基盤を構造化して持つ", () => {
+    const report = reports.find((item) => item.id === "tech-landscape-weekly-2026-09-10");
+
+    expect(report).toBeTruthy();
+    expect(report?.topicCards.map((topic) => topic.title)).toContain("GPT-6 Astraの導入は能力評価と安全運用を一体で設計する段階へ進む");
+    expect(report?.topicCards.map((topic) => topic.title)).toContain("攻撃者のエージェント活用で侵害から認証情報収集までの時間が短縮している");
+    expect(report?.topicCards.map((topic) => topic.title)).toContain("BigQuery GraphのGAがエージェント向け接続コンテキストをデータ基盤へ統合する");
+    expect(report?.sources.find((source) => source.title === "OpenAI: GPT-6 Astra: A new generation of intelligence")?.type).toBe("一次情報");
+    expect(report?.sources.find((source) => source.title === "Google Threat Intelligence: From Prompting to Autonomy")?.publishedAt).toBe("2026-09-08");
+    expect(report?.topicCards.filter((topic) => topic.priority === "高")).toHaveLength(3);
+    expect(report?.sections.find((section) => section.title === "注目すべき仮説と解くべき課題")?.items).toContain(
+      "仮説: 高性能モデルの導入価値は単発タスクの精度より、許可範囲を守る自律実行と人のレビュー負荷をどこまで両立できるかで決まる。反証には、権限逸脱、差し戻し、監視停止、総費用を同じ業務シナリオで測る必要がある。"
+    );
+  });

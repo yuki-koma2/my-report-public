@@ -529,3 +529,18 @@ describe("App", () => {
       "https://github.blog/changelog/2026-09-02-content-exclusions-generally-available-in-copilot-app-and-cli/"
     );
   });
+
+  it("2026-09-10週のテック情勢レポート詳細に安全運用と攻撃者の自動化を表示する", () => {
+    window.location.hash = "#/reports/tech-landscape-weekly-2026-09-10";
+
+    render(<App />);
+
+    expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-09-10週", level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "GPT-6 Astraの導入は能力評価と安全運用を一体で設計する段階へ進む" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "攻撃者のエージェント活用で侵害から認証情報収集までの時間が短縮している" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "注目すべき仮説と解くべき課題" })).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: "OpenAI: GPT-6 Astra: A new generation of intelligence" })[0]).toHaveAttribute(
+      "href",
+      "https://openai.com/index/gpt-6-astra/"
+    );
+  });
