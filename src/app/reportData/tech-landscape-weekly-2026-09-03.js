@@ -12,7 +12,7 @@ export const report = {
     "規制",
     "市場インテリジェンス"
   ],
-  "summary": "2026年8月27日00:00 JSTから9月3日実行時点までの公開情報をもとに、Critical水準のAIサイバー能力、開発者AIの管理統制、EU AI Actの既存システム移行期限を整理した週次レポートです。",
+  "summary": "2026年8月27日08:00 JSTから9月3日実行時点までの公開情報をもとに、Critical水準のAIサイバー能力、開発者AIの管理統制、EU AI Actの既存システム移行期限を整理した週次レポートです。",
   "publishedAt": "2026-09-03",
   "checkedAt": "2026-09-03",
   "sources": [
@@ -58,7 +58,31 @@ export const report = {
     {
       "title": "ProductZine RSS",
       "url": "https://productzine.jp/rss/new/20/index.xml",
-      "type": "取得エラー",
+      "type": "RSS",
+      "checkedAt": "2026-09-03"
+    },
+    {
+      "title": "Product Hunt",
+      "url": "https://www.producthunt.com/feed",
+      "type": "RSS",
+      "checkedAt": "2026-09-03"
+    },
+    {
+      "title": "Forrester Blogs",
+      "url": "https://go.forrester.com/blogs/feed/",
+      "type": "RSS",
+      "checkedAt": "2026-09-03"
+    },
+    {
+      "title": "TechFeed Startup / Innovation",
+      "url": "https://techfeed.io/feeds/categories/Startup%20%2F%20Innovation?userId=667a89b3185e12081e95a7b5",
+      "type": "RSS",
+      "checkedAt": "2026-09-03"
+    },
+    {
+      "title": "TechFeed Marketing",
+      "url": "https://techfeed.io/feeds/categories/Marketing?userId=667a89b3185e12081e95a7b5",
+      "type": "RSS",
       "checkedAt": "2026-09-03"
     }
   ],
@@ -77,7 +101,7 @@ export const report = {
     {
       "label": "対象期間",
       "value": "7日",
-      "caption": "2026-08-27 00:00 JSTから2026-09-03実行時点まで。14日遡及なし",
+      "caption": "2026-08-27 08:00 JSTから2026-09-03実行時点まで。14日遡及なし",
       "tone": "primary"
     },
     {
@@ -129,8 +153,8 @@ export const report = {
     },
     {
       "theme": "開発者・インフラ動向",
-      "title": "GitHub Copilotで文脈除外とPR承認を管理者統制へ組み込む選択肢が拡大",
-      "summary": "GitHubは9月1日から2日にかけて、Copilot appとCLIが管理者設定のcontent exclusionを尊重する一般提供と、Copilot code reviewがPR承認を提出できる公開プレビューを発表した。承認は既定で無効で、適用範囲を管理者が設定する。",
+      "title": "Copilot appとCLIで管理者の文脈除外設定が一般提供",
+      "summary": "GitHubは9月2日、Copilot appとCLIが管理者設定のcontent exclusionを尊重する機能の一般提供を発表した。",
       "date": "2026-09-02",
       "sourceTitle": "GitHub Changelog: Content exclusions generally available in Copilot app and CLI",
       "sourceUrl": "https://github.blog/changelog/2026-09-02-content-exclusions-generally-available-in-copilot-app-and-cli/",
@@ -149,9 +173,36 @@ export const report = {
         "セキュリティ担当",
         "コンプライアンス担当"
       ],
-      "change": "AI支援開発は、モデル選択だけでなく、どのファイルを文脈に渡さないか、AIの承認をどのパスで有効にするかを管理者設定で扱う段階に進んだ。",
+      "change": "AIに渡さないファイルの範囲を管理者が設定できる。",
+      "importance": "機密情報や規制対象データを文脈に含めないため、除外範囲の設計が必要。",
+      "implication": "除外パターンを顧客データや規制対象設定まで棚卸しし、適用範囲を検証する。",
+      "uncertainty": "機能の提供範囲、プラン、既存ポリシーとの優先関係、生成済みの会話や外部連携に対する扱いは、各組織のGitHub設定と公式ドキュメントで確認が必要。"
+    },
+    {
+      "theme": "開発者・インフラ動向",
+      "title": "Copilot code reviewのPR承認を公開プレビュー",
+      "summary": "GitHubは9月1日、Copilot code reviewがPR承認を提出できる公開プレビューを発表した。承認は既定で無効で、管理者が適用範囲を設定する。",
+      "date": "2026-09-01",
+      "sourceTitle": "GitHub Changelog: Copilot code review can now approve pull requests",
+      "sourceUrl": "https://github.blog/changelog/2026-09-01-copilot-code-review-can-now-approve-pull-requests/",
+      "sourceType": "一次情報",
+      "priority": "中",
+      "timing": "すぐ",
+      "relevance": 96,
+      "relatedTags": [
+        "AI",
+        "エンジニアリング",
+        "セキュリティ"
+      ],
+      "affected": [
+        "開発組織",
+        "リポジトリ管理者",
+        "セキュリティ担当",
+        "コンプライアンス担当"
+      ],
+      "change": "管理者設定によりCopilotのPR承認を試せる。",
       "importance": "秘密情報や規制対象コードを含むリポジトリでは、AIへ渡さない範囲とAI承認を人の承認とどう組み合わせるかが、導入速度と監査可能性を左右する。",
-      "implication": "除外パターンを秘密鍵・認証情報だけに限定せず、顧客データ、規制対象の設定、生成物を含む領域まで棚卸しする。AI承認は非重要パスから試し、CODEOWNERS、必須レビュー、変更後の承認失効と整合させる。",
+      "implication": "非重要パスから検証し、CODEOWNERS、必須レビュー、変更後の承認失効と整合させる。",
       "uncertainty": "機能の提供範囲、プラン、既存ポリシーとの優先関係、生成済みの会話や外部連携に対する扱いは、各組織のGitHub設定と公式ドキュメントで確認が必要。"
     },
     {
@@ -183,9 +234,9 @@ export const report = {
       "dateLabel": "確認日"
     },
     {
-      "theme": "重要な新規情報なし",
-      "title": "半導体・資本市場・ブラウザ/OSは今週採用すべき大規模な一次情報なし",
-      "summary": "主要フィードと公式入口を確認したが、今回の事業・技術判断を直ちに変える大規模な半導体、資本市場、ブラウザ、OS、モバイルの一次情報は採用しなかった。",
+      "theme": "半導体・資本市場・ブラウザ・OS・モバイルの採用記録",
+      "title": "Hacker News確認記録での追加採用なし",
+      "summary": "当時のHacker News確認記録では、半導体・資本市場・ブラウザ・OS・モバイルの追加トピックを採用しなかった。取得時点の記事一覧と各ベンダーの個別発表は保存されておらず、対象期間全体で新規発表が存在しなかったことを示すものではない。",
       "date": "2026-09-03",
       "sourceTitle": "Hacker News RSS",
       "sourceUrl": "https://news.ycombinator.com/rss",
@@ -201,10 +252,10 @@ export const report = {
         "プロダクト責任者",
         "AI基盤チーム"
       ],
-      "change": "今週確認できた重要な新規情報なし。",
+      "change": "Hacker Newsの確認記録に限定した採用結果。",
       "importance": "話題量ではなく、公式な製品提供、仕様変更、規制・資本の一次情報で採用可否を判断する。",
       "implication": "主要ベンダーの公式発表、脆弱性、投資・供給網の更新を来週も継続確認する。",
-      "uncertainty": "個別の小規模更新や報道は、今回の大きな変化の選定外。",
+      "uncertainty": "フィードは更新されるため、当時の全記事と各領域の公式発表を後から網羅的に検証できない。",
       "dateLabel": "確認日"
     }
   ],
@@ -223,16 +274,16 @@ export const report = {
     },
     {
       "owner": "プロダクト・法務責任者",
-      "action": "EU向けAI機能の透明性義務と既存システムの市場投入日を台帳化する",
+      "action": "8月2日より前に市場投入したEU向けAIシステムのArticle 50(2)の機械可読な標識・検出対応を台帳化する",
       "due": "2026-10-31まで",
-      "reason": "2026年12月2日の対応猶予終了前に該当性と実装を確認するため。"
+      "reason": "12月2日は既存システムのArticle 50(2)だけの猶予期限。10月31日は準備のための推奨社内期限であり、対話時通知・導入者表示等の適用済み義務は直ちに確認する。"
     }
   ],
   "sections": [
     {
       "title": "調査条件",
       "items": [
-        "主対象期間: 2026-08-27 00:00 JSTから2026-09-03実行時点まで。直近7日で重要な一次情報を確認できたため、過去14日への遡りは行っていない。",
+        "主対象期間: 2026-08-27 08:00 JSTから2026-09-03 08:00 JSTまで。直近7日で重要な一次情報を確認できたため、過去14日への遡りは行っていない。",
         "主要確認入口: TechCrunch、Hacker News、Product Hunt、ProductZine、Forrester Blogs、TechFeed Startup / Innovation、TechFeed Marketing。",
         "確認方針: フィードで候補を抽出し、OpenAI、GitHub、欧州委員会の公開資料を優先した。製品提供の可否や規制該当性は組織・製品ごとに追加確認が必要である。"
       ]

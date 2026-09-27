@@ -15,7 +15,7 @@ export const report = {
     "テック情勢",
     "規制"
   ],
-  "summary": "2026年9月10日00:00 JSTから9月17日08:00 JSTまでの公開情報をもとに、対話型AIへの広告・商取引の組込み、モデル逸脱行動の開示、AI導入の効果測定と実験工程のボトルネックを整理した週次レポートです。",
+  "summary": "2026年9月10日08:00 JSTから9月17日08:00 JSTまでの公開情報をもとに、対話型AIへの広告・商取引の組込み、モデル逸脱行動の開示、AI導入の効果測定と実験工程のボトルネックを整理した週次レポートです。",
   "publishedAt": "2026-09-17",
   "checkedAt": "2026-09-17",
   "sources": [
@@ -113,7 +113,7 @@ export const report = {
     {
       "label": "対象期間",
       "value": "7日",
-      "caption": "2026-09-10 00:00 JSTから2026-09-17 08:00 JSTまで。14日遡及なし",
+      "caption": "2026-09-10 08:00 JSTから2026-09-17 08:00 JSTまで。14日遡及なし",
       "tone": "primary"
     },
     {
@@ -139,7 +139,7 @@ export const report = {
     {
       "theme": "AI/LLM/エージェント",
       "title": "対話型広告がエージェント商取引の新しい接点になる",
-      "summary": "OpenAIは広告をクリックした利用者が、明確にラベル付けされた事業者スポンサーのエージェントと会話できるSponsored Agentsを、米国の一部広告主でテストする。広告運用ではChatGPT Workから自然言語でキャンペーンを作成・更新・分析できる機能、HubSpotとShopifyとの連携も発表した。Googleも会話型購買を前提に、Merchant CenterのAI performance insightsを複数国へ一般提供した。",
+      "summary": "OpenAIは広告をクリックした利用者が、明確にラベル付けされた事業者スポンサーのエージェントと会話できるSponsored Agentsを、米国の一部広告主でテストする。広告運用ではChatGPT Workから自然言語でキャンペーンを作成・更新・分析できる機能、HubSpotとShopifyとの連携も発表した。",
       "date": "2026-09-16",
       "sourceTitle": "OpenAI: Reimagining advertising with AI",
       "sourceUrl": "https://openai.com/index/reimagining-advertising-with-ai/",
@@ -161,6 +161,33 @@ export const report = {
       "change": "広告の到達先がランディングページだけでなく、文脈に沿って質問へ答える事業者エージェントへ広がり始めた。",
       "importance": "会話内での発見から比較、リード化までを短縮できる可能性がある一方、広告と独立した回答の区別、同意、商品情報の正確性、計測可能性が顧客信頼を左右する。",
       "implication": "広告・会話・CRM・商品カタログの間で渡すデータを棚卸しし、スポンサー表示、エージェントの回答範囲、有人引継ぎ、成果計測、削除・訂正手順を先に定義する。",
+      "uncertainty": "限定テストや地域限定提供の結果は一般的な転換率を保証しない。会話が売上増分を生むのか、既存流入の代替に留まるのかは、対照群を置いて検証する必要がある。"
+    },
+    {
+      "theme": "AI/LLM/エージェント",
+      "title": "GoogleがMerchant CenterのAI performance insightsを提供",
+      "summary": "GoogleはMerchant CenterのAI performance insightsを複数国へ一般提供した。会話型購買に向けた商品情報と計測の運用を確認する。",
+      "date": "2026-09-16",
+      "sourceTitle": "Google: Boost your holiday sales with these agentic commerce updates",
+      "sourceUrl": "https://blog.google/products-and-platforms/products/shopping/google-shopping-updates-holiday-shopping/",
+      "sourceType": "一次情報",
+      "priority": "中",
+      "timing": "すぐ",
+      "relevance": 97,
+      "relatedTags": [
+        "AI",
+        "プロダクト",
+        "マーケティング"
+      ],
+      "affected": [
+        "プロダクト責任者",
+        "マーケティング",
+        "CRM・EC担当",
+        "法務・プライバシー担当"
+      ],
+      "change": "Merchant CenterでAIによる商品発見の状況を確認する機能が提供された。",
+      "importance": "会話内での発見から比較、リード化までを短縮できる可能性がある一方、広告と独立した回答の区別、同意、商品情報の正確性、計測可能性が顧客信頼を左右する。",
+      "implication": "対象国・アカウントでの提供範囲を確認し、商品データ品質と計測の関係を検証する。",
       "uncertainty": "限定テストや地域限定提供の結果は一般的な転換率を保証しない。会話が売上増分を生むのか、既存流入の代替に留まるのかは、対照群を置いて検証する必要がある。"
     },
     {
@@ -248,9 +275,9 @@ export const report = {
       "uncertainty": "機能の利用と事業成果の因果関係は別途検証が必要。"
     },
     {
-      "theme": "重要な新規情報なし",
-      "title": "半導体、ブラウザ/OS、主要OSSは今週採用判断を変える大規模な一次情報なし",
-      "summary": "主要フィードと公式発表を確認したが、今回の事業・技術判断を直ちに変える大規模な半導体、ブラウザ/OS、モバイル、主要OSSの一次情報は採用しなかった。",
+      "theme": "半導体・ブラウザ・OS・モバイル・主要OSSの採用記録",
+      "title": "Hacker News確認記録での追加採用なし",
+      "summary": "当時のHacker News確認記録では、半導体・ブラウザ・OS・モバイル・主要OSSの追加トピックを採用しなかった。取得時点の記事一覧と各ベンダーの個別発表は保存されておらず、対象期間全体で新規発表が存在しなかったことを示すものではない。",
       "date": "2026-09-17",
       "sourceTitle": "Hacker News RSS",
       "sourceUrl": "https://news.ycombinator.com/rss",
@@ -267,10 +294,11 @@ export const report = {
         "プラットフォーム担当",
         "プロダクト責任者"
       ],
-      "change": "今週確認できた重要な新規情報なし。",
+      "change": "Hacker Newsの確認記録に限定した採用結果。",
       "importance": "話題量ではなく、公式の提供開始、仕様変更、サポート期限、セキュリティ更新の有無で採用判断を更新する。",
       "implication": "来週も主要ベンダーの公式発表とセキュリティ勧告を継続確認する。",
-      "uncertainty": "個別製品の小規模更新や地域限定の変更は、今回の大きな変化の選定外である。"
+      "uncertainty": "フィードは更新されるため、当時の全記事と各領域の公式発表を後から網羅的に検証できない。",
+      "dateLabel": "確認日"
     }
   ],
   "actionCards": [
@@ -297,7 +325,7 @@ export const report = {
     {
       "title": "調査条件",
       "items": [
-        "主対象期間: 2026-09-10 00:00 JSTから2026-09-17 08:00 JSTまで。直近7日で十分な重要情報を確認できたため、過去14日への遡及は行っていない。",
+        "主対象期間: 2026-09-10 08:00 JSTから2026-09-17 08:00 JSTまで。直近7日で十分な重要情報を確認できたため、過去14日への遡及は行っていない。",
         "主要確認入口: TechCrunch、Hacker News、Product Hunt、ProductZine、Forrester Blogs、TechFeed Startup / Innovation、TechFeed Marketing。候補抽出後、OpenAIとGoogleの一次情報を優先して確認した。",
         "確認方針: 企業の機能発表、研究・分析の対象範囲、提供地域・段階、数値の前提を分けて記載した。将来の採用効果や市場転換は事実として扱わず、反証条件を明記した。"
       ]

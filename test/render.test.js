@@ -104,10 +104,10 @@ describe("reports", () => {
 
     expect(report).toBeDefined();
     expect(report?.checkedAt).toBe("2026-08-24");
-    expect(report?.sources.every((source) => source.checkedAt === "2026-08-24")).toBe(true);
+    expect(report?.sources.every((source) => source.checkedAt === (source.url.includes("74842") ? "2026-09-27" : "2026-08-24"))).toBe(true);
     expect(report?.topicCards.map((topic) => topic.title)).toEqual(
       expect.arrayContaining([
-        expect.stringContaining("電子的な情報連携"),
+        expect.stringContaining("7月の医療・介護情報連携"),
         expect.stringContaining("介護給付費分科会"),
         expect.stringContaining("SaMD")
       ])
@@ -301,8 +301,8 @@ describe("reports", () => {
     expect(report?.highlights.join("\n")).toContain("未調査");
     expect(themeText).toContain("1. 医療・介護制度改正");
     expect(themeText).toContain("10. 海外の医療・介護DX動向");
-    expect(themeText).toContain("公募締切: 今週確認できた対象公募なし");
-    expect(report?.sources.every((source) => source.checkedAt === "2026-09-14")).toBe(true);
+    expect(themeText).toContain("5. 補助金・助成金・公募 / 未調査");
+    expect(report?.sources.every((source) => source.checkedAt === (source.url.includes("0000212218_00092") ? "2026-09-27" : "2026-09-14"))).toBe(true);
   });
 
   it("記事ページをリッチに表示するための構造化データを持つ", () => {
@@ -693,9 +693,9 @@ describe("reports", () => {
     const report = reports.find((item) => item.id === "tech-landscape-weekly-2026-08-13");
 
     expect(report).toBeTruthy();
-    expect(report?.topicCards.map((topic) => topic.title)).toContain("Atlasの終了でブラウザ型エージェントの移行とデータ保全が運用課題になる");
+    expect(report?.topicCards.map((topic) => topic.title)).toContain("Atlasの終了予定発表を受け、ブラウザ型エージェントの移行とデータ保全を確認");
     expect(report?.topicCards.map((topic) => topic.title)).toContain("EU AI Actの透明性義務が適用され、実装証跡の確認局面へ移る");
-    expect(report?.topicCards.map((topic) => topic.title)).toContain("TSMCの7月売上は前年比44.7％増、AI需要の強さと供給集中を同時に示す");
+    expect(report?.topicCards.map((topic) => topic.title)).toContain("TSMCの7月全社売上は前年同月比44.7％増");
     expect(report?.sources.find((source) => source.title.startsWith("OpenAI Help Center: Evolving Atlas"))).toMatchObject({ type: "一次情報", checkedAt: "2026-08-13" });
     expect(report?.sources.find((source) => source.title.startsWith("European Commission: Transparency obligations"))?.type).toBe("規制当局資料");
     expect(report?.sources.find((source) => source.title.startsWith("TSMC: 2026 Monthly Revenue"))).toMatchObject({ type: "一次情報", publishedAt: "2026-08-10" });
@@ -787,7 +787,7 @@ describe("reports", () => {
 
     expect(report).toBeTruthy();
     expect(report?.topicCards.map((topic) => topic.title)).toContain("OpenAIはAstraがCriticalサイバー能力の閾値に達したと評価");
-    expect(report?.topicCards.map((topic) => topic.title)).toContain("GitHub Copilotで文脈除外とPR承認を管理者統制へ組み込む選択肢が拡大");
+    expect(report?.topicCards.map((topic) => topic.title)).toContain("Copilot appとCLIで管理者の文脈除外設定が一般提供");
     expect(report?.topicCards.find((topic) => topic.theme === "セキュリティ/規制/標準化")?.timing).toBe("2026-12-02まで");
     expect(report?.sources.find((source) => source.title.startsWith("OpenAI: Path to Astra"))).toMatchObject({ type: "一次情報", publishedAt: "2026-09-01", checkedAt: "2026-09-03" });
     expect(report?.sources.find((source) => source.title.startsWith("GitHub Changelog: Content exclusions"))?.type).toBe("一次情報");
