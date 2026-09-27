@@ -630,3 +630,16 @@ describe("reports", () => {
     expect(themeText).toContain("今週確認できた重要な新規情報なし");
     expect(report?.sources.every((source) => source.checkedAt === "2026-08-03")).toBe(true);
   });
+
+  it("2026-08-13週のテック情勢レポートが移行、透明性適用、半導体指標を構造化して持つ", () => {
+    const report = reports.find((item) => item.id === "tech-landscape-weekly-2026-08-13");
+
+    expect(report).toBeTruthy();
+    expect(report?.topicCards.map((topic) => topic.title)).toContain("Atlasの終了でブラウザ型エージェントの移行とデータ保全が運用課題になる");
+    expect(report?.topicCards.map((topic) => topic.title)).toContain("EU AI Actの透明性義務が適用され、実装証跡の確認局面へ移る");
+    expect(report?.topicCards.map((topic) => topic.title)).toContain("TSMCの7月売上は前年比44.7％増、AI需要の強さと供給集中を同時に示す");
+    expect(report?.sources.find((source) => source.title.startsWith("OpenAI Help Center: Evolving Atlas"))).toMatchObject({ type: "一次情報", checkedAt: "2026-08-13" });
+    expect(report?.sources.find((source) => source.title.startsWith("European Commission: Transparency obligations"))?.type).toBe("規制当局資料");
+    expect(report?.sources.find((source) => source.title.startsWith("TSMC: 2026 Monthly Revenue"))).toMatchObject({ type: "一次情報", publishedAt: "2026-08-10" });
+    expect(report?.sections.find((section) => section.title === "取得エラー")?.items).toContain("ProductZine RSS: https://productzine.jp/rss/new/20/index.xml — HTTP 403: Forbidden");
+  });
