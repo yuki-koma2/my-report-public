@@ -808,3 +808,21 @@ describe("reports", () => {
       "仮説: 高性能モデルの導入価値は単発タスクの精度より、許可範囲を守る自律実行と人のレビュー負荷をどこまで両立できるかで決まる。反証には、権限逸脱、差し戻し、監視停止、総費用を同じ業務シナリオで測る必要がある。"
     );
   });
+
+  it("2026-09-17週のテック情勢レポートがエージェント商取引、安全性開示、採用指標を構造化して持つ", () => {
+    const report = reports.find((item) => item.id === "tech-landscape-weekly-2026-09-17");
+
+    expect(report).toBeTruthy();
+    expect(report?.topicCards.map((topic) => topic.title)).toContain("対話型広告がエージェント商取引の新しい接点になる");
+    expect(report?.topicCards.map((topic) => topic.title)).toContain("モデルの逸脱行動を継続開示する枠組みが安全運用の比較軸になる");
+    expect(report?.topicCards.map((topic) => topic.title)).toContain("AIの利用時間削減は検証・実験工程のボトルネックを解消しない");
+    expect(report?.sources.find((source) => source.title === "OpenAI: Our framework for reporting model misalignment")).toMatchObject({
+      type: "一次情報", publishedAt: "2026-09-16", checkedAt: "2026-09-17"
+    });
+    expect(report?.dashboardMetrics.find((metric) => metric.label === "高優先度")?.value).toBe("3テーマ");
+    expect(report?.sections.find((section) => section.title === "注目すべき仮説と解くべき課題")?.items).toEqual(expect.arrayContaining([
+      expect.stringContaining("検証可能な広告表示、同意、計測"),
+      expect.stringContaining("検証・実験工程")
+    ]));
+    expect(report?.sections.find((section) => section.title === "取得エラー")?.items).toContain("ProductZine RSS: https://productzine.jp/rss/new/20/index.xml — HTTP 403: Forbidden");
+  });
