@@ -478,3 +478,22 @@ describe("App", () => {
     );
     expect(screen.getAllByText(/HTTP 403: Forbidden/).length).toBeGreaterThan(0);
   });
+
+  it("2026-08-20週のテック情勢レポートにエージェント、評価環境、規制執行を表示する", () => {
+    window.location.hash = "#/reports/tech-landscape-weekly-2026-08-20";
+
+    render(<App />);
+
+    expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-08-20週", level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "今週の判断ポイント" })).toBeInTheDocument();
+    expect(screen.getAllByText(/Amazon QuickがMicrosoft 365内へ/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/AIサイバー評価で検証環境の封じ込め/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/EU AI Actの透明性要件は執行フェーズ/).length).toBeGreaterThan(0);
+    expect(screen.getByRole("heading", { name: "注目すべき仮説と解くべき課題" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "今週検討すべき対応アクション" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "取得エラー" })).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: "AWS: Amazon Quick for Microsoft 365: Agentic AI where you work" })[0]).toHaveAttribute(
+      "href",
+      "https://aws.amazon.com/blogs/machine-learning/amazon-quick-for-microsoft-365-agentic-ai-where-you-work/"
+    );
+  });
