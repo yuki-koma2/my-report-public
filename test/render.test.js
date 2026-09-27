@@ -36,6 +36,7 @@ describe("routing", () => {
 describe("reports", () => {
   it("実調査に基づく週次レポートを保持する", () => {
     expect(reports.length).toBeGreaterThanOrEqual(7);
+    expect(reports.map((report) => report.id)).toContain("healthcare-care-weekly-2026-08-24");
     expect(reports.map((report) => report.id)).toContain("healthcare-care-weekly-2026-07-06");
     expect(reports.map((report) => report.id)).toContain("product-tech-weekly-2026-07-01");
     expect(reports.map((report) => report.id)).toContain("tech-landscape-weekly-2026-07-02");
@@ -65,6 +66,7 @@ describe("reports", () => {
         "product-tech-weekly-2026-07-01",
         "tech-landscape-weekly-2026-07-02",
         "healthcare-care-weekly-2026-07-06",
+        "healthcare-care-weekly-2026-08-24",
         "academic-vc-weekly-2026-07-01",
         "tech-landscape-weekly-2026-07-01",
         "healthcare-care-weekly-2026-07-01",
@@ -74,6 +76,24 @@ describe("reports", () => {
     expect(getReportsByType("deep").map((report) => report.id)).toEqual(
       expect.arrayContaining(["japan-healthcare-industry-structural-challenges-2026-07-01", "japan-care-industry-challenges-2026"])
     );
+  });
+
+  it("2026年8月24日週の医療・介護週次レポートに期限と空情報を表示する", () => {
+    const report = reports.find((item) => item.id === "healthcare-care-weekly-2026-08-24");
+
+    expect(report).toBeDefined();
+    expect(report?.checkedAt).toBe("2026-08-24");
+    expect(report?.sources.every((source) => source.checkedAt === "2026-08-24")).toBe(true);
+    expect(report?.topicCards.map((topic) => topic.title)).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("電子的な情報連携"),
+        expect.stringContaining("介護給付費分科会"),
+        expect.stringContaining("SaMD")
+      ])
+    );
+    expect(report?.dashboardMetrics.find((metric) => metric.label === "開催日")?.value).toBe("9/16");
+    expect(report?.sections.find((section) => section.title === "テーマ別の調査結果")?.items).toHaveLength(10);
+    expect(report?.sections.some((section) => section.items.some((item) => item.includes("今週確認できた重要な新規情報なし")))).toBe(true);
   });
 
   it("タグで記事を分類できる", () => {
