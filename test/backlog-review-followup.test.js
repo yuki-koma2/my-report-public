@@ -5,6 +5,7 @@ const tech = d=>get('tech-landscape-weekly-2026-'+d);
 it('週次の開始時刻とRSSの確認範囲を一貫して表示する',()=>{
  for(const d of ['07-30','08-06','08-13','08-20','08-27','09-03','09-10','09-17','09-24']) {
   const r=tech(d); expect(JSON.stringify(r)).not.toContain('00:00');
+  expect(JSON.stringify(r)).not.toMatch(/大規模な一次情報[をは]確認できなかった/);
   for(const c of r.topicCards.filter(c=>c.sourceUrl==='https://news.ycombinator.com/rss')) {
    expect(c.dateLabel).toBe('確認日'); expect(c.summary).toContain('確認記録');
    expect(c.summary).not.toContain('公式入口を確認'); expect(c.change).not.toBe('今週確認できた重要な新規情報なし。');
