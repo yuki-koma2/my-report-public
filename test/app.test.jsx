@@ -29,6 +29,7 @@ describe("App", () => {
     expect(screen.getByRole("heading", { name: "マーケティング" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "VC" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "スタートアップ" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "医療・介護領域の最新動向調査レポート 2026-07-13週" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "医療・介護領域の最新動向調査レポート 2026-07-06週" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-07-02週" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "プロダクト・テック週次レポート 2026-07-01週" })).toBeInTheDocument();
@@ -128,6 +129,33 @@ describe("App", () => {
     expect(screen.getAllByText("確認日 2026-07-09").length).toBeGreaterThan(0);
     expect(screen.queryByText("公開日 2026-07-03 / 確認日 2026-07-09")).not.toBeInTheDocument();
     expect(screen.getAllByText("公開日 2026-07-05 / 確認日 2026-07-09").length).toBeGreaterThan(0);
+  });
+
+  it("2026-07-13週の医療介護週次レポートに医療DX、重点支援区域、在宅酸素を表示する", () => {
+    window.location.hash = "#/reports/healthcare-care-weekly-2026-07-13";
+
+    render(<App />);
+
+    expect(screen.getByRole("heading", { name: "医療・介護領域の最新動向調査レポート 2026-07-13週", level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "今週の判断ポイント" })).toBeInTheDocument();
+    expect(screen.getByText("7/14")).toBeInTheDocument();
+    expect(screen.getAllByText(/医療DXに関するダッシュボード/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/電子処方箋の導入状況に関するダッシュボード/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/地域医療構想の重点支援区域/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/在宅酸素療法/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/今週確認できた重要な新規情報なし/).length).toBeGreaterThan(0);
+    expect(screen.getByText(/10. 海外の医療・介護DX動向/)).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: "デジタル庁 医療DXに関するダッシュボード" })[0]).toHaveAttribute(
+      "href",
+      "https://www.digital.go.jp/resources/govdashboard/healthcare-dx"
+    );
+    expect(screen.getAllByRole("link", { name: "厚生労働省 地域医療構想の実現に向けた重点支援区域の12回目の選定" })[0]).toHaveAttribute(
+      "href",
+      "https://www.mhlw.go.jp/stf/newpage_74194.html"
+    );
+    expect(screen.getAllByText("更新日").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("確認日 2026-07-13").length).toBeGreaterThan(0);
+    expect(screen.queryByText("公開日 2026-07-10 / 確認日 2026-07-13")).not.toBeInTheDocument();
   });
 
   it("日本の医療業界課題レポートに3課題、歴史背景、国際比較を表示する", () => {
@@ -324,6 +352,23 @@ describe("App", () => {
     expect(screen.getAllByRole("link", { name: "OpenAI: GPT-5.6: Frontier intelligence that scales with your ambition" })[0]).toHaveAttribute("href", "https://openai.com/index/gpt-5-6/");
   });
 
+  it("2026-07-30週のテック情勢レポート詳細に権限、透明性、物理AIの論点を表示する", () => {
+    window.location.hash = "#/reports/tech-landscape-weekly-2026-07-30";
+
+    render(<App />);
+
+    expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-07-30週", level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "OpenAIとHugging Faceの評価環境事案がAIエージェントの境界設計を問う" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "MetaがAI生成コンテンツの透明性コードへの署名を表明" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "AIエージェントの権限、実行環境、停止手段を高リスク操作から棚卸しする" })).toBeInTheDocument();
+    expect(screen.getByText("期限 2026-08-02まで")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "注目すべき仮説と解くべき課題" })).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: "OpenAI: OpenAI and Hugging Face partner to address security incident during model evaluation" })[0]).toHaveAttribute(
+      "href",
+      "https://openai.com/index/hugging-face-model-evaluation-security-incident/"
+    );
+  });
+
   it("テック情勢レポート詳細に判断ポイント、仮説、課題、取得エラーを表示する", () => {
     window.location.hash = "#/reports/tech-landscape-weekly-2026-07-01";
 
@@ -361,6 +406,23 @@ describe("App", () => {
     expect(screen.getAllByRole("link", { name: "Figma Config 2026: New materials, new tools and a more expressive canvas" })[0]).toHaveAttribute(
       "href",
       "https://www.figma.com/blog/config-2026-recap/"
+    );
+  });
+
+  it("2026-08-06週のテック情勢レポート詳細に供給網防御、透明性、取得エラーを表示する", () => {
+    window.location.hash = "#/reports/tech-landscape-weekly-2026-08-06";
+
+    render(<App />);
+
+    expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-08-06週", level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "GitHub Actionsが疑わしいワークフローを実行前に承認待ちへ移す" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "EU AI Actの生成AI透明性義務が8月2日に適用開始" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "注目すべき仮説と解くべき課題" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "取得エラー" })).toBeInTheDocument();
+    expect(screen.getAllByText(/ProductZine.*HTTP 403/).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("link", { name: "GitHub Changelog: GitHub Actions holds potentially malicious workflows for approval" })[0]).toHaveAttribute(
+      "href",
+      "https://github.blog/changelog/2026-07-28-github-actions-holds-potentially-malicious-workflows-for-approval/"
     );
   });
 
