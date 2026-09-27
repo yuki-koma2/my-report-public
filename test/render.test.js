@@ -643,3 +643,25 @@ describe("reports", () => {
     expect(report?.sources.find((source) => source.title.startsWith("TSMC: 2026 Monthly Revenue"))).toMatchObject({ type: "一次情報", publishedAt: "2026-08-10" });
     expect(report?.sections.find((section) => section.title === "取得エラー")?.items).toContain("ProductZine RSS: https://productzine.jp/rss/new/20/index.xml — HTTP 403: Forbidden");
   });
+
+  it("2026-08-17週の医療介護レポートは公募期限と10テーマの確認結果を表示用に保持する", () => {
+    const report = reports.find((item) => item.id === "healthcare-care-weekly-2026-08-17");
+    const themeText = report?.sections.find((section) => section.title === "テーマ別の調査結果")?.items.join("\n") ?? "";
+
+    expect(report).toBeDefined();
+    expect(report?.publishedAt).toBe("2026-08-17");
+    expect(report?.checkedAt).toBe("2026-08-17");
+    expect(report?.dashboardMetrics.find((metric) => metric.label === "最短期限")?.value).toBe("8/21");
+    expect(report?.highlights.join("\n")).toContain("2026年8月21日12時59分");
+    expect(report?.topicCards.find((topic) => topic.sourceTitle.includes("日米医学協力計画"))).toMatchObject({
+      date: "2026-08-13",
+      priority: "高",
+      timing: "すぐ",
+      sourceType: "一次情報"
+    });
+    expect(themeText).toContain("1. 医療・介護制度改正: 未調査");
+    expect(themeText).toContain("5. 補助金・助成金・公募情報");
+    expect(themeText).toContain("公募締切: 2026-08-21 12時59分");
+    expect(themeText).toContain("10. 海外の医療・介護DX動向: 未調査");
+    expect(report?.sources.every((source) => source.checkedAt === (source.url.includes("amed.go.jp") ? "2026-09-27" : "2026-08-17"))).toBe(true);
+  });
