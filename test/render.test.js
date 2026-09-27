@@ -521,3 +521,28 @@ describe("reports", () => {
     });
     expect(report?.sources.every((source) => source.checkedAt === "2026-07-13")).toBe(true);
   });
+
+  it("2026-07-27週の医療介護レポートは介護報酬改定論点、医療介護連携、期限を保持する", () => {
+    const report = reports.find((item) => item.id === "healthcare-care-weekly-2026-07-27");
+
+    expect(report).toBeDefined();
+
+    const themeSection = report?.sections.find((section) => section.title === "テーマ別の調査結果");
+    const themeText = themeSection?.items.join("\n") ?? "";
+    const feeTopic = report?.topicCards.find((topic) => topic.sourceTitle.includes("第261回社会保障審議会"));
+    const linkageTopic = report?.topicCards.find((topic) => topic.sourceTitle.includes("第11回介護情報利活用"));
+    const dhtTopic = report?.topicCards.find((topic) => topic.sourceTitle.includes("Digital Health Technologies"));
+
+    expect(report?.publishedAt).toBe("2026-07-27");
+    expect(report?.checkedAt).toBe("2026-07-27");
+    expect(report?.dashboardMetrics.find((metric) => metric.label === "最短期限")?.value).toBe("8/20");
+    expect(report?.highlights.join("\n")).toContain("今週確認できた重要な新規情報なし");
+    expect(themeText).toContain("1. 医療・介護制度改正");
+    expect(themeText).toContain("10. 海外の医療・介護DX動向");
+    expect(themeText).toContain("公募締切: 2026-08-20");
+    expect(themeText).toContain("補助率・補助上限額: 公表ページ上は確認できず");
+    expect(feeTopic).toMatchObject({ date: "2026-07-23", priority: "高", sourceType: "一次情報" });
+    expect(linkageTopic).toMatchObject({ date: "2026-07-23", timing: "すぐ" });
+    expect(dhtTopic).toMatchObject({ date: "2026-07-20", timing: "すぐ" });
+    expect(report?.sources.every((source) => source.checkedAt === (/newpage_(74599|74842)/.test(source.url) ? "2026-09-27" : "2026-07-27"))).toBe(true);
+  });
