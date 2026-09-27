@@ -29,6 +29,7 @@ describe("App", () => {
     expect(screen.getByRole("heading", { name: "マーケティング" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "VC" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "スタートアップ" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "医療・介護領域の最新動向調査レポート 2026-07-13週" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "医療・介護領域の最新動向調査レポート 2026-07-06週" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-07-02週" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "プロダクト・テック週次レポート 2026-07-01週" })).toBeInTheDocument();
@@ -128,6 +129,33 @@ describe("App", () => {
     expect(screen.getAllByText("確認日 2026-07-09").length).toBeGreaterThan(0);
     expect(screen.queryByText("公開日 2026-07-03 / 確認日 2026-07-09")).not.toBeInTheDocument();
     expect(screen.getAllByText("公開日 2026-07-05 / 確認日 2026-07-09").length).toBeGreaterThan(0);
+  });
+
+  it("2026-07-13週の医療介護週次レポートに医療DX、重点支援区域、在宅酸素を表示する", () => {
+    window.location.hash = "#/reports/healthcare-care-weekly-2026-07-13";
+
+    render(<App />);
+
+    expect(screen.getByRole("heading", { name: "医療・介護領域の最新動向調査レポート 2026-07-13週", level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "今週の判断ポイント" })).toBeInTheDocument();
+    expect(screen.getByText("7/14")).toBeInTheDocument();
+    expect(screen.getAllByText(/医療DXに関するダッシュボード/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/電子処方箋の導入状況に関するダッシュボード/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/地域医療構想の重点支援区域/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/在宅酸素療法/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/今週確認できた重要な新規情報なし/).length).toBeGreaterThan(0);
+    expect(screen.getByText(/10. 海外の医療・介護DX動向/)).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: "デジタル庁 医療DXに関するダッシュボード" })[0]).toHaveAttribute(
+      "href",
+      "https://www.digital.go.jp/resources/govdashboard/healthcare-dx"
+    );
+    expect(screen.getAllByRole("link", { name: "厚生労働省 地域医療構想の実現に向けた重点支援区域の12回目の選定" })[0]).toHaveAttribute(
+      "href",
+      "https://www.mhlw.go.jp/stf/newpage_74194.html"
+    );
+    expect(screen.getAllByText("更新日").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("確認日 2026-07-13").length).toBeGreaterThan(0);
+    expect(screen.queryByText("公開日 2026-07-10 / 確認日 2026-07-13")).not.toBeInTheDocument();
   });
 
   it("日本の医療業界課題レポートに3課題、歴史背景、国際比較を表示する", () => {
@@ -324,6 +352,23 @@ describe("App", () => {
     expect(screen.getAllByRole("link", { name: "OpenAI: GPT-5.6: Frontier intelligence that scales with your ambition" })[0]).toHaveAttribute("href", "https://openai.com/index/gpt-5-6/");
   });
 
+  it("2026-07-30週のテック情勢レポート詳細に権限、透明性、物理AIの論点を表示する", () => {
+    window.location.hash = "#/reports/tech-landscape-weekly-2026-07-30";
+
+    render(<App />);
+
+    expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-07-30週", level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "OpenAIとHugging Faceの評価環境事案がAIエージェントの境界設計を問う" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "MetaがAI生成コンテンツの透明性コードへの署名を表明" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "AIエージェントの権限、実行環境、停止手段を高リスク操作から棚卸しする" })).toBeInTheDocument();
+    expect(screen.getByText("期限 2026-08-02まで")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "注目すべき仮説と解くべき課題" })).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: "OpenAI: OpenAI and Hugging Face partner to address security incident during model evaluation" })[0]).toHaveAttribute(
+      "href",
+      "https://openai.com/index/hugging-face-model-evaluation-security-incident/"
+    );
+  });
+
   it("テック情勢レポート詳細に判断ポイント、仮説、課題、取得エラーを表示する", () => {
     window.location.hash = "#/reports/tech-landscape-weekly-2026-07-01";
 
@@ -364,6 +409,23 @@ describe("App", () => {
     );
   });
 
+  it("2026-08-06週のテック情勢レポート詳細に供給網防御、透明性、取得エラーを表示する", () => {
+    window.location.hash = "#/reports/tech-landscape-weekly-2026-08-06";
+
+    render(<App />);
+
+    expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-08-06週", level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "GitHub Actionsが疑わしいワークフローを実行前に承認待ちへ移す" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "EU AI Actの生成AI透明性義務が8月2日に適用開始" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "注目すべき仮説と解くべき課題" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "取得エラー" })).toBeInTheDocument();
+    expect(screen.getAllByText(/ProductZine.*HTTP 403/).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("link", { name: "GitHub Changelog: GitHub Actions holds potentially malicious workflows for approval" })[0]).toHaveAttribute(
+      "href",
+      "https://github.blog/changelog/2026-07-28-github-actions-holds-potentially-malicious-workflows-for-approval/"
+    );
+  });
+
   it("存在しないページでは Not Found を表示する", () => {
     window.location.hash = "#/missing";
 
@@ -399,3 +461,86 @@ describe("App", () => {
     expect(screen.getByRole("heading", { name: "レポート作成方針", level: 1 })).toBeInTheDocument();
   });
 });
+
+  it("2026-08-13週のテック情勢レポート詳細に移行、規制適用、取得エラーを表示する", () => {
+    window.location.hash = "#/reports/tech-landscape-weekly-2026-08-13";
+
+    render(<App />);
+
+    expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-08-13週", level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Atlasの終了でブラウザ型エージェントの移行とデータ保全が運用課題になる" })).toBeInTheDocument();
+    expect(screen.getByText("期限 2026-12-02まで")).toBeInTheDocument();
+    expect(screen.getAllByText(/人の最終確認を伴わない公益事項のAI生成テキスト/).length).toBeGreaterThan(0);
+    expect(screen.getByRole("heading", { name: "Atlas利用の有無と保存対象を棚卸しし、移行後のブラウザ運用を検証する" })).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: "OpenAI Help Center: Evolving Atlas into ChatGPT for browser-based agentic work" })[0]).toHaveAttribute(
+      "href",
+      "https://help.openai.com/en/articles/20001371-evolving-atlas-into-chatgpt-for-browser-based-agentic-work"
+    );
+    expect(screen.getAllByText(/HTTP 403: Forbidden/).length).toBeGreaterThan(0);
+  });
+
+  it("2026-08-20週のテック情勢レポートにエージェント、評価環境、規制執行を表示する", () => {
+    window.location.hash = "#/reports/tech-landscape-weekly-2026-08-20";
+
+    render(<App />);
+
+    expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-08-20週", level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "今週の判断ポイント" })).toBeInTheDocument();
+    expect(screen.getAllByText(/Amazon QuickがMicrosoft 365内へ/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/AIサイバー評価で検証環境の封じ込め/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/EU AI Actの透明性要件は執行フェーズ/).length).toBeGreaterThan(0);
+    expect(screen.getByRole("heading", { name: "注目すべき仮説と解くべき課題" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "今週検討すべき対応アクション" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "取得エラー" })).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: "AWS: Amazon Quick for Microsoft 365: Agentic AI where you work" })[0]).toHaveAttribute(
+      "href",
+      "https://aws.amazon.com/blogs/machine-learning/amazon-quick-for-microsoft-365-agentic-ai-where-you-work/"
+    );
+  });
+
+  it("2026-08-27週のテック情勢レポート詳細に評価環境の課題と取得エラーを表示する", () => {
+    window.location.hash = "#/reports/tech-landscape-weekly-2026-08-27";
+
+    render(<App />);
+
+    expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-08-27週", level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "OpenAIが評価環境で起きたHugging Face侵害事案と再発防止策を公表" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "エージェント評価環境の外向き通信、資格情報、共有ストレージの境界を点検する" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "取得エラー" })).toBeInTheDocument();
+    expect(screen.getAllByText(/ProductZine.*HTTP 403: Forbidden/).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("link", { name: "OpenAI: The Hugging Face incident and the road ahead" })[0]).toHaveAttribute(
+      "href",
+      "https://openai.com/index/hugging-face-incident-and-the-road-ahead/"
+    );
+  });
+
+  it("2026-09-03週のテック情勢レポート詳細にCritical能力、統制、規制期限を表示する", () => {
+    window.location.hash = "#/reports/tech-landscape-weekly-2026-09-03";
+
+    render(<App />);
+
+    expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-09-03週", level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "OpenAIはAstraがCriticalサイバー能力の閾値に達したと評価" })).toBeInTheDocument();
+    expect(screen.getByText("対応 2026-12-02まで")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "高権限AIの評価・実行環境で通信、資格情報、ツール権限、停止手順を棚卸しする" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "取得エラー" })).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: "GitHub Changelog: Content exclusions generally available in Copilot app and CLI" })[0]).toHaveAttribute(
+      "href",
+      "https://github.blog/changelog/2026-09-02-content-exclusions-generally-available-in-copilot-app-and-cli/"
+    );
+  });
+
+  it("2026-09-10週のテック情勢レポート詳細に安全運用と攻撃者の自動化を表示する", () => {
+    window.location.hash = "#/reports/tech-landscape-weekly-2026-09-10";
+
+    render(<App />);
+
+    expect(screen.getByRole("heading", { name: "テック情勢週次レポート 2026-09-10週", level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "GPT-6 Astraの導入は能力評価と安全運用を一体で設計する段階へ進む" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "攻撃者のエージェント活用で侵害から認証情報収集までの時間が短縮している" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "注目すべき仮説と解くべき課題" })).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: "OpenAI: GPT-6 Astra: A new generation of intelligence" })[0]).toHaveAttribute(
+      "href",
+      "https://openai.com/index/gpt-6-astra/"
+    );
+  });
