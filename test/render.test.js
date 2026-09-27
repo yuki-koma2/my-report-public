@@ -342,6 +342,24 @@ describe("reports", () => {
     expect(report?.sources.every((source) => source.checkedAt === "2026-07-09")).toBe(true);
   });
 
+  it("2026-07-20週の医療介護レポートは二次内示、介護会議、全10テーマと空情報を表示する", () => {
+    const report = reports.find((item) => item.id === "healthcare-care-weekly-2026-07-20");
+    const themeText = report?.sections.find((section) => section.title === "テーマ別の調査結果")?.items.join("\n") ?? "";
+
+    expect(report?.publishedAt).toBe("2026-07-20");
+    expect(report?.dashboardMetrics.find((metric) => metric.label === "最短期限")?.value).toBe("7/31");
+    expect(report?.topicCards.find((topic) => topic.sourceTitle.includes("二次内示"))).toMatchObject({
+      date: "2026-07-17",
+      priority: "高",
+      sourceType: "一次情報"
+    });
+    expect(themeText).toContain("1. 医療・介護制度改正");
+    expect(themeText).toContain("10. 海外の医療・介護DX動向");
+    expect(themeText).toContain("今週確認できた重要な新規情報なし");
+    expect(themeText).toContain("公募締切: 2026-07-31必着");
+    expect(report?.sources.every((source) => source.checkedAt === "2026-07-20")).toBe(true);
+  });
+
   it("Academic VC週次レポートが投資判断向けの主要トピックと取得エラーを持つ", () => {
     const report = reports.find((item) => item.id === "academic-vc-weekly-2026-07-01");
 
