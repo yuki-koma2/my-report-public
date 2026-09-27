@@ -721,3 +721,25 @@ describe("reports", () => {
     expect(report?.sections.find((section) => section.title === "取得エラー")?.items.join(" ")).toContain("ProductZine");
     expect(report?.sections.find((section) => section.title === "取得エラー")?.items.join(" ")).toContain("HTTP 403: Forbidden");
   });
+
+  it("2026-08-31週の医療介護レポートは10テーマ、改定検討資料、外国人患者調査を保持する", () => {
+    const report = reports.find((item) => item.id === "healthcare-care-weekly-2026-08-31");
+    const themeSection = report?.sections.find((section) => section.title === "テーマ別の調査結果");
+    const themeText = themeSection?.items.join("\n") ?? "";
+
+    expect(report).toBeDefined();
+    expect(report?.publishedAt).toBe("2026-08-31");
+    expect(report?.lead.title).toBe("今週の判断ポイント");
+    expect(report?.dashboardMetrics.find((metric) => metric.label === "最短期限")?.value).toBe("10/16");
+    expect(report?.highlights.join("\n")).toContain("未調査");
+    expect(themeText).toContain("1. 医療・介護制度改正");
+    expect(themeText).toContain("10. 海外の医療・介護DX動向");
+    expect(themeText).toContain("第263回社会保障審議会介護給付費分科会");
+    expect(themeText).toContain("公募締切: 該当なし");
+    expect(themeText).toContain("調査票A: 2026-10-16");
+    expect(report?.topicCards.find((topic) => topic.sourceTitle.includes("第130回社会保障審議会医療部会"))).toMatchObject({
+      date: "2026-08-26",
+      sourceType: "一次情報"
+    });
+    expect(report?.sources.every((source) => source.checkedAt === "2026-08-31")).toBe(true);
+  });
