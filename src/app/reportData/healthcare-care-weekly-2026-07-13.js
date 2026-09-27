@@ -21,14 +21,12 @@ export const report = {
       title: "デジタル庁 医療DXに関するダッシュボード",
       url: "https://www.digital.go.jp/resources/govdashboard/healthcare-dx",
       type: "一次情報",
-      publishedAt: "2026-07-10",
       checkedAt: "2026-07-13"
     },
     {
       title: "デジタル庁 電子処方箋の導入状況に関するダッシュボード",
       url: "https://www.digital.go.jp/resources/govdashboard/electronic-prescription",
       type: "一次情報",
-      publishedAt: "2026-07-10",
       checkedAt: "2026-07-13"
     },
     {
@@ -67,13 +65,6 @@ export const report = {
       checkedAt: "2026-07-13"
     },
     {
-      title: "厚生労働省 第30回社会保障審議会 生活困窮者自立支援及び生活保護部会",
-      url: "https://www.mhlw.go.jp/stf/newpage_74387.html",
-      type: "一次情報",
-      publishedAt: "2026-07-10",
-      checkedAt: "2026-07-13"
-    },
-    {
       title: "PMDA 医療機器プログラム（SaMD）の審査ポイント",
       url: "https://www.pmda.go.jp/review-services/drug-reviews/about-reviews/devices/0047.html",
       type: "一次情報",
@@ -103,7 +94,7 @@ export const report = {
     },
     {
       label: "一次情報",
-      value: "10本",
+      value: "9本",
       caption: "厚生労働省、デジタル庁、PMDAの公式情報を確認",
       tone: "primary"
     },
