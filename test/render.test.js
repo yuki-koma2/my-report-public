@@ -848,6 +848,24 @@ describe("reports", () => {
     expect(report?.sources.every((source) => source.checkedAt === (source.url.includes("newpage_76071") ? "2026-09-27" : "2026-09-21"))).toBe(true);
   });
 
+  it("2026-10-05週の医療介護レポートは全テーマ、統計更新、海外公募期限を保持する", () => {
+    const report = reports.find((item) => item.id === "healthcare-care-weekly-2026-10-05");
+    const themeText = report?.sections.find((section) => section.title === "テーマ別の調査結果")?.items.join("\n") ?? "";
+
+    expect(report).toBeDefined();
+    expect(report?.publishedAt).toBe("2026-10-05");
+    expect(report?.checkedAt).toBe("2026-10-05");
+    expect(report?.topicCards.map((topic) => topic.title)).toEqual(expect.arrayContaining([
+      "第268回介護給付費分科会で令和9年度改定の基本的な視点案を議論",
+      "医療DXダッシュボードと介護の公的統計を9月30日までに更新"
+    ]));
+    expect(report?.sources.every((source) => source.checkedAt === "2026-10-05")).toBe(true);
+    expect(themeText).toContain("1. 医療・介護制度改正");
+    expect(themeText).toContain("10. 海外の医療・介護DX動向");
+    expect(themeText).toContain("公募締切: 2026-10-20");
+    expect(themeText).toContain("今週確認できた重要な新規情報なし");
+  });
+
   it("2026-09-24週のテック情勢レポートが一次情報、仮説、取得エラーを構造化して持つ", () => {
     const report = reports.find((item) => item.id === "tech-landscape-weekly-2026-09-24");
 
