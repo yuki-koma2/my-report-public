@@ -27,4 +27,7 @@ it('10月8日週の詳細ページに判断ポイント、限定展開、取得�
   expect(screen.getAllByText(/Gemini 4 Argon/).length).toBeGreaterThan(0);
   expect(screen.getAllByText(/ProductZine RSSはHTTP 403/).length).toBeGreaterThan(0);
   expect(screen.getAllByText('一次情報').length).toBeGreaterThan(0);
+  expect(screen.getByRole('heading', { name: '今週検討すべき対応アクション' })).toBeInTheDocument();
+  expect(screen.getByText('プロダクト・AI基盤責任者')).toBeInTheDocument();
+  expect(screen.getAllByText('2週間以内').length).toBeGreaterThan(0);
 });
