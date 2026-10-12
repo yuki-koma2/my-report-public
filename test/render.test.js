@@ -73,6 +73,27 @@ describe("reports", () => {
     expect(report?.dashboardMetrics.find((metric) => metric.label === "最短期限")?.value).toBe("9/24");
   });
 
+  it("2026-10-12週の医療・介護レポートは方針適用、補助内示、公募期限を区別して表示する", () => {
+    const report = reports.find((item) => item.id === "healthcare-care-weekly-2026-10-12");
+    const themeSection = report?.sections.find((section) => section.title === "テーマ別の調査結果");
+    const themeText = themeSection?.items.join("\n") ?? "";
+
+    expect(report).toBeDefined();
+    expect(report?.publishedAt).toBe("2026-10-12");
+    expect(report?.sources.every((source) => source.checkedAt === "2026-10-12")).toBe(true);
+    expect(report?.topicCards.map((topic) => topic.title)).toEqual(expect.arrayContaining([
+      "医療情報化推進方針を10月1日から適用し、医療DXサイトを更新",
+      "令和9年度介護報酬改定に向け、第269回で4サービス類型を議論",
+      "老人保健健康増進等事業の3次公募は10月15日締切"
+    ]));
+    expect(report?.topicCards.find((topic) => topic.theme === "補助金・公募")?.sourceType).toBe("一次情報");
+    expect(report?.dashboardMetrics.find((metric) => metric.label === "最短期限")?.value).toBe("10/15");
+    expect(themeSection?.items).toHaveLength(10);
+    expect(themeText).toContain("公募締切: 2026-10-15");
+    expect(themeText).toContain("今週確認できた重要な新規情報なし");
+    expect(themeText).toContain("8. 主要プレイヤー、競合企業、スタートアップ動向 / 未調査");
+  });
+
   it("レポート本文を個別データファイルから集約する", () => {
     const reportData = Object.values(reportDataModules);
 
