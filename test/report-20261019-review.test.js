@@ -19,6 +19,10 @@ it("10月19日週は10テーマ、AMED公募期限、方針と確定要件の区
   expect(themeSection?.items).toHaveLength(10);
   expect(themeText).toContain("公募締切: 2026-11-04 12:00");
   expect(themeText).toContain("補助率: 該当なし（研究開発費の上限を示す公募）");
+  expect(themeText).toContain("公募開始日: 2026-10-08");
+  expect(themeText).toContain("新規採択予定数: 各分野0〜6課題程度");
+  expect(themeText).toContain("中間評価後に令和10年度へ進む課題: 各分野0〜3課題程度");
+  expect(themeText).toContain("資料公開日: 2026-10-06");
   expect(themeText).toContain("今週確認できた重要な新規情報なし");
   expect(report.topicCards.find((topic) => topic.theme === "補助金・公募")?.sourceType).toBe("一次情報");
   expect(report.dashboardMetrics.find((metric) => metric.label === "最短期限")?.value).toBe("11/4");
