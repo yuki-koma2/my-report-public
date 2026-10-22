@@ -14,6 +14,8 @@ it('10月22日週は7日間の対象期間、一次情報、取得エラーを�
   expect(report.dashboardMetrics[0]?.value).toBe('7日');
   expect(report.dashboardMetrics[0]?.caption).toContain('2026-10-15 08:00 JSTから2026-10-22 08:00 JSTまで');
   expect(report.topicCards).toHaveLength(4);
+  expect(report.topicCards.filter((card) => card.priority === '高')).toHaveLength(3);
+  expect(report.dashboardMetrics.find((metric) => metric.label === '高優先度')?.value).toBe('3テーマ');
   expect(report.topicCards.find((card) => card.title.includes('独立評価者'))?.sourceType).toBe('一次情報');
   expect(report.sources.find((source) => source.title === 'ProductZine RSS')?.failureType).toBe('HTTP 403: Forbidden');
 });
