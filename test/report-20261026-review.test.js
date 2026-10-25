@@ -23,6 +23,11 @@ it("10月26日週は10テーマ、介護保険部会の論点、提供再開と�
   expect(themeText).toContain("今週確認できた重要な新規情報なし");
   expect(report.topicCards.find((topic) => topic.theme === "競合・企業動向")?.sourceType).toBe("一次情報");
   expect(report.dashboardMetrics.find((metric) => metric.label === "最短日程")?.value).toBe("10/26");
+  expect(report.topicCards.filter((topic) => topic.priority === "高").map((topic) => topic.theme)).toEqual([
+    "政策・審議会",
+    "報酬・加算",
+    "競合・企業動向"
+  ]);
 });
 
 it("10月26日週の詳細ページに判断ポイント、空情報、対応アクションを表示する", () => {
