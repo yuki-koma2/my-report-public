@@ -20,6 +20,9 @@ it("11月2日週は10テーマ、内示、公募、海外AIの根拠を保持す
   expect(themeText).toContain("地域介護・福祉空間整備等施設整備交付金");
   expect(themeText).toContain("ヘルステック・チャレンジ");
   expect(themeText).toContain("WHO欧州地域のAI医療ロードマップ");
+  expect(themeText).toContain("登録施設介護支援");
+  expect(themeText).not.toContain("居宅介護支援、地域区分");
+  expect(report.lead.body).toContain("応募期限と、採択後の医療機器該当性確認の時点を分ける");
   expect(themeText).toContain("今週確認できた重要な新規情報なし");
   expect(report.dashboardMetrics.find((metric) => metric.label === "最短期限")?.value).toBe("11/4 正午");
   expect(report.topicCards.find((topic) => topic.theme === "補助金・公募")?.sourceType).toBe("一次情報");
