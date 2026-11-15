@@ -33,5 +33,6 @@ it("11月16日週の詳細ページに判断ポイント、出典、対応アク
   expect(screen.getByRole("heading", { name: "今週の判断ポイント" })).toBeInTheDocument();
   expect(screen.getAllByText(/11月18日.*正午/).length).toBeGreaterThan(0);
   expect(screen.getAllByRole("link", { name: /AMED.*バイオバンク/ }).length).toBeGreaterThan(0);
+  expect(screen.getByText(/記録、連携、教育の業務負荷を可視化/)).toBeInTheDocument();
   expect(screen.getByRole("heading", { name: "今週検討すべき対応アクション" })).toBeInTheDocument();
 });
