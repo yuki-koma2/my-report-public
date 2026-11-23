@@ -21,7 +21,7 @@ it("11月23日週は10テーマと確認済みの期限を記録する", () => {
   expect(themeText).toContain("Public Medical Hub");
   expect(themeText).toContain("医療施設等施設整備費補助金");
   expect(themeText).toContain("今週確認できた重要な新規情報なし");
-  expect(report.dashboardMetrics.find((metric) => metric.label === "確認期限")?.value).toBe("12/31");
+  expect(report.dashboardMetrics.find((metric) => metric.label === "確認期限")?.value).toBe("3/17");
   expect(report.topicCards.find((topic) => topic.theme === "海外動向")?.sourceType).toBe("一次情報");
 });
 
@@ -31,7 +31,7 @@ it("11月23日週の詳細ページに判断ポイント、出典、対応アク
 
   expect(screen.getByRole("heading", { name: "医療・介護領域の最新動向調査レポート 2026-11-23週", level: 1 })).toBeInTheDocument();
   expect(screen.getByRole("heading", { name: "今週の判断ポイント" })).toBeInTheDocument();
-  expect(screen.getAllByText(/2026年12月31日/).length).toBeGreaterThan(0);
+  expect(screen.getAllByText(/2027年3月17日/).length).toBeGreaterThan(0);
   expect(screen.getAllByRole("link", { name: /医療施設等施設整備費補助金/ }).length).toBeGreaterThan(0);
   expect(screen.getAllByText(/PMHの導入済み医療機関・薬局リスト/).length).toBeGreaterThan(0);
   expect(screen.getByRole("heading", { name: "今週検討すべき対応アクション" })).toBeInTheDocument();
